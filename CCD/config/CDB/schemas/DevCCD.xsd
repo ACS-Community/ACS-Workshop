@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="urn:schemas-cosylab-com:DevCCD:1.0"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns="urn:schemas-cosylab-com:DevCCD:1.0"
+   xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+   xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+   elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:import namespace="urn:schemas-cosylab-com:CDB:1.0" schemaLocation="CDB.xsd"/>
+<xs:import namespace="urn:schemas-cosylab-com:BACI:1.0" schemaLocation="BACI.xsd"/>
+
+<xs:complexType name="DevCCDType">
+   <xs:sequence>
+      <xs:element name="frame" type="baci:ROlongSeq"/>
+      <xs:element name="device" type="baci:RWstring"/>
+      <xs:element name="red" type="baci:RWlong"/>
+      <xs:element name="blue" type="baci:RWlong"/>
+      <xs:element name="green" type="baci:RWlong"/>
+      <xs:element name="pixelBias" type="baci:RWlong"/>
+      <xs:element name="resetLevel" type="baci:RWlong"/>
+      <xs:element name="exposure" type="baci:RWlong"/>
+      <xs:element name="locking" type="xs:boolean"/>
+      <xs:element name="powered" type="xs:boolean"/>
+   </xs:sequence>
+
+   <xs:attribute name="id" type="xs:int" use="optional" default="0"/>
+</xs:complexType>
+
+<xs:element name="DevCCD" type="DevCCDType"/>
+</xs:schema>

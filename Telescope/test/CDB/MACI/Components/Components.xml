@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+       xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+       xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <_ Name="SCHEDULER"   Code="Acssim.Servants.Simulator"
+                            Type="IDL:alma/SCHEDULER_MODULE/Scheduler:1.0"
+                            Container="pyContainer"
+			    Default="true"/>
+      <_ Name="DATABASE"    Code="Acssim.Servants.Simulator"
+                            Type="IDL:alma/DATABASE_MODULE/DataBase:1.0"
+                            Container="pyContainer"
+			    Default="true"/>
+      <_ Name="CONSOLE"     Code="Acssim.Servants.Simulator"
+                            Type="IDL:alma/CONSOLE_MODULE/Console:1.0"
+                            Container="pyContainer"
+			    Default="true"/>
+      <_ Name="INSTRUMENT"  Code="Acssim.Servants.Simultor"
+                            Type="IDL:alma/INSTRUMENT_MODULE/Instrument:1.0"
+                            Container="pyContainer"
+			    Default="true"/>
+      <_ Name="DEVCCD"      Code="Acssim.Servants.Simulator"
+                            Type="IDL:alma/DEVCCD_MODULE/DevCCD:1.0"
+                            Container="pyContainer"
+			    Default="true"/>
+      <_ Name="TELESCOPE"   Code="TelescopeImpl"
+                            Type="IDL:alma/TELESCOPE_MODULE/Telescope:1.0"
+                            Container="telescopeContainer"
+			    Default="true"/> 
+<!--     <_ Name="TELESCOPE"   Code="TelescopeImpl"
+                            Type="IDL:alma/TELESCOPE_MODULE/Telescope:1.0"
+                            Container="bilboContainer"
+			    Default="true"/>
+
+      <_ Name="RCX"         Code="Acssim.Servants.Simulator"
+                            Type="IDL:alma/H3E/TelescopeControl:1.0"
+                            Container="pyContainer"
+			    Default="true"/>
+-->
+      <_ Name="CELESTRON_SIM"   Code="Acssim.Servants.Simulator"
+                            Type="IDL:alma/H3E/TelescopeControl:1.0"
+                            Container="pyContainer"
+			    Default="false"/>
+
+      <_ Name="CELESTRON_REAL"   Code="MOUNT2"
+                            Type="IDL:alma/H3E/TelescopeControl:1.0"
+                            Container="telescopeContainer"
+			    Default="true"/>
+</Components>
