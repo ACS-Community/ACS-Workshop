@@ -1,4 +1,3 @@
-
 #*******************************************************************************
 # ALMA - Atacama Large Millimiter Array
 # (c) UNSPECIFIED - FILL IN, 2009 
@@ -17,13 +16,13 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 #
-# "@(#) $Id: Makefile,v 1.3 2009/11/13 13:08:28 almamgr Exp $"
+# "@(#) $Id: Makefile,v 1.2 2009/11/11 20:58:53 almamgr Exp $"
 #
 # Makefile of ........
 #
 # who       when      what
 # --------  --------  ----------------------------------------------
-# almamgr  2009-07-22  created
+# almadev  2009-11-11  created
 #
 
 #*******************************************************************************
@@ -32,6 +31,7 @@
 # REMARKS
 #    None
 #------------------------------------------------------------------------
+
 #
 # user definable C-compilation flags
 #USER_CFLAGS = 
@@ -96,10 +96,10 @@ TCL_SCRIPTS_L   =
 PY_SCRIPTS         =
 PY_SCRIPTS_L       =
 
-PY_MODULES         =
+PY_MODULES         = 
 PY_MODULES_L       =
 
-PY_PACKAGES        =
+PY_PACKAGES        = OCimpl
 PY_PACKAGES_L      =
 pppppp_MODULES	   =
 
@@ -122,37 +122,28 @@ tttlll_OBJECTS  =
 #
 # Configuration Database Files
 # ----------------------------
-CDB_SCHEMAS = SC
+CDB_SCHEMAS = 
+
 # 
 # IDL Files and flags
-#
-IDL_FILES = MARSCommon
-IDL_FILES += OCBase
-IDL_FILES += TSBase
-IDL_FILES += TRDBase
-IDL_FILES += FDBase
-IDL_FILES += SCBase
-IDL_FILES += RCBase
-         
-
+# 
+IDL_FILES =
 TAO_IDLFLAGS =
 USER_IDL =
 #
 # Jarfiles and their directories
 #
-JARFILES = $(MODULE)
-#$(MODULE)_DIRS = alma
-#jjj_EXTRAS = 
+JARFILES= 
+jjj_DIRS=
+jjj_EXTRAS= 
 #
 # java sources in Jarfile on/off
-DEBUG=on
+DEBUG= 
 #
 # ACS XmlIdl generation on/off
 #
-XML_IDL=  
-
-ACSERRDEF = TaskSchedulerExceptions
-
+XML_IDL= 
+#
 # Java Component Helper Classes generation on/off
 #
 COMPONENT_HELPERS=

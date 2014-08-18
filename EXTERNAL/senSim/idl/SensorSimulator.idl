@@ -1,0 +1,38 @@
+//  Sensor Simulator - For ACS Workshop 2009  UTFSM
+//
+//  Created by Camilo Menay - cmenay[at]csrg.inf.utfsm.cl
+//
+//  Nov 8 2009  ... Created
+
+
+
+
+#ifndef _SENSORSIM_IDL_
+#define _SENSORSIM_IDL_
+
+#include <baci.idl>
+
+#pragma prefix "alma"
+
+
+module SS { 
+
+interface SensorSimulator: ACS::ACSComponent {
+	/* Reset the status of a specified sensor (sets back to False). */
+	void resetSensor(in long sensorID);
+
+	/* Get the status of a specified sensor (by default False). */
+	boolean getStatus(in long sensorID);
+
+	/* Set the status of a specified sensor. Normally used to change
+	 * the status to True, and cause a monitoring thread to send an alarm.
+	 * This method is only for simulating error conditions, and should
+	 * not be used by a monitoring client! */
+	void setStatus(in long sensorID, in boolean status);
+
+	};
+
+};
+
+#endif
+

@@ -1,0 +1,23 @@
+
+#ifndef TRD_IDL
+#define TRD_IDL
+
+#include <acscomponent.idl>
+
+#include <MARSCommon.idl>
+
+#pragma prefix "alma"
+
+module MARS
+{
+    interface TRDBase : ACS::ACSComponent
+    {
+        command_struct_seq getRAB        (               in long type        );
+        long createReport        (               in report_struct report        );
+        long_seq getReportsList        ();
+        report_struct getReport        (               in long id        );
+
+    };
+};
+#endif /* TRD_IDL */
+

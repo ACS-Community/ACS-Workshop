@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DevNXT
+	xmlns="urn:schemas-cosylab-com:DevNXT:1.0"
+	xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+	xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<macAddress description="macAddress" default_value="00:16:53:06:7E:0B" />
+</DevNXT>

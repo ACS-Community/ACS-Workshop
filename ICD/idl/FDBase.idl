@@ -1,0 +1,22 @@
+
+#ifndef FD_IDL
+#define FD_IDL
+
+#include <acscomponent.idl>
+
+#include <MARSCommon.idl>
+
+#pragma prefix "alma"
+
+module MARS
+{
+    interface FDBase : ACS::ACSComponent
+    {
+        long_seq getSensorsList        ();
+        sensor_status_struct sensorStatus        (               in long id        );
+        void resetSensor        (               in long id        );
+
+    };
+};
+#endif /* FD_IDL */
+    

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+       xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+       xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+       <!-- Failure Detection -->
+      <_ Name="FailureDetection"
+                            Code="alma.failuredetection.FailureDetectionHelper"
+                            Type="IDL:alma/MARS/FDBase:1.0"
+                            Container="javaContainer"
+                            Default="true" ImplLang="java" />
+      <!-- Operation Console -->
+      <_ Name="OC"          Code="OCimpl.OCimpl"
+                            Type="IDL:alma/MARS/OCBase:1.0"
+                            Container="pyContainer"
+                            ImplLang="py" />
+      <!-- Robot Control -->
+      <_ Name="assembly" 	    
+         Code="RCBaseImpl" 
+         Type="IDL:alma/MARS/RCBase:1.0"
+         Container="cppContainer" ImplLang="cpp" />
+      <_ Name="welding" 	    
+	 Code="RCBaseImpl" 
+	 Type="IDL:alma/MARS/RCBase:1.0"
+	 Container="cppContainer" ImplLang="cpp" />
+      <_ Name="debris" 	    
+	 Code="RCBaseImpl" 
+	 Type="IDL:alma/MARS/RCBase:1.0"
+	 Container="cppContainer" ImplLang="cpp" />
+      <_ Name="transporter" 	    
+	 Code="RCBaseImpl" 
+	 Type="IDL:alma/MARS/RCBase:1.0"
+	 Container="cppContainer" ImplLang="cpp" />
+      <!-- Sensor Control -->
+      <_ Name="SENSOR1" 	    
+         Code="SensorControl" 
+         Type="IDL:alma/MARS/SCBase:1.0"
+         Container="cppContainer" ImplLang="cpp" />
+      <_ Name="SENSOR2" 	    
+         Code="SensorControl" 
+         Type="IDL:alma/MARS/SCBase:1.0"
+         Container="cppContainer" ImplLang="cpp" />
+      <_ Name="SENSOR3" 	    
+         Code="SensorControl" 
+         Type="IDL:alma/MARS/SCBase:1.0"
+         Container="cppContainer" ImplLang="cpp" />
+      <!-- Task and Report Database -->
+      <_ Name="TRD" Code="alma.impl.TRD.TRDHelper"
+                             Type="IDL:alma/MARS/TRDBase:1.0"
+                             Container="javaContainer" ImplLang="java" />
+      <!-- Task Scheduler -->
+      <_ Name="TaskScheduler"  Code="alma.impl.TaskScheduler.TaskSchedulerHelper"
+                             Type="IDL:alma/MARS/TSBase:1.0"
+                             Container="javaContainer"
+                             ImplLang="java"/>
+      <!-- Others -->
+      <_ Name="ROBOTCONTROL" Code="Acssim.Servants.Simulator"
+                            Type="IDL:alma/ROBOTCONTROL_MODULE/RobotControl:1.0"
+                            Container="pyContainer"
+                            ImplLang="py"
+                            Default="true"/>
+      <_ Name="SensorSimulator" Code="senSim.SensorSimulator"
+                            Type="IDL:alma/SS/SensorSimulator:1.0"
+                            Container="pyContainer"
+                            ImplLang="py"
+                            Default="true"/>
+</Components>

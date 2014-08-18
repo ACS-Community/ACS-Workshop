@@ -1,0 +1,36 @@
+/* IDL for NXT component */
+
+#ifndef _NXT_IDL_
+#define _NXT_IDL_
+
+#include <baci.idl>
+#include <Types.idl>
+
+#pragma prefix "alma"
+
+/**
+ * @file NXT.idl
+ * IDL specification for the Lego control.
+ */
+
+module NXT_MODULE 
+{
+	/** @interface NXT
+	 * Defines the interface that will control de devices.
+	 */
+	interface NXT : ACS::ACSComponent {
+
+		/** Associate NXT with a DevNXT component */
+		void associate(in string componentName);
+
+		/** Set the objective for the vehicle and antenna movements */
+		void setObjective(in TYPES::Positions positions, in long legoNumber);
+
+		/** Run the vehicle routine */
+		void runVehicle();
+
+	};
+
+};
+
+#endif /* _NXT_IDL_ */

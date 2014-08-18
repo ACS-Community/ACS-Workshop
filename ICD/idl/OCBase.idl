@@ -1,0 +1,26 @@
+
+#ifndef OC_IDL
+#define OC_IDL
+
+#include <acscomponent.idl>
+
+#include <MARSCommon.idl>
+
+#pragma prefix "alma"
+
+module MARS
+{
+    interface OCBase : ACS::ACSComponent
+    {
+        void executeRAB        (               in long type        ,                in pos_struct pos        );
+        long_seq getReportsList        ();
+        report_struct getReport        (               in long iD        );
+        long_seq getSensorsList        ();
+        sensor_status_struct getSensorStatus        (               in long id        );
+        long_seq getRobotsList        ();
+        robot_status_struct getRobotStatus        (               in long id        );
+
+    };
+};
+#endif /* OC_IDL */
+    

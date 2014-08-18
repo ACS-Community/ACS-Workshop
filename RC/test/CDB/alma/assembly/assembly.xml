@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RC xmlns="urn:schemas-cosylab-com:RC:1.0"
+             xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+			 xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     robot_type="2"
+             park_x="0"
+             park_y="0"
+	     ></RC>

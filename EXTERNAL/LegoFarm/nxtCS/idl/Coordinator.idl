@@ -1,0 +1,36 @@
+/* IDL for Coordinator component */
+
+#ifndef _Coordinator_IDL_
+#define _Coordinator_IDL_
+
+#include <baci.idl>
+#include <Types.idl>
+
+#pragma prefix "alma"
+
+/**
+ * @file Coordinator.idl
+ * IDL specification for the main coordinator.
+ */
+
+module COORDINATOR_MODULE 
+{
+	/** @interface Coordinator
+	 * Defines the interface that will coordinate the system.
+	 */
+	interface Coordinator : ACS::ACSComponent {
+
+		/** Instantiate a given robot name */
+		void instantiate(in string componentName);
+
+		/** Call the setObjective of each NXT */
+		void setObjectivesCaller(in TYPES::Positions p, in string componentName);
+
+		/** Call the runVehicle of each NXT */
+		void runVehiclesCaller(in string componentName);
+
+	};
+
+};
+
+#endif /* _Coordinator_IDL_ */

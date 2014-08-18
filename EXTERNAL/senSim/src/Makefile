@@ -1,29 +1,13 @@
-
 #*******************************************************************************
-# ALMA - Atacama Large Millimiter Array
-# (c) UNSPECIFIED - FILL IN, 2009 
-# 
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-# 
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-# 
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+# PPPPPPPP
 #
-# "@(#) $Id: Makefile,v 1.3 2009/11/13 13:08:28 almamgr Exp $"
+# "@(#) $Id: Makefile,v 1.1 2009/11/08 19:23:13 almamgr Exp $"
 #
 # Makefile of ........
 #
 # who       when      what
 # --------  --------  ----------------------------------------------
-# almamgr  2009-07-22  created
+# almamgr  06/11/09  created
 #
 
 #*******************************************************************************
@@ -32,6 +16,7 @@
 # REMARKS
 #    None
 #------------------------------------------------------------------------
+
 #
 # user definable C-compilation flags
 #USER_CFLAGS = 
@@ -66,18 +51,15 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = 
 
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = 
 LIBRARIES_L     =
 
 #
-# <brief description of lllll library>
-lllll_OBJECTS   =
-
 #
 # Scripts (public and local)
 # ----------------------------
@@ -93,15 +75,14 @@ TCL_SCRIPTS_L   =
 #
 # Python stuff (public and local)
 # ----------------------------
-PY_SCRIPTS         =
+PY_SCRIPTS         = 
 PY_SCRIPTS_L       =
 
-PY_MODULES         =
-PY_MODULES_L       =
+PY_MODULES         = 
+PY_MODULES_L       = 
 
-PY_PACKAGES        =
+PY_PACKAGES        = senSim
 PY_PACKAGES_L      =
-pppppp_MODULES	   =
 
 #
 # <brief description of tttttt tcl-script>
@@ -122,37 +103,28 @@ tttlll_OBJECTS  =
 #
 # Configuration Database Files
 # ----------------------------
-CDB_SCHEMAS = SC
+CDB_SCHEMAS = 
+
 # 
 # IDL Files and flags
-#
-IDL_FILES = MARSCommon
-IDL_FILES += OCBase
-IDL_FILES += TSBase
-IDL_FILES += TRDBase
-IDL_FILES += FDBase
-IDL_FILES += SCBase
-IDL_FILES += RCBase
-         
-
+# 
+IDL_FILES = SensorSimulator
 TAO_IDLFLAGS =
 USER_IDL =
 #
 # Jarfiles and their directories
 #
-JARFILES = $(MODULE)
-#$(MODULE)_DIRS = alma
-#jjj_EXTRAS = 
+JARFILES= 
+jjj_DIRS=
+jjj_EXTRAS= 
 #
 # java sources in Jarfile on/off
-DEBUG=on
+DEBUG= 
 #
 # ACS XmlIdl generation on/off
 #
-XML_IDL=  
-
-ACSERRDEF = TaskSchedulerExceptions
-
+XML_IDL= 
+#
 # Java Component Helper Classes generation on/off
 #
 COMPONENT_HELPERS=
