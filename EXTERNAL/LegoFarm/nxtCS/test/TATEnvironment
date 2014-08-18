@@ -1,0 +1,21 @@
+#*******************************************************************************
+# ALMA - Atacama Large Millimiter Array
+#
+# "@(#) $Id: TATEnvironment,v 1.1 2009/11/09 03:01:39 almamgr Exp $"
+#
+# $Log: TATEnvironment,v $
+# Revision 1.1  2009/11/09 03:01:39  almamgr
+# Initial commit for legacy software: LegoFarm (jslopez)
+#
+#
+
+set ACS_TMP $env(PWD)/tmp
+set env(ACS_TMP) $ACS_TMP
+set env(ACS_LOG_STDOUT) 4
+set env(MACI_RECOVERY_FILE_NAME) $ACS_TMP/maciRecovery
+set env(ACS_BACI_RECOVERY_FILE) $ACS_TMP/baciRecovery
+set env(ACS_LOG_FILE) $ACS_TMP/log_cache.dat 
+
+#
+# ___oOo___
+

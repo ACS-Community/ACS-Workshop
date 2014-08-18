@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+       xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+       xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <_ Name="assembly" 	    
+         Code="RCBaseImpl" 
+         Type="IDL:alma/MARS/RCBase:1.0"
+         Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="welding" 	    
+	 Code="RCBaseImpl" 
+	 Type="IDL:alma/MARS/RCBase:1.0"
+	 Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="debris" 	    
+	 Code="RCBaseImpl" 
+	 Type="IDL:alma/MARS/RCBase:1.0"
+	 Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="transporter" 	    
+	 Code="RCBaseImpl" 
+	 Type="IDL:alma/MARS/RCBase:1.0"
+	 Container="bilboContainer" ImplLang="cpp" />
+
+      <_ Name="ROBOTCONTROL" Code="Acssim.Servants.Simulator"
+         Type="IDL:alma/ROBOTCONTROL_MODULE/RobotControl:1.0"
+         Container="pyContainer"
+         ImplLang="py"
+         Default="true"/>
+
+</Components>
+

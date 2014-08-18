@@ -1,0 +1,25 @@
+
+#ifndef RC_IDL
+#define RC_IDL
+
+#include <baci.idl>
+
+#include <MARSCommon.idl>
+
+#pragma prefix "alma"
+
+module MARS
+{
+    interface RCBase : ACS::CharacteristicComponent
+    {
+        void move        (               in pos_struct pos        );
+        void executeCommand        (               in long action        );
+        void park        ();
+        robot_status_struct status        ();
+        pos_struct position        ();
+        long robotType        ();
+
+    };
+};
+#endif /* RC_IDL */
+    

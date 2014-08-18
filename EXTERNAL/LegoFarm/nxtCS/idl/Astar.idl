@@ -1,0 +1,31 @@
+/* IDL for Astar component */
+
+#ifndef _Astar_IDL_
+#define _Astar_IDL_
+
+#include <baci.idl>
+#include <Types.idl>
+
+#pragma prefix "alma"
+
+/**
+ * @file Astar.idl
+ * IDL specification for the A* algorithm.
+ */
+
+module ASTAR_MODULE 
+{
+	/** @interface Astar
+	 * Defines the interface that will solve the A* algorithm.
+	 */
+	interface Astar : ACS::ACSComponent {
+
+		/** Solve the algorithm */
+		TYPES::Solution solveAlgorithm(in TYPES::Grid plan);
+		//TYPES::Solution solveAlgorithm();
+
+	};
+
+};
+
+#endif /* _Astar_IDL_ */

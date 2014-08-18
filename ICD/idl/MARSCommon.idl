@@ -1,0 +1,71 @@
+
+#ifndef MARS_IDL
+#define MARS_IDL
+#pragma prefix "alma"
+
+module MARS
+{
+             
+    enum robot_type {
+    
+               welding        , 
+               debris        , 
+               assembly        , 
+               transporter        
+    };
+             
+    enum action_type {
+    
+               fire        , 
+               vacuum        , 
+               piping        
+    };
+             
+    enum command_type {
+    
+               primary ,
+               firefight        
+    };
+     
+             
+    struct pos_struct {
+        long x;
+        long y;
+    };
+    typedef sequence<pos_struct> pos_struct_seq;
+             
+    struct sensor_status_struct {
+        long id;
+        long type;
+        pos_struct position;
+        boolean isEnabled;
+        boolean isAlarmActive;
+    };
+    typedef sequence<sensor_status_struct> sensor_status_struct_seq;
+             
+    struct report_struct {
+        boolean isSuccessful;
+        long id;
+        string errorMsg;
+        string rabType;
+    };
+    typedef sequence<report_struct> report_struct_seq;
+             
+    struct robot_status_struct {
+        long id;
+        long type;
+        pos_struct position;
+        boolean isOperational;
+        boolean isParked;
+    };
+    typedef sequence<robot_status_struct> robot_status_struct_seq;
+             
+    struct command_struct {
+        long robotId;
+        long actionId;
+    };
+    typedef sequence<command_struct> command_struct_seq;
+     
+     typedef sequence<long> long_seq;
+};
+#endif //MARS_IDL

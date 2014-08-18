@@ -1,0 +1,40 @@
+#ifndef _TYPES_IDL_
+#define _TYPES_IDL_
+
+#pragma prefix "alma"
+
+/**
+ * @file Types.idl
+ * IDL specification for common types that are used by the whole system
+ */
+
+module TYPES
+{
+	struct MotorState {
+		unsigned short port;
+		unsigned short power;
+		unsigned short tachoLimit;
+	};
+
+	struct SensorState {
+		unsigned short port;
+		unsigned short type;
+		unsigned short mode;
+	};
+
+	struct Positions {
+		short coord[4][4];
+
+	};
+
+	struct Solution {
+		short s[36];
+	};
+
+	struct Grid {
+		short p[6][6];
+	};
+
+};
+
+#endif /* _TYPES_IDL_ */
