@@ -1,4 +1,1 @@
-ACS-Workshop
-============
-
-ACS Workshop
+# ACS Workshop 2008 / codename: UOS

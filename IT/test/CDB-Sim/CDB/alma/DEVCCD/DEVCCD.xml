@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DevCCD
+   xmlns="urn:schemas-cosylab-com:DevCCD:1.0"
+   xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+   xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <frame/>
+   <device default_value="/dev/video0"/>
+   <red/>
+   <blue/>
+   <green/>
+   <pixelBias/>
+   <resetLevel/>
+   <exposure/>
+   <locking>true</locking>
+   <powered>false</powered>
+
+</DevCCD>

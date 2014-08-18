@@ -1,0 +1,103 @@
+#ifndef _H3E_IDL_
+#define _H3E_IDL_
+
+#include <baci.idl>
+
+#pragma prefix "alma"
+
+module H3E {
+
+   /** @interface TelescopeControl
+    * Defines the interface for controlling and monitoring a simple
+    * telescope. This model considers a "quantum" of movement defined by
+    * the calibration process for the discrete rotation sensors. The telescope
+    * can't be operated until the calibration is done. A "calibrated" status bit
+    * is kept, thus the commanded position is not going to be followed if this bit
+    * is not set. This IDL was thinked for H3E project and for a lego model, but is used for
+    * a more general purpose.
+    * Please refer to <a href="https://csrg.inf.utfsm.cl/twiki4/bin/view/ACS/HardwareEndToEndExample">
+    * CSRG H3E project Twiki site</a> for more information.
+    */
+   interface TelescopeControl : ACS::CharacteristicComponent {
+
+      /**
+       * Asynchronously sets the telescope to the specified position.
+       * If the "calibrated" status bit is set, this method returns when the telescope
+       * is at the commanded position, accepting an error defined by the calibration of
+       * the rotation sensors for each axis. If not, the telescope is not going to move
+       * and this method returns immediately.
+       * 
+       * @param altitude        desired telescope's altitude (degrees)
+       * @param azimut          desired telescope's azimut   (degrees)
+       */
+       void setTo (in double altitude, in double azimuth);
+
+
+      /**
+       * Asynchronously moves away the telescope, starting from actual position.
+       * If the "calibrated" status bit is set, this method returns when the telescope is
+       * positioned at the actual position plus the indicated values for each axis. If not,
+       * the telescope does not move and this method returns immediately.
+       * The indicated altitude and azimut offsets must be bigger than the minimal altitude
+       * and azimut steps, defined by the calibration process, or the telescope is not going
+       * to move.
+       * 
+       * @param altOffset    desired altitude offset (degrees)
+       * @param azOffset     desired azimut offset (degrees)
+       */
+      void offSet (in double altOffset, in double azOffset);
+
+
+      /**
+       * Moves the telescope to zenith position. It is the same that a "setTo(90,0)" call.
+       */
+      void zenith ();
+
+
+      /**
+       * Moves the telescope to parking position (implemmentation-dependant).
+       */
+      void park ();
+
+
+      /**
+       * Unsets the "calibrated" status bit. It is necessary to manually move the
+       * telescope (e.g. when it needs to be calibrated).
+       */
+      void setUncalibrated   ();
+
+
+      /**
+       * Starts the calibration procedure for the conversion from motor rotation
+       * to arc degrees. This procedure requires the telescope to be at zenith
+       * position due to lack of touch sensors on the Lego MindStorms kit. Don't
+       * forget to unset the "calibration" status bit when manually moving the telescope
+       * or it is going to try to return to the last commanded position.
+       */
+      void calibrateEncoders  ();
+
+
+      /** Indicates the last commanded telescope's altitude.
+       */
+      readonly attribute ACS::RWdouble commandedAltitude;   // devio, LegoCmdAltDevIO, CORBA::Double
+
+      /** Indicates the last commanded telescope's azimut.
+       */
+      readonly attribute ACS::RWdouble commandedAzimuth;   // devio, LegoCmdAzDevIO, CORBA::Double
+
+      /** Indicates the actual telescope's altitude.
+       */
+      readonly attribute ACS::ROdouble actualAltitude;   // devio, LegoAltDevIO, CORBA::Double
+
+      /** Indicates the actual telescope's azimut.
+       */
+      readonly attribute ACS::ROdouble actualAzimuth;    // devio, LegoAzDevIO, CORBA::Double
+
+      /** Indicates some telescope's status parameters
+       */
+      readonly attribute ACS::RWpattern status;    // devio, LegoStatusDevIO, ACS::pattern
+   };
+
+};
+
+#endif
