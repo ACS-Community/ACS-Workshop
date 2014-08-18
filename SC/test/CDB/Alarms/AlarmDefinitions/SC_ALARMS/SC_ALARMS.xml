@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fault-family name="SC_ALARMS" xmlns="urn:schemas-cosylab-com:acsalarm-fault-family:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <alarm-source>ALARM_SYSTEM_SOURCES</alarm-source>
+  <help-url>http://tempuri.org</help-url>
+  <contact name="Ricardo and Kyoko"/>
+  <fault-code value="1">
+    <priority>1</priority>
+    <problem-description>Vacuum</problem-description>
+  </fault-code>
+  <fault-code value="2">
+    <priority>0</priority>
+    <problem-description>Fire</problem-description>
+  </fault-code>
+  <fault-code value="3">
+    <priority>2</priority>
+    <problem-description>Piping</problem-description>
+  </fault-code>
+
+  <fault-member name="SENSOR1">
+  </fault-member>
+  <fault-member name="SENSOR2">
+  </fault-member>
+  <fault-member name="SENSOR3">
+  </fault-member>
+</fault-family>

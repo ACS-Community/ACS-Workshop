@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DevLego
+	xmlns="urn:schemas-cosylab-com:DevLego:1.0"
+	xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+	xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<status default_timer_trig="2.0"/>
+	<posAlt default_timer_trig="2.0"/>
+	<posAzm default_timer_trig="2.0"/>
+	<velAlt default_timer_trig="2.0"/>
+	<velAzm default_timer_trig="2.0"/>
+	<posX default_timer_trig="2.0"/>
+	<posY default_timer_trig="2.0"/>
+	<velX default_timer_trig="2.0"/>
+	<velY default_timer_trig="2.0"/>
+
+</DevLego>

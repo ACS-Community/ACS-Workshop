@@ -1,29 +1,13 @@
-
 #*******************************************************************************
-# ALMA - Atacama Large Millimiter Array
-# (c) UNSPECIFIED - FILL IN, 2009 
-# 
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-# 
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-# 
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+# PPPPPPPP
 #
-# "@(#) $Id: Makefile,v 1.3 2009/11/13 13:08:28 almamgr Exp $"
+# "@(#) $Id: Makefile,v 1.1 2009/11/09 03:01:39 almamgr Exp $"
 #
 # Makefile of ........
 #
 # who       when      what
 # --------  --------  ----------------------------------------------
-# almamgr  2009-07-22  created
+# almadev  08/08/07  created
 #
 
 #*******************************************************************************
@@ -32,14 +16,15 @@
 # REMARKS
 #    None
 #------------------------------------------------------------------------
+
 #
 # user definable C-compilation flags
-#USER_CFLAGS = 
+USER_CFLAGS = -D_NXT_LITTLE_ENDIAN
 
 #
 # additional include and library search paths
 #USER_INC = 
-#USER_LIB = 
+USER_LIB =
 
 #
 # MODULE CODE DESCRIPTION:
@@ -50,38 +35,29 @@
 #
 # C programs (public and local)
 # -----------------------------
-EXECUTABLES     =
+EXECUTABLES     = 
 EXECUTABLES_L   = 
-
-#
-# <brief description of xxxxx program>
-xxxxx_OBJECTS   =	
-xxxxx_LDFLAGS   =
-xxxxx_LIBS      =
-
-#
-# special compilation flags for single c sources
-#yyyyy_CFLAGS   = 
 
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = bluecomm.h  comms.h  exceptions.h  message.h  opcodes.h  usbcomm.h
 
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
-LIBRARIES_L     =
+LIBRARIES       = Lestat
+LIBRARIES_L     = 
 
 #
 # <brief description of lllll library>
-lllll_OBJECTS   =
+Lestat_OBJECTS = bluecomm usbcomm comms message exceptions opcodes
+Lestat_LIBS    = usb bluetooth
 
 #
 # Scripts (public and local)
 # ----------------------------
-SCRIPTS         =
+SCRIPTS         = 
 SCRIPTS_L       =
 
 #
@@ -122,40 +98,38 @@ tttlll_OBJECTS  =
 #
 # Configuration Database Files
 # ----------------------------
-CDB_SCHEMAS = SC
+CDB_SCHEMAS = 
+
 # 
 # IDL Files and flags
-#
-IDL_FILES = MARSCommon
-IDL_FILES += OCBase
-IDL_FILES += TSBase
-IDL_FILES += TRDBase
-IDL_FILES += FDBase
-IDL_FILES += SCBase
-IDL_FILES += RCBase
-         
-
-TAO_IDLFLAGS =
+# 
+IDL_FILES = 
+IDL_TAO_FLAGS =
 USER_IDL =
+
 #
+# Error definition files for exceptions and completions
+# -----------------------------------------------------
+ACSERRDEF = 
+
 # Jarfiles and their directories
 #
-JARFILES = $(MODULE)
-#$(MODULE)_DIRS = alma
-#jjj_EXTRAS = 
+JARFILES= 
+xxxxx_DIRS= 
+
+USER_JFLAGS=
+
 #
 # java sources in Jarfile on/off
 DEBUG=on
 #
 # ACS XmlIdl generation on/off
 #
-XML_IDL=  
-
-ACSERRDEF = TaskSchedulerExceptions
-
+XML_IDL= 
+#
 # Java Component Helper Classes generation on/off
 #
-COMPONENT_HELPERS=
+COMPONENT_HELPERS=on
 #
 # Java Entity Classes generation on/off
 #

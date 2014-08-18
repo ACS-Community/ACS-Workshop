@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+	xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+	xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<_ Name="LEGONXT_ALPHA"
+	Code="LegoNXTImpl"
+	Type="IDL:alma/DEVNXT_MODULE/DevNXT:1.0"
+	Default="true"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="LEGONXT_BETA"
+	Code="LegoNXTImpl"
+	Type="IDL:alma/DEVNXT_MODULE/DevNXT:1.0"
+	Default="true"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="LEGONXT_GAMMA"
+	Code="LegoNXTImpl"
+	Type="IDL:alma/DEVNXT_MODULE/DevNXT:1.0"
+	Default="true"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="LEGONXT_DELTA"
+	Code="LegoNXTImpl"
+	Type="IDL:alma/DEVNXT_MODULE/DevNXT:1.0"
+	Default="true"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="LEGONXT_EPSILON"
+	Code="LegoNXTImpl"
+	Type="IDL:alma/DEVNXT_MODULE/DevNXT:1.0"
+	Default="true"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="ALPHA"
+	Code="NXTImpl"
+	Type="IDL:alma/NXT_MODULE/NXT:1.0"
+	Default="true"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="BETA"
+	Code="NXTImpl"
+	Type="IDL:alma/NXT_MODULE/NXT:1.0"
+	Default="false"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="GAMMA"
+	Code="NXTImpl"
+	Type="IDL:alma/NXT_MODULE/NXT:1.0"
+	Default="false"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="DELTA"
+	Code="NXTImpl"
+	Type="IDL:alma/NXT_MODULE/NXT:1.0"
+	Default="false"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="EPSILON"
+	Code="NXTImpl"
+	Type="IDL:alma/NXT_MODULE/NXT:1.0"
+	Default="false"
+	ImplLang="cpp"
+	Container="legofarmContainerCpp"/>
+
+	<_ Name="ASTAR_SOLVER"
+	Code="alma.ASTAR_MODULE.AstarImpl.AstarHelper"
+	Type="IDL:alma/ASTAR_MODULE/Astar:1.0"
+	Default="true"
+	ImplLang="java"
+	Container="legofarmContainerJava"/>
+
+	<_ Name="LEGOFARM"
+	Code="alma.COORDINATOR_MODULE.CoordinatorImpl.CoordinatorHelper"
+	Type="IDL:alma/COORDINATOR_MODULE/Coordinator:1.0"
+	Default="true"
+	ImplLang="java"
+	Container="legofarmContainerJava"/>
+
+	<_ Name="ROBOTCONTROL"
+	Code="RobotControl.RobotControl"
+	Type="IDL:alma/ROBOTCONTROL_MODULE/RobotControl:1.0"
+	Default="true"
+	ImplLang="py"
+	Container="legofarmContainerPy"/>
+
+</Components>

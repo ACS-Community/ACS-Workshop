@@ -1,0 +1,29 @@
+/* IDL for RobotControl component */
+
+#ifndef _RobotControl_IDL_
+#define _RobotControl_IDL_
+
+#include <baci.idl>
+#include <Types.idl>
+
+#pragma prefix "alma"
+
+/**
+ * @file RobotControl.idl
+ * IDL specification for the legacy controller.
+ */
+
+module ROBOTCONTROL_MODULE 
+{
+	/** @interface RobotControl
+	 * Defines the interface that will interacts with the legacy software.
+	 */
+	interface RobotControl : ACS::ACSComponent {
+
+		/** Moves a given robot to x,y */
+		void move(in string robotName, in short x, in short y);
+	};
+
+};
+
+#endif /* _RobotControl_IDL_ */

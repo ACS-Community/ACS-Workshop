@@ -1,0 +1,23 @@
+
+#ifndef TS_IDL
+#define TS_IDL
+
+#include <acscomponent.idl>
+#include <MARSCommon.idl>
+#include <TaskSchedulerExceptions.idl>
+
+#pragma prefix "alma"
+
+module MARS
+{
+    interface TSBase : ACS::ACSComponent
+    {
+        void runManualRAB        (               in long type        ,                in pos_struct pos        );
+        void runAutoRAB        (               in long type        ,                in pos_struct pos, in long sensorId        );
+        long_seq getRobotsList        ();
+        robot_status_struct getRobotStatus        (               in long id        ) raises (TaskSchedulerExceptions::RobotNotFoundEx);
+
+    };
+};
+#endif /* TS_IDL */
+    

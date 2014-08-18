@@ -1,0 +1,34 @@
+
+#ifndef SC_IDL
+#define SC_IDL
+
+//#include <acscomponent.idl>
+#include <baci.idl>
+
+#include <MARSCommon.idl>
+
+#pragma prefix "alma"
+
+module MARS
+{
+    interface SCBase :ACS::CharacteristicComponent
+    {
+        void reset        ();
+        sensor_status_struct status        ();
+        pos_struct position        ();
+        long sensorType        ();
+
+	const string alarmFamily = "SC_ALARMS";
+	const string alarmMemberSensor1 = "SENSOR1";
+	const string alarmMemberSensor2 = "SENSOR2";
+	const string alarmMemberSensor3 = "SENSOR3";
+	const long alarmSensor1 = 1;
+	const long alarmSensor2 = 2;
+	const long alarmSensor3 = 3;
+	const short alarmTypeVacuum = 1;
+	const short alarmTypeFire = 2;
+	const short alarmTypePiping = 3;
+    };
+};
+#endif /* SC_IDL */
+    

@@ -1,0 +1,43 @@
+/* IDL for DevNXT component */
+
+#ifndef _DEV_NXT_IDL_
+#define _DEV_NXT_IDL_
+
+#include <baci.idl>
+#include <Types.idl>
+
+#pragma prefix "alma"
+
+/**
+ * @file DevNXT.idl
+ * IDL specification for the DevNXT module interface. This interface is the
+ * lego device abstraction.
+ */
+
+module DEVNXT_MODULE 
+{
+	/** @interface DevNXT
+	 * Defines the interface that will be the one in charge of the
+	 * communication with the hardware itself.
+	 */
+	interface DevNXT : ACS::CharacteristicComponent {
+
+		/** Holds the mac address that should be accessed */
+		readonly attribute ACS::ROstring macAddress;
+
+		/** Set output state of the motors */
+		void setMotorState(in TYPES::MotorState mState);
+
+		/** Get MotorState of a given motor */
+		TYPES::MotorState getMotorState(in long port);
+
+		/** Set the type and mode of the sensor and return its value */
+		void setSensorState(in TYPES::SensorState sState);
+
+		/** Get rawValue of a given sensor */
+		long getSensorState(in long port);
+	};
+
+};
+
+#endif /* _DEV_NXT_IDL_ */

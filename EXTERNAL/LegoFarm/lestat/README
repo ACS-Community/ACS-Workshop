@@ -1,0 +1,22 @@
+Lestat: Lego STandard AbsTraction layer
+
+Requirements:
+Anything higher than this should work:
+    * bluez-libs-3.20 for bluetooth access
+    * libusb-0.1.12 for usb access
+
+Installation and use:
+    * Untar source package
+    * In the source directory, run "scons"
+    * Examples are included in the source files "main_*"
+
+For USB:
+    * Create file at /etc/udev/rules.d/70-lego.rules, containing one line:
+BUS=="usb", SYSFS{idVendor}=="0694", GROUP="lego", MODE="0666"
+
+
+For Bluetooth;
+    * Run "hcitool dev" to check if you have a bluetooth adapter cofigured
+    * Run "hcitool scan" to check if you can locate the NXT brick(make sure bluetooth is enabled in the brick)
+
+Send bug reports and feedback to Nicolas A. Barriga <nbarriga@inf.utfsm.cl>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="urn:schemas-cosylab-com:DevLego:1.0"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="urn:schemas-cosylab-com:DevLego:1.0"
+	xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+	xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:import namespace="urn:schemas-cosylab-com:CDB:1.0" schemaLocation="CDB.xsd"/>
+<xs:import namespace="urn:schemas-cosylab-com:BACI:1.0" schemaLocation="BACI.xsd"/>
+
+<xs:complexType name="DevLego">
+	<xs:sequence>
+
+
+		<xs:element name="status">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:RWpattern">
+						<xs:attribute name="description" type="xs:string" use="optional" default="status"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="posAlt">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:ROdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="posAlt"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="posAzm">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:ROdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="posAzm"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="velAlt">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:RWdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="velAlt"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="velAzm">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:RWdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="velAzm"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="posX">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:ROdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="posX"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="posY">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:ROdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="posY"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="velX">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:RWdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="velX"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="velY">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:RWdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="velY"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+ 
+
+	</xs:sequence>
+
+	<xs:attribute name="id" type="xs:int" use="optional" default="0"/>
+</xs:complexType>
+<xs:element name="DevLego" type="DevLego"/>
+</xs:schema>
