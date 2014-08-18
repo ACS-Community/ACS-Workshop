@@ -1,0 +1,7 @@
+SOURCE TATEnvironment
+
+PROLOGUE ./testExampleTATPrologue
+
+1 javaUnitTest "acsStartJava -endorsed  alma.acs.testsupport.tat.TATJUnitRunner alma.SchedulerIdlTest"
+
+EPILOGUE ./testExampleTATEpilogue

@@ -1,0 +1,199 @@
+#   Autoconf -*-shell-script-*- for CIPE
+#
+#   Copyright 2002 Doug Hunt <dhunt@ucar.edu>
+#   Copyright 1999 Olaf Titz <olaf@bigred.inka.de>
+#
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License
+#   as published by the Free Software Foundation; either version
+#   2 of the License, or (at your option) any later version.
+#
+dnl
+dnl Process this file with autoconf to produce a configure script.
+dnl
+AC_PREREQ(2.13)
+AC_INIT(legousbtower.c)
+dnl AC_CONFIG_HEADER(Makefile.in)
+AC_SUBST(VERSION)
+VERSION=0.54
+AC_SUBST(PVERSION)
+
+AC_PROG_CC
+test "$GCC" || AC_ERROR(You would not have much luck compiling kernel code with non-gcc...)
+
+AC_PROG_CPP
+AC_CHECK_PROGS(MAKE, gmake make, :)
+$MAKE -v 2>&1 | grep -iqs 'GNU Make' || AC_ERROR(This compilation needs GNU make)
+
+dnl  --- Find the Linux kernel, at least the headers ---
+
+AC_MSG_CHECKING(for kernel include tree)
+AC_SUBST(KSRC)
+AC_ARG_WITH(linux,
+[  --with-linux=DIR        Path to Linux source tree], KSRC=$withval)
+AC_SUBST(KINC)
+AC_ARG_WITH(linux-include,
+[  --with-linux-include=DIR
+                          Path to Linux include tree], KINC=$withval)
+dnl use default only if nothing specified
+UNAMER=`uname -r`
+if ! test "$KSRC$KINC" ; then
+  if test -d "/usr/src/linux" ; then
+    KSRC=/usr/src/linux
+  elif test -d "/usr/src/linux-$UNAMER" ; then
+    KSRC=/usr/src/linux-$UNAMER
+  fi
+fi
+if test -z "$KINC" -o ! -d "$KINC" ; then
+  if test -d "$KSRC" -a -f $KSRC/include/linux/autoconf.h ; then
+    KINC=$KSRC/include
+  fi
+fi
+if test -z "$KSRC" -o ! -d "$KSRC" ; then
+  if test -f $KINC/include/linux/autoconf.h; then
+    KINC=$KINC/include; dnl test for obvious mis-specification
+  elif test -f $KINC/linux/autoconf.h; then
+    KSRC=;
+  fi
+fi
+if ! test -f $KINC/linux/version.h ; then
+  AC_MSG_ERROR(no suitable configured kernel include tree found)
+fi
+dnl attempt to follow symlinks
+if test -x /bin/pwd ; then
+  test "$KSRC" && KSRC=`cd $KSRC; /bin/pwd`
+  KINC=`cd $KINC; /bin/pwd`
+fi
+AC_MSG_RESULT($KINC)
+
+AC_MSG_CHECKING(for kernel compile parameters)
+if test -z "$KSRC" -o ! -f "$KSRC/Makefile" ; then
+  AC_MSG_WARN(no Makefile - using default flags)
+else
+  cp $KSRC/Makefile conftest.make
+  echo -e "conftest.CC:" >>conftest.make
+  echo -e "\t@echo \$(CC)" >>conftest.make
+  echo -e "conftest.CFLAGS:" >>conftest.make
+  echo -e "\t@echo \$(CFLAGS) \$(MODFLAGS)" >>conftest.make
+  here=`pwd`
+  NKCC=`cd $KSRC; make -f $here/conftest.make conftest.CC`
+  NKCFLAGS=`cd $KSRC; make -f $here/conftest.make conftest.CFLAGS`
+  dnl some sanity checking
+  echo "$NKCC $NKCFLAGS" | grep -qse '-I[[^ ]]*/include' || NKCC=""
+  if test -z "$NKCC" ; then
+    AC_MSG_WARN(not found - using default flags)
+  else
+    AC_MSG_RESULT($NKCC $NKCFLAGS)
+  fi
+  rm -f conftest.make
+fi
+
+dnl cancel -O arguments set by autoconf
+if ! test "$ac_test_CFLAGS" = set; then
+  CFLAGS=`echo $CFLAGS | sed 's,-O[[0-9]]*,,g'`
+fi
+CFLAGS="-Wall -Wstrict-prototypes -fomit-frame-pointer -fno-strength-reduce $CFLAGS"
+dnl We separate compilation parameters in kernel and user part
+AC_SUBST(KCPPFLAGS)     KCPPFLAGS="$CPPFLAGS"
+AC_SUBST(KCFLAGS)       KCFLAGS="-pipe -O3 -funroll-loops $CFLAGS"
+AC_SUBST(KDEFS)         KDEFS="-D__KERNEL__ -DMODULE $DEFS"
+AC_SUBST(KLDFLAGS)      KLDFLAGS="-r -S"
+dnl For user part. no-inline because egcs plays havoc with logs() in ciped
+AC_SUBST(UCPPFLAGS)     UCPPFLAGS="$CPPFLAGS"
+AC_SUBST(UCFLAGS)       UCFLAGS="-pipe -O3 -fno-inline-functions $CFLAGS"
+AC_SUBST(UDEFS)         UDEFS="$DEFS"
+AC_SUBST(ULDFLAGS)      ULDFLAGS="$LDFLAGS"
+AC_SUBST(ULIBS)         ULIBS="$LIBS"
+
+AC_MSG_CHECKING(for architecture)
+ARCH=`uname -m | sed -e 's/i.86/i386/;s/sun4u/sparc64/;s/arm.*/arm/;s/sa110/arm/'`
+AC_MSG_RESULT($ARCH)
+
+dnl  --- Get Linux kernel version and compile parameters ---
+
+oldcppflags="$CPPFLAGS"
+CPPFLAGS="-I$KINC $CPPFLAGS"
+
+AC_SUBST(KVERS)
+AC_MSG_CHECKING(for kernel version)
+AX_MACRO_STR(UTS_RELEASE, linux/version.h)
+KVERS=$ax_result
+AC_MSG_RESULT($KVERS)
+case "$KVERS" in
+2.[[01234]].*) ;;
+*) AC_MSG_ERROR(Unsupported kernel version)
+esac
+kcomp=
+if test -f $KINC/linux/compile.h; then
+  AX_MACRO_STR(LINUX_COMPILER, linux/compile.h)
+  kcomp=$ax_result
+fi
+if test -z "$kcomp" ; then
+  AC_MSG_WARN(could not find kernel compiler version)
+else
+  tcomp=`${NKCC:-$CC} -v 2>&1 | tail -1`
+  if ! test "$kcomp" = "$tcomp" ; then
+    AC_MSG_WARN(Compiler version mismatch - try using $kcomp)
+  fi
+fi
+
+AC_MSG_CHECKING(for SMP)
+smp=0
+case "$KVERS" in
+2.[[01]].*)
+  AX_EGREP([^ *SMP *= *1], $KSRC/Makefile, smp=1)
+  ;;
+*)
+  AC_EGREP_CPP(yes, [
+	#include <linux/autoconf.h>
+	#ifdef CONFIG_SMP
+	 yes
+	#endif
+  ], smp=1)
+  ;;
+esac
+test "$smp" = 1 && AC_DEFINE(__SMP__)
+AX_MSG_RESULT_YN($smp)
+
+AC_SUBST(KCC)
+CPPFLAGS="$oldcppflags"
+dnl make sure the config includes come first
+UCPPFLAGS="-I$KINC -I. -Iinclude $UCPPFLAGS"
+
+if test "$NKCC" ; then
+
+KCC="$NKCC"
+KCFLAGS="$NKCFLAGS"
+KDEFS="-DKCC_BUILD"
+KCPPFLAGS="-I. -Iinclude $KCPPFLAGS"
+
+else dnl NKCC not set
+
+KCC="$CC"
+KCPPFLAGS="-I$KINC -I. -Iinclude $KCPPFLAGS"
+
+dnl On the side of caution: the kernel headers contain inline funcs and
+dnl we dont know for sure if they are alias-safe
+AX_GCC_NOALIAS
+test "$ax_cv_prog_gcc_noalias" = "yes" && KCFLAGS="$KCFLAGS -fno-strict-aliasing"
+
+AC_MSG_CHECKING(for versioned symbols)
+mv=0
+AC_EGREP_CPP(yes, [
+	#include <linux/autoconf.h>
+	#ifdef CONFIG_MODVERSIONS
+	 yes
+	#endif
+], mv=1)
+AX_MSG_RESULT_YN($mv)
+test "$mv" = 1 && AC_DEFINE(MODVERSIONS)
+
+fi
+
+dnl find RANLIB
+AC_PROG_RANLIB
+
+dnl check for AR
+AC_PATH_PROG(AR,ar)
+
+AC_OUTPUT(Makefile:Makefile.in)

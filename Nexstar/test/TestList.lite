@@ -1,0 +1,7 @@
+SOURCE TATEnvironment
+
+PROLOGUE NexstarTATPrologue
+
+1 cppUnitTest "TelescopecppUnitTest"
+
+EPILOGUE testExampleTATEpilogue

@@ -1,0 +1,5 @@
+1 -  --endorsed -- alma.acs.testsupport.tat.TATJUnitRunner alma.DATABASE_MODULE.DataBaseTest
+1 - ----------T--:--:--.--- INFO [acsStartJava] Starting Java application: alma.acs.testsupport.tat.TATJUnitRunner alma.DATABASE_MODULE.DataBaseTest
+1 - ----------T--:--:--.--- INFO [acsStartJava] Using endorsed jar files in: -Djava.endorsed.dirs=/diska/home/almadev/introot/lib/endorsed:/alma/ACS-9.0/ACSSW/lib/endorsed:
+1 - TEST_RUNNER_REPORT success/total: 3/3
+1 - JUnit test run succeeded

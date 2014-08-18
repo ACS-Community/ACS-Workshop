@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/Console.jar"/>
+	<classpathentry kind="lib" path="lib/DataBase.jar"/>
+	<classpathentry kind="lib" path="lib/DevCCD.jar"/>
+	<classpathentry kind="lib" path="lib/Instrument.jar"/>
+	<classpathentry kind="lib" path="lib/Scheduler.jar"/>
+	<classpathentry kind="lib" path="lib/SORTErr.jar"/>
+	<classpathentry kind="lib" path="lib/Telescope.jar"/>
+	<classpathentry kind="lib" path="lib/Types.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

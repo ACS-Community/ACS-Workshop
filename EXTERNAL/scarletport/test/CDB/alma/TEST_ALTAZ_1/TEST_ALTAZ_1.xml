@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   - First attempt at a Configuration Database Entry for an altaz mount
+   -
+   - Author: Nicolas Barriga
+   -
+   - History:
+   -   2005-08-01  NB  Created
+-->
+<AltAz xmlns="urn:schemas-cosylab-com:AltAz:1.0" 
+	xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+	xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+	<refAlt	description="Reference Altitude"
+		units="degrees"
+		graph_min="0"
+		graph_max="90"
+		default_value="0"
+		min_value="0"
+		max_value="90"
+		/>
+	<refAz 	description="Reference Azimuth"
+		units="degrees"
+		graph_min="0"
+		graph_max="360"
+		default_value="0"		
+		min_value="0"
+		max_value="360"
+		/>
+	<realAlt description="Actual Altitude"
+		units="degrees"
+		graph_min="0"
+		graph_max="90"
+		default_value="0"
+		/>
+	<realAz description="Actual Azimuth"
+		units="degrees"
+		graph_min="0"
+		graph_max="360"
+		default_value="0"
+		/>
+
+</AltAz>
+

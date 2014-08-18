@@ -1,0 +1,235 @@
+/*
+ * CSRG - UTFSM Computer Systems Research Group
+ * ACS-UTFSM Team
+ *
+ * NAME
+ *   LegoMountProg5.nqc - Antenna Control Program. 
+ *
+ * SYNOPSIS
+ *   nqc -TRCX2 -d -pgm 5 LegoMountProg5.nqc
+ *
+ * BIG TODO: Comment and Improve this control loop
+ */
+
+/* Include symbols shared between the RCX and the IOC. */
+#include "../include/SCTdefs.h"
+
+#define ELEVATION_CAL_OFFSET 100
+#define AZIMUTH_CAL_OFFSET 100
+#define ELEV_UP 1
+#define ELEV_DOWN 2
+#define ELEV_STOP 0
+#define ENC_ELEV_RANGE 5
+#define AZIM_CLOCK 1
+#define AZIM_COCLOCK 2
+#define AZIM_STOP 0
+#define ENC_AZIM_RANGE 5
+
+/* Reserve the space for RCX counters, shall we ever need them. */
+#pragma reserve 0 1 2
+
+/* Target azimuth. */
+#pragma reserve 4
+#define target_azimuth (@4)
+
+/* Actual azimuth. */
+#pragma reserve 5
+#define real_azimuth (@5)
+
+/* Target elevation. */
+#pragma reserve 6
+#define target_elevation (@6)
+
+/* Actual elevation. */
+#pragma reserve 7
+#define real_elevation (@7)
+
+/* Azimuth speed */
+// DEPRECATED!
+#pragma reserve 8
+#define elevation_state (@8)
+
+/* Azimuth speed in right direction. */
+// DEPRECATED!
+#pragma reserve 9
+#define azimuth_state (@9)
+
+/*
+ * Control loop. Turns motors on or off in appropriate directions to guide
+ * the mount from actual to target position.
+ */
+task main()
+{  
+   int prev_elev_target=0;
+   int prev_azim_target=0;
+   int enc_elev_target;
+   int enc_azim_target;
+   int enc_elev_factor;
+   int enc_azim_factor;
+   int sensor_back;
+   int elevation_count;
+   int azimuth_count;
+   /* Touch sensor for elevation detection. */
+
+   SetPower(MOTOR_ELEVATION,5);
+
+   /* Light sensor for position detection. */
+
+   SetSensor(SENSOR_1, SENSOR_TOUCH);
+
+   SetSensor(SENSOR_2, SENSOR_ROTATION);
+   // Azimuth Rotation 
+   SetSensor(SENSOR_3, SENSOR_ROTATION);
+
+   // Initialize target position. 
+   target_elevation = 0;
+   target_azimuth   = 0;
+   elevation_count  = 0;
+
+   SetOutput(MOTOR_ELEVATION, OUT_OFF);
+   ClearSensor(SENSOR_2);
+
+   SetDirection(MOTOR_ELEVATION, OUT_REV);
+   SetOutput(MOTOR_ELEVATION, OUT_ON);
+   sensor_back=SENSOR_2;
+   Wait(5*RCX_WAIT_PERIOD);
+   
+   while(SENSOR_2 != sensor_back) {
+      elevation_count=sensor_back;
+      sensor_back=SENSOR_2;
+      SetUserDisplay(elevation_count, 2);
+      Wait(2*RCX_WAIT_PERIOD);
+   }
+   SetOutput(MOTOR_ELEVATION, OUT_OFF);
+   elevation_count=-elevation_count;
+   enc_elev_factor=(elevation_count*100)/90;
+   
+   /* End Elevation Calibration */
+   
+   PlaySound(0);
+   
+   /* AZIMUTH */
+   SetPower(MOTOR_AZIMUTH,5);
+   ClearSensor(SENSOR_3);
+
+   SetDirection(MOTOR_AZIMUTH, OUT_FWD);
+   SetOutput(MOTOR_AZIMUTH, OUT_ON);
+   while(SENSOR_1 != 1 ) {
+      Wait(RCX_WAIT_PERIOD);
+   }
+   
+   PlaySound(0);
+   /* Start 360 Degree Calibration */ 
+   ClearSensor(SENSOR_3);
+   SetOutput(MOTOR_AZIMUTH, OUT_OFF);
+   Wait(10);
+
+   SetDirection(MOTOR_AZIMUTH, OUT_REV);
+   SetOutput(MOTOR_AZIMUTH, OUT_ON);
+   Wait(AZIMUTH_CAL_OFFSET*RCX_WAIT_PERIOD);
+
+   while(SENSOR_1 != 1) {
+   SetUserDisplay(SENSOR_3, 2);
+      Wait(RCX_WAIT_PERIOD);
+   }
+   azimuth_count=SENSOR_3;
+   enc_azim_factor=(azimuth_count*10)/360;
+   SetUserDisplay(azimuth_count, 2);
+   SetOutput(MOTOR_AZIMUTH, OUT_OFF);
+   
+   PlaySound(0);
+   /* The actual position. */
+   real_elevation = 0;
+   real_azimuth   = 0;
+   target_azimuth   = 90;
+   target_elevation = 45;
+   ClearSensor(SENSOR_3);
+   ClearSensor(SENSOR_2);
+   elevation_state=ELEV_STOP;
+   azimuth_state=AZIM_STOP;
+   /* Main loop. */
+   int sensor_3;
+   while(true) {
+      if (target_elevation >ELEVATION_MAX) 
+         target_elevation=ELEVATION_MAX;
+      if (target_elevation <ELEVATION_MIN) 
+         target_elevation=ELEVATION_MIN;
+      target_azimuth %= AZIMUTH_MAX;
+      real_elevation=(SENSOR_2*100)/enc_elev_factor;
+
+      if (prev_elev_target != target_elevation)
+      {
+         enc_elev_target=(enc_elev_factor*target_elevation)/100;
+      }
+      prev_elev_target=target_elevation;
+
+      if (SENSOR_2 < enc_elev_target - ENC_ELEV_RANGE){
+         if (elevation_state != ELEV_UP){
+            SetDirection(MOTOR_ELEVATION, OUT_REV);
+            if (abs(enc_elev_target - SENSOR_2) < 20) SetPower(MOTOR_ELEVATION,3);
+            else SetPower(MOTOR_ELEVATION,7);
+            SetOutput(MOTOR_ELEVATION, OUT_ON);
+            target_elevation = real_elevation;
+            elevation_state=ELEV_UP;
+         }
+      } else if (SENSOR_2 > enc_elev_target + ENC_ELEV_RANGE){
+         if (elevation_state != ELEV_DOWN){
+            SetDirection(MOTOR_ELEVATION, OUT_FWD);
+            if (abs(enc_elev_target - SENSOR_2) < 20) SetPower(MOTOR_ELEVATION,3);
+            else SetPower(MOTOR_ELEVATION,7);
+            SetOutput(MOTOR_ELEVATION, OUT_ON);
+            target_elevation = real_elevation;
+            elevation_state=ELEV_DOWN;
+         }
+      } else {
+         if (elevation_state!=ELEV_STOP)
+            SetOutput(MOTOR_ELEVATION, OUT_OFF);
+         elevation_state=ELEV_STOP;
+      }
+      
+      if (SENSOR_1 == 1) ClearSensor(SENSOR_3);
+
+      if (SENSOR_3 < 0) 
+         sensor_3=azimuth_count + SENSOR_3%azimuth_count;
+      else
+         sensor_3=SENSOR_3%azimuth_count;
+
+      real_azimuth=(sensor_3*10)/enc_azim_factor;
+
+      if (prev_azim_target != target_azimuth)
+      {
+         enc_azim_target=(enc_azim_factor*target_azimuth)/10;
+         SetPower(MOTOR_AZIMUTH,5);
+      }
+
+      prev_azim_target=target_azimuth;
+      
+      if (sensor_3 < enc_azim_target - ENC_AZIM_RANGE){
+         if (azimuth_state != AZIM_CLOCK){
+            SetDirection(MOTOR_AZIMUTH, OUT_REV);
+            SetOutput(MOTOR_AZIMUTH, OUT_ON);
+            azimuth_state=AZIM_CLOCK;
+         }
+      }
+      else if (sensor_3 > enc_azim_target + ENC_AZIM_RANGE){
+         if (azimuth_state != AZIM_COCLOCK){
+            SetDirection(MOTOR_AZIMUTH, OUT_FWD);
+            SetOutput(MOTOR_AZIMUTH, OUT_ON);
+            azimuth_state=AZIM_COCLOCK;
+         }
+      }
+      else
+      {
+         if (azimuth_state!=AZIM_STOP)
+            SetOutput(MOTOR_AZIMUTH, OUT_OFF);
+         azimuth_state=AZIM_STOP;
+      }
+      sensor_back=SENSOR_2;
+      SetUserDisplay(real_azimuth, 2);
+
+      Wait(RCX_WAIT_PERIOD);
+   }
+}
+
+/* ___oOo___ */
+

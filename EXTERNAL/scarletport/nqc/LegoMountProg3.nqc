@@ -1,0 +1,29 @@
+/*
+ * CSRG - UTFSM Computer Systems Research Group
+ * ACS-UTFSM Team
+ *
+ * NAME
+ *   LegoMountProg3.nqc - Support Program that moves the Elevation motor up.
+ *
+ * SYNOPSIS
+ *   nqc -TRCX2 -d -pgm 3 LegoMountProg3.nqc
+ *
+ */
+
+/* Include symbols shared between the RCX and the IOC. */
+#include "../include/SCTdefs.h"
+
+/* Reserve the space for RCX counters, shall we ever need them. */
+#pragma reserve 0 1 2
+
+task main()
+{
+   SetDirection(MOTOR_ELEVATION, OUT_FWD);
+   SetOutput(MOTOR_ELEVATION, OUT_ON);
+         
+   while(true) {
+      Wait(RCX_WAIT_PERIOD);
+   }
+}
+   /* ___oOo___ */
+
