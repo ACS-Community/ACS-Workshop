@@ -2,38 +2,48 @@
 #define _SCHEDULER_IDL_
 
 /*******************************************************************************
-*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
-*    
+*    ALMA - Atacama Large Millimiter Array
+*
+*    (c) European Southern Observatory, 2002
+*    Copyright by ESO (in the framework of the ALMA collaboration)
+*    and Cosylab 2002, All rights reserved
+*
 *    This library is free software; you can redistribute it and/or
 *    modify it under the terms of the GNU Lesser General Public
 *    License as published by the Free Software Foundation; either
 *    version 2.1 of the License, or (at your option) any later version.
-*    
+*
 *    This library is distributed in the hope that it will be useful,
 *    but WITHOUT ANY WARRANTY; without even the implied warranty of
 *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 *    Lesser General Public License for more details.
-*    
+*
 *    You should have received a copy of the GNU Lesser General Public
 *    License along with this library; if not, write to the Free Software
 *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+*
+*
+* "@(#) $Id: Scheduler.idl,v 1.4 2010-11-18 20:33:22 scheduler Exp $"
+*
+* who       when      what
+* --------  --------  ----------------------------------------------
 */
 
 #include <acscomponent.idl>
-#include "SYSTEMErr.idl"
+#include "SORTErr.idl"
 
-#pragma prefix "acsws"
+#pragma prefix "alma"
 
 
 /** 
  * @file Scheduler.idl
- * SYSTEMErr Scheduler IDL file
+ * SORTErr Scheduler IDL file
  */
 
 module SCHEDULER_MODULE
 {
     /** @interface Scheduler
-     *  This is a simple scheduler for the SYSTEMErr
+     *  This is a simple scheduler for the SORTErr
      */
     interface Scheduler : ACS::ACSComponent
 	{
@@ -45,7 +55,7 @@ module SCHEDULER_MODULE
 	 * @return None
 	 */
 	void start ()
-		raises(SYSTEMErr::SchedulerAlreadyRunningEx);
+		raises(SORTErr::SchedulerAlreadyRunningEx);
 
 	/**
 	 * Stops the scheduler.
@@ -58,7 +68,7 @@ module SCHEDULER_MODULE
 	 * @return None
 	 */
 	void stop ()
-		raises(SYSTEMErr::SchedulerAlreadyStoppedEx);
+		raises(SORTErr::SchedulerAlreadyStoppedEx);
 
 	/**
 	 * Returns the pid of the proposal currently under execution
@@ -67,7 +77,7 @@ module SCHEDULER_MODULE
 	 * @retun Proposal ID
 	 */
 	long proposalUnderExecution()
-		raises(SYSTEMErr::NoProposalExecutingEx);
+		raises(SORTErr::NoProposalExecutingEx);
 	};    
 
 };
