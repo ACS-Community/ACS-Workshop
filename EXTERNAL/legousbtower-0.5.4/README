@@ -1,0 +1,46 @@
+Greetings!  This package is one part of the solution to allowing
+Linux users to use the new Lego RCX v 2.0 with the USB tower.
+This portion is a Linux kernel module which communicates with
+a USB device (/dev/usb/lego0) that allows user programs access
+to the lego USB tower.
+
+Follow the instructions below to install the Linux kernel module.
+
+The driver currently is suppored in Lejos http://www.lejos.org and a 
+patched version of nqc (Not Quite C, which can be
+found at the legoUSB source forge site http://legousb.sourceforge.net)
+can be installed to communicate with the USB device.
+
+This kernel module should work with kernel versions 2.4 or higher.
+
+This driver has been provided as a courtesy by the LegoUSB DevTeam
+<legousb-devteam@lists.sourceforge.net>.
+
+Updated releases of Linux Lego USB drivers are always available from
+http://legousb.sourceforge.net
+
+-+- INSTALLATION -+-
+
+SUGGESTION: You may wish to plug your tower in and tail -f
+/var/log/messages in a seperate window to watch the tower get
+initialised when you do the install.
+
+------------------------------------------------------------------
+Important!  Unplug the lego USB tower before installing the module.
+After 'make install' is successfully run, then plug in the tower.
+Note that 'make install' must be done as root.
+------------------------------------------------------------------
+
+* Type './configure'
+* Type 'make'
+* Type 'su'
+* Type 'make install'
+
+* Find a program with LegoUSB support and test it out.  Lejos and NQC are
+supported; a patch for NQC is available from our website:
+
+http://legousb.sourceforge.net
+
+
+- The LegoUSB DevTeam <legousb-devteam@lists.sourceforge.net>
+

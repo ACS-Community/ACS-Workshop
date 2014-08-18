@@ -1,0 +1,7 @@
+To compile the application, write:
+
+	make
+
+To run it:
+
+	make run

@@ -1,0 +1,5 @@
+Application time: 0.5712410 seconds
+0.626: [GC 0.626: [DefNew
+Desired survivor size 819200 bytes, new threshold 1 (max 4)
+- age   1:     936928 bytes,     936928 total
+: 13184K->914K(14784K), 0.0110870 secs] 13184K->914K(63936K), 0.0112020 secs]

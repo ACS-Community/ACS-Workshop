@@ -1,0 +1,26 @@
+#ifndef _ALTAZ_IDL_
+#define _ALTAZ_IDL_
+
+#include <baci.idl>
+
+#pragma prefix "alma"
+
+module AltAzModule 
+{
+	interface AltAz : ACS::CharacteristicComponent 
+		{
+		/*move to fixed position*/
+		void moveto(in ACS::CBvoid cb, in ACS::CBDescIn desc, in double alt, in double az);
+
+		//where it should be
+		readonly attribute ACS::RWdouble refAlt; 
+		readonly attribute ACS::RWdouble refAz;
+
+		//where it is according to the sensors(encoders)
+		readonly attribute ACS::ROdouble realAlt;
+		readonly attribute ACS::ROdouble realAz;
+
+	};
+
+};
+#endif

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+acsutilTATPrologue -l
+
+#echo "Starting bilboContainer"
+#acsutilAwaitContainerStart -cpp bilboContainer

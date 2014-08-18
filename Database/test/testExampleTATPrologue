@@ -1,0 +1,6 @@
+#!/bin/bash
+
+acsutilTATPrologue -l
+
+echo "Starting testContainer"
+acsutilAwaitContainerStart -java databaseContainer

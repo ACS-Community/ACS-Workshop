@@ -1,0 +1,9 @@
+SOURCE ./TATEnvironment
+
+PROLOGUE ./testExampleTATPrologue
+
+1 cppUnitTest "../bin/cppInstrumentTest"
+#2 pyUnitTest "python pyUnitTest.py HelloDemoTest"
+#3 javaUnitTest "acsStartJava -endorsed  alma.acs.testsupport.tat.TATJUnitRunner demo.HelloDemoTest"
+
+EPILOGUE ./testExampleTATEpilogue

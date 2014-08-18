@@ -1,0 +1,55 @@
+2010-11-17T18:50:25.000 INFO [acsStart] Starting ACS version 9.0.0
+2010-11-17T18:50:25.000 INFO [acsStart] Using ALMA Base Software tag ACS-9_0_0-pre-20101102
+2010-11-17T18:50:25.000 INFO [acsStartORBSRVC] Starting CORBA Services
+2010-11-17T18:50:25.000 INFO [acsStartORBSRVC]     Orb options:  -ORBDottedDecimalAddresses 1
+2010-11-17T18:50:25.000 INFO [acsNamingService] Starting Naming Service
+2010-11-17T18:50:27.000 INFO [acsInterfaceRepository] Starting Interface Repository
+Bound ID: InterfaceRepository
+2010-11-17T18:50:29.000 INFO [acsConfigurationDatabase] Starting ACS Configuration Database
+2010-11-17T18:50:29.000 INFO [acsConfigurationDatabase]     CDB data is in:  /diska/home/almadev/MODULES/SORT/instrument/test
+ --endorsed --maxHeapSize 512m -D jacorb.poa.thread_pool_max=200 -D jacorb.connection.client.pending_reply_timeout=30000 -D ACS.cdbpath=/diska/home/almadev/MODULES/SORT/instrument/test/../config/CDB/schemas:/diska/home/almadev/MODULES/SORT/instrument/test/CDB/schemas:/diska/home/almadev/introot/config/CDB/schemas:/alma/ACS-9.0/ACSSW/config/CDB/schemas -- com.cosylab.cdb.jdal.Server -jacorb -root /diska/home/almadev/MODULES/SORT/instrument/test -OAIAddr 172.16.23.205 -OAport 3012 -n
+2010-11-17T18:50:31.000 INFO [acsStartJava] Starting Java application: com.cosylab.cdb.jdal.Server -jacorb -root /diska/home/almadev/MODULES/SORT/instrument/test -OAIAddr 172.16.23.205 -OAport 3012 -n
+2010-11-17T18:50:31.000 INFO [acsStartJava] Using endorsed jar files in: -Djava.endorsed.dirs=../lib/endorsed:/diska/home/almadev/introot/lib/endorsed:/alma/ACS-9.0/ACSSW/lib/endorsed:
+2010-11-17T18:50:31.000 INFO [acsNotifyService] Starting Notify Service
+2010-11-17T18:50:39.000 INFO [acsstartupLoadIFR] Loading of IDL interfaces in Interface Repository completed OK
+2010-11-17T18:50:39.000 INFO [acsNotifyService] Starting Logging Notify Service
+2010-11-17T18:50:40.133 INFO [CDB] DALImpl will use XSD caching for xerces sax parser ? false
+2010-11-17T18:50:40.155 INFO [CDB] DAL root is: /diska/home/almadev/MODULES/SORT/instrument/test/CDB/
+2010-11-17T18:50:40.370 INFO [CDB] JDAL is ready and waiting ...
+JDAL is ready and waiting ...
+2010-11-17T18:50:40.427 NOTICE [CDB] Curl 'MACI/Managers/Manager' does not exist.
+2010-11-17T18:50:40.474 NOTICE [CDB] Curl 'MACI/Components' does not exist.
+2010-11-17T18:50:41.000 INFO [acsNotifyService] Starting Archive Notify Service
+2010-11-17T18:50:42.000 INFO [acsNotifyService] Starting Alarm Notify Service
+2010-11-17T18:50:43.000 INFO [acsLoggingService] Starting Logging Service
+2010-11-17T18:50:45.000 INFO [acsACSLogService] Starting ACS Log service
+2010-11-17T18:50:46.000 INFO [acsAlarmService] Starting ACS AlarmService
+ --endorsed -- alma.acs.alarmsystem.corbaservice.AlarmSystemCorbaServer -jacorb -OAIAddr 172.16.23.205 -OAport 3013
+2010-11-17T18:50:46.000 INFO [acsStartJava] Starting Java application: alma.acs.alarmsystem.corbaservice.AlarmSystemCorbaServer -jacorb -OAIAddr 172.16.23.205 -OAport 3013
+2010-11-17T18:50:46.000 INFO [acsStartJava] Using endorsed jar files in: -Djava.endorsed.dirs=../lib/endorsed:/diska/home/almadev/introot/lib/endorsed:/alma/ACS-9.0/ACSSW/lib/endorsed:
+2010-11-17T18:50:47.732 NOTICE [CDB] Curl 'Alarms/Administrative/AlarmSystemConfiguration' does not exist.
+2010-11-17T18:50:47.739 INFO [AlarmService] Starting the ACS implementation of the alarm service
+The alarm service is ready and waiting
+2010-11-17T18:50:48.000 INFO [acsStartORBSRVC] For this ACS session, please do an 'export ACS_INSTANCE=0' on all terminals running ACS clients.
+2010-11-17T18:50:48.000 INFO [acsStartORBSRVC] The acsStartORBSRVC script has now completed!
+2010-11-17T18:50:49.000 INFO [Starting jManager] 
+ --endorsed --noClassLoader --noAutoClasspath --addToClasspath acsASsources.jar:acscommon.jar:acscomponent.jar:acsContainerServices.jar:acsdaemon.jar:acsdaemonErrType.jar:acserr.jar:acserrj.jar:acsErrTypeAlarmSourceFactory.jar:ACSErrTypeCommon.jar:ACSErrTypeCORBA.jar:ACSErrTypeJavaNative.jar:acsjlog.jar:acsjms.jar:ACSJMSMessageEntity.jar:acsnc.jar:AlarmSourceSchemaBindings.jar:alarmsysteminterface.jar:avalon-framework.jar:castor.jar:cdbDAL.jar:cdbErrType.jar:CDB.jar:cmwmom.jar:commons-logging-1.1.1.jar:jACSUtil.jar:JavaContainerError.jar:jcontnc.jar:jmanagerErrType.jar:jManager.jar:jms.jar:laserutil.jar:log4j-1.2.15.jar:logging_idl.jar:maciErrType.jar:maci.jar:maciSchemaBindings.jar:NotifyExt.jar:NotifyMonitoringExt.jar:prevayler-1.02.001.jar:xalan.jar:xalan_serializer.jar -D jacorb.poa.thread_pool_max=200 -D NamingServiceRemoteDirectory.reference=iiop://172.16.23.205:3001 -D DAL.defaultReference=corbaloc::172.16.23.205:3012/CDB -D OAPort=3000 -D manager.debug.rememberOldHandles -- com.cosylab.acs.maci.manager.app.Manager -n
+2010-11-17T18:50:49.000 INFO [acsStartJava] Starting Java application: com.cosylab.acs.maci.manager.app.Manager -n
+2010-11-17T18:50:49.000 INFO [acsStartJava] Using endorsed jar files in: -Djava.endorsed.dirs=../lib/endorsed:/diska/home/almadev/introot/lib/endorsed:/alma/ACS-9.0/ACSSW/lib/endorsed:
+2010-11-17T18:50:49.505 INFO [Manager] Initializing Manager.
+2010-11-17T18:50:49.703 INFO [Manager] Connecting to CORBA Naming Service with reference 'iiop://172.16.23.205:3001'...
+2010-11-17T18:50:49.824 INFO [Manager] Connected to CORBA Naming Service with reference 'iiop://172.16.23.205:3001'.
+Recovering system state...
+Skipping saved manager state!
+2010-11-17T18:50:49.863 INFO [Manager] Connecting to DAL 'corbaloc::172.16.23.205:3012/CDB'...
+2010-11-17T18:50:49.868 INFO [Manager] Connected to DAL 'corbaloc::172.16.23.205:3012/CDB'.
+2010-11-17T18:50:49.914 INFO [Manager] Manager activated with IOR:000000000000001C49444C3A696A732E73692F6D6163692F4D616E616765723A312E300000000001000000000000006C000102000000000E3137322E31362E32332E323035000BB8000000164F52422F4D616E61676572504F412F4D616E616765720000000000020000000000000008000000004A414300000000010000001C00000000000100010000000105010001000101090000000105010001
+2010-11-17T18:50:49.935 INFO [Manager] All initializations done.
+2010-11-17T18:50:49.935 INFO [Manager] AcsManagerStatusMessage_ManagerStarted Manager Application initialized.
+
+2010-11-17T18:50:49.989 NOTICE [CDB] Curl 'MACI/Containers' does not exist.
+2010-11-17T18:50:49.991 INFO [Manager] 'Manager' requested component 'curl:///Log'.
+2010-11-17T18:50:50.014 INFO [Manager] Component 'curl:///Log' provided to 'Manager'.
+2010-11-17T18:50:50.000 INFO [acsManager] Manager is up and running
+2010-11-17T18:50:52.000 INFO [acsStart] For this ACS session, please do an 'export ACS_INSTANCE=0' on all terminals running ACS clients.
+2010-11-17T18:50:52.000 INFO [acsStart] ACS is up and running
