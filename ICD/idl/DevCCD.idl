@@ -1,0 +1,95 @@
+/* IDL for DevCCD component */
+
+#ifndef _DEVCCD_IDL_
+#define _DEVCCD_IDL_
+
+#include <baci.idl>
+#include <Types.idl>
+
+#pragma prefix "alma"
+
+/**
+ * @file DevCCD.idl
+ * IDL specification for the DevCCD module interface. This interface is a CCD
+ * device abstraction, and, thus, it should be a generalization of a simple CCD
+ */
+
+module DEVCCD_MODULE {
+
+	/**
+	 * @interface DevCCD
+	 * The DecCCD interface defines a DevCCD-like ACS component that will
+	 * be the one in charge of communicate with the hardware itself. The
+	 * main purpose of this interface is to take images from the camera
+	 * with a certain exposure time
+	 */
+	interface DevCCD : ACS::CharacteristicComponent	{
+
+		/** Holds the last frame that has been taken */
+		readonly attribute ACS::ROlongSeq frame;
+
+		/** Holds the device name that should be accesed */
+		readonly attribute ACS::RWstring device;
+
+		/** Set and get the red balance value */
+		readonly attribute ACS::RWlong red;
+
+		/** Set and get the blue balance value */
+		readonly attribute ACS::RWlong blue;
+
+		/** Set and get the green balance value */
+		readonly attribute ACS::RWlong green;
+
+		/** Set and get the size of the pixels */
+		readonly attribute ACS::RWlong pixelBias;
+
+		/** Set and get the reset level (black balance) */
+		readonly attribute ACS::RWlong resetLevel;
+
+		/** Set and get the exposure time */
+		readonly attribute ACS::RWlong exposure;
+
+		/** Locking status of the component. For further information,
+		 * look at the DevTelescope component documentation
+		 */
+		readonly attribute boolean locking;
+
+		/** Is the device turned on/off? */
+		readonly attribute boolean powered;
+
+		/**
+		 * Tell the camera to capture a frame with certain exposure time. This
+		 * is the main function of this component.
+		 */
+		TYPES::ImageType image(in double exposure);
+	
+		/**
+		 * This method locks the component, so any order received from
+		 * any other component that is not CSATStatus or CSATControl
+		 * will be ignored
+		 */
+		void lock();
+
+		/**
+		 * Unlocks the component, so the component will follow any
+		 * order that an external component may give it
+		 */
+		void unlock();
+	
+		/**
+		 * Turns the CCD on (in simple models it will only affect the
+		 * local variable
+		 */
+		void on();
+
+		/**
+		 * Turns the CCD off (in simple models it will only affect the
+		 * local variable
+		 */
+		void off();
+
+	};
+
+};
+
+#endif /* _DEVCCD_IDL_ */

@@ -1,0 +1,49 @@
+#   -*-Makefile-*- template for the LegoUSB kernel module.
+#
+#   Copyright 2002 Doug Hunt,
+#   based on CIPE Makefile.in, Copyright 1996 Olaf Titz <olaf@bigred.inka.de>
+#
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License
+#   as published by the Free Software Foundation; either version
+#   2 of the License, or (at your option) any later version.
+
+MODDIR:=/lib/modules/@KVERS@/misc
+
+MAKE=	   @MAKE@
+CC=	   @CC@
+KCC=	   @KCC@
+KCPPFLAGS= @KCPPFLAGS@
+KCFLAGS=   @KCFLAGS@
+KDEFS=	   @KDEFS@
+KLDFLAGS=  @KLDFLAGS@
+UCPPFLAGS= @UCPPFLAGS@
+UCFLAGS=   @UCFLAGS@
+UDEFS=	   @UDEFS@
+ULDFLAGS=  @ULDFLAGS@
+ULIBS=	   @ULIBS@
+KINC=	   @KINC@
+prefix = @prefix@
+MODULE=	   legousbtower.o
+
+all::	$(MODULE) 
+
+install:: all
+	/sbin/modprobe -r legousbtower
+	mkdir -p $(MODDIR)
+	install -m 644 $(MODULE) $(MODDIR)
+	/sbin/insmod $(MODDIR)/$(MODULE) 
+	rm -f /dev/usb/lego0
+	mknod --mode=a=rw /dev/usb/lego0 c 180 179
+	mkdir -p $(prefix)/include/LegoUSB
+	cp include/legousbtower.h $(prefix)/include/LegoUSB/.
+
+
+KOBJS:=	legousbtower.o
+
+$(KOBJS): %.o: %.c
+	$(KCC) -MD $(KDEFS) $(KCPPFLAGS) $(KCFLAGS) -o $@ -c $<
+
+clean::
+	rm -rf $(MODULE) core *.[oaisd] config.log config.status *.cache Makefile
+

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="Alma/ACSError" xsi:schemaLocation="Alma/ACSError ACSError.xsd" name="SORTErr" type="900907" _prefix="alma">
+        <ErrorCode name="AlreadyInAutomatic" 
+                   shortDescription="Already in automatic mode" 
+                   description="Trying to set automatic mode, failed. It has already been set"/>
+        <ErrorCode name="PositionOutOfLimits" 
+                   shortDescription="Position out of limits" 
+                   description="Command tries to move the telescope out of limits"/>
+        <ErrorCode name="ProposalNotYetReady" 
+                   shortDescription="Proposal is not ready" 
+                   description="Proposal is not ready">
+                   <Member name="ProposalId" type="long" description="Id of the proposal that is not ready."/>
+        </ErrorCode>           
+        <ErrorCode name="InvalidProposalId" 
+                   shortDescription="Proposal ID does not exist." 
+                   description="A request contained a proposal ID that does not exist in the database.">
+                   <Member name="ProposalId" type="long" description="Id of the proposal that does not exist."/>
+        </ErrorCode>
+        <ErrorCode name="InvalidTargetId" 
+                   shortDescription="Target ID is invalid" 
+                   description="A request contained a target ID that is invalid in the database.">
+                   <Member name="ProposalId" type="long" description="Id of the proposal that does not exist."/>
+                   <Member name="TargetId" type="long" description="Id of the target that is invalid"/>
+        </ErrorCode>            
+        <ErrorCode name="InvalidProposalStatusTransition" 
+                   shortDescription="Database: Invalid proposal status" 
+                   description="Trying to set an invalid status for the proposa."/>
+        <ErrorCode name="ImageAlreadyStored" 
+                   shortDescription="Image already stored" 
+                   description="Image has already been stored in the database."/>
+        <ErrorCode name="CameraIsOff" 
+                   shortDescription="camera is off" 
+                   description="Trying to take exposure with camera off."/>
+        <ErrorCode name="SchedulerAlreadyRunning" 
+                   shortDescription="Scheduler is already running" 
+                   description="Trying to start scheduler, but is already has been started."/>
+        <ErrorCode name="SchedulerAlreadyStopped" 
+                   shortDescription="Scheduler is already stopped" 
+                   description="Trying to stop scheduler, but is already has been stopped."/>
+        <ErrorCode name="NoProposalExecuting" 
+                   shortDescription="No proposal is executing" 
+                   description="Trying to retrieve an executing proposal, but no proposal is executing."/>
+	
+        <ErrorCode name="SystemInAutoMode" 
+                   shortDescription="System is in automatic mode" 
+                   description="Trying to execute a command in console while the system is in automatic mode."/>
+        <ErrorCode name="CannotOpenDevice" 
+                   shortDescription="Can't open device" 
+                   description="Can't open THE device."/>
+</Type>

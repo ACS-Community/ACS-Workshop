@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by David Fugate (E.S.O.) -->
+<xs:schema targetNamespace="urn:schemas-cosylab-com:EventChannel:1.0" xmlns="urn:schemas-cosylab-com:EventChannel:1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="EventChannel">
+		<xs:annotation>
+			<xs:documentation>Data type describes an ACS event channel</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="MaxQueueLength" use="optional" default="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:long">
+					<xs:minInclusive value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="MaxConsumers" use="optional" default="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:long">
+					<xs:minInclusive value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="MaxSuppliers" use="optional" default="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:long">
+					<xs:minInclusive value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="RejectNewEvents" type="xs:boolean" use="optional" default="true"/>
+		<xs:attribute name="DiscardPolicy" use="optional" default="AnyOrder">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AnyOrder"/>
+					<xs:enumeration value="FifoOrder"/>
+					<xs:enumeration value="PriorityOrder"/>
+					<xs:enumeration value="DeadlineOrder"/>
+					<xs:enumeration value="LifoOrder"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="EventReliability" use="optional" default="BestEffort">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BestEffort"/>
+					<xs:enumeration value="Persistent"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ConnectionReliability" use="optional" default="BestEffort">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BestEffort"/>
+					<xs:enumeration value="Persistent"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Priority" use="optional" default="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:long">
+					<xs:minInclusive value="-32767"/>
+					<xs:maxInclusive value="32767"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Timeout" use="optional" default="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:long">
+					<xs:minInclusive value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="OrderPolicy" use="optional" default="AnyOrder">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AnyOrder"/>
+					<xs:enumeration value="FifoOrder"/>
+					<xs:enumeration value="PriorityOrder"/>
+					<xs:enumeration value="DeadlineOrder"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="StartTimeSupported" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="StopTimeSupported" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="MaxEventsPerConsumer" use="optional" default="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:long">
+					<xs:minInclusive value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="EventChannel" type="EventChannel"/>
+</xs:schema>

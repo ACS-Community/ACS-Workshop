@@ -1,0 +1,7 @@
+SOURCE TATEnvironment
+
+PROLOGUE testExampleTATPrologue
+
+1 cppUnitTest "../bin/cppUnitTest"
+
+EPILOGUE testExampleTATEpilogue
