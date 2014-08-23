@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/ref
+END
+pyUnitTest.ref
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/ref/pyUnitTest.ref
+END
+javaUnitTest.ref
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/ref/javaUnitTest.ref
+END
+cppUnitTest.ref
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/ref/cppUnitTest.ref
+END

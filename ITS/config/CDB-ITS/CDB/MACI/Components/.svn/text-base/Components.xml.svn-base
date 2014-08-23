@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Components
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:schemas-cosylab-com:Components:1.0 http://www.eso.org/schemas/ACS/Components.xsd"
+    xmlns="urn:schemas-cosylab-com:Components:1.0"
+    xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+    xmlns:baci="urn:schemas-cosylab-com:BACI:1.0">
+    <!-- Simulated DB -->
+<!--
+    <_
+        Name="DATABASE"
+        Code="Acssim.Servants.Simulator"
+        Type="IDL:astri/DATABASE_MODULE/DataBase:1.0"
+        Container="pyContainer"
+        ImplLang="py"></_>
+-->
+    <!--  Real DB -->
+    <_
+        Name="DATABASE"
+        Code="astri.sort.database.DataBaseComponentHelper"
+        Type="IDL:sort/DATABASE_MODULE/DataBase:1.0"
+        Container="databaseContainer"
+        ImplLang="java"
+        Default="true"></_>
+    <_
+        Name="SCHEDULER"
+        Code="scheduler"
+        Type="IDL:sort/SCHEDULER_MODULE/Scheduler:1.0"
+        Container="schedulerContainer"
+        ImplLang="java"
+        Default="true"></_>
+    <_
+        Name="CONSOLE"
+        Code="ConsoleImpl"
+        Type="IDL:sort/CONSOLE_MODULE/Console:1.0"
+        Container="consoleContainer"
+        ImplLang="py"></_>
+    <_
+        Name="TELESCOPE"
+        Code="TelescopeImpl"
+        Type="IDL:sort/TELESCOPE_MODULE/Telescope:1.0"
+        Container="telescopeContainer"
+        ImplLang="cpp"
+        Default="true"></_>
+    <_
+        Name="INSTRUMENT"
+        Code="libInstrumentImplementation"
+        Type="IDL:sort/INSTRUMENT_MODULE/Instrument:1.0"
+        Container="instrumentContainer"
+        ImplLang="cpp"
+        Default="true"></_>
+</Components>

@@ -1,0 +1,33 @@
+# CDB location
+# Comment this line if the CDB being used shouldn't be decompressed
+# from a tar file.
+CDB_PACKED_FILE=./config/CDB.tar.gz
+TESTDIR=`pwd`
+ACS_CDB=`pwd`/tmp
+# ACS_CDB=`pwd`/config
+ACS_TMP=`pwd`/tmp
+ACS_LOCK=${ACS_TMP}/.running
+ACS_INSTANCE=0
+ACS_CONTAINERS="cppContainer"
+IDL_FILES_TO_LOAD="MonitoringTester.idl DevIOTester.idl"
+ACS_LOG_STDOUT=2
+
+# Hibernate database configuration
+DBDIR=$ACS_TMP/hsqldb
+DBNAME=tmcdb
+DBPORT=9001
+SQLTOOL_RC_FILE=./config/sqltool.rc
+
+JAVA_OPTIONS="-Darchive.configFile=$TESTDIR/config/archiveConfig.properties $JAVA_OPTIONS"
+
+### Test specific configurations ####
+
+# If 'true' then the TMCDBStandaloneComponent won't use an in-memory
+# database, but a disk based one, which can be accessed by script/sqltool.
+TMCDB_STANDALONE_DEBUG=true
+TMCDB_CONFIGURATION_NAME=Test
+TMCDB_STARTUP_NAME=Test
+
+TMCDB_HW_CONF_FILE=./config/Configuration.xml
+
+unset DISPLAY

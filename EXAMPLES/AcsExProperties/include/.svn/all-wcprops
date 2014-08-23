@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/include
+END
+SimpleImpl.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/include/SimpleImpl.h
+END
+MonitoringTesterImpl.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/include/MonitoringTesterImpl.h
+END
+DevIOTesterImpl.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/include/DevIOTesterImpl.h
+END
+SimpleCharacteristicImpl.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/include/SimpleCharacteristicImpl.h
+END
+RandomDevIO.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/include/RandomDevIO.h
+END
+OnePropertyImpl.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/include/OnePropertyImpl.h
+END

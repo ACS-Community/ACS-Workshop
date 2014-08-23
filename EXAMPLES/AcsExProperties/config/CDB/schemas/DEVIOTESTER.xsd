@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+  targetNamespace="urn:schemas-cosylab-com:DEVIOTESTER:1.0"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-cosylab-com:DEVIOTESTER:1.0"
+  xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+  xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="urn:schemas-cosylab-com:CDB:1.0" schemaLocation="/alma/ACS-current/ACSSW/config/CDB/schemas/CDB.xsd"/>
+  <xs:import namespace="urn:schemas-cosylab-com:BACI:1.0" schemaLocation="/alma/ACS-current/ACSSW/config/CDB/schemas/BACI.xsd"/>
+  <xs:complexType name="DEVIOTESTER">
+    <xs:complexContent>
+      <xs:extension base="baci:CharacteristicComponent">
+        <xs:sequence>
+          <xs:element name="doubleProp01" type="baci:RWdouble"/>
+          <xs:element name="doubleProp02" type="baci:RWdouble"/>
+          <xs:element name="doubleProp03" type="baci:ROdouble"/>
+        </xs:sequence>        
+      </xs:extension>
+    </xs:complexContent>    
+  </xs:complexType>
+  <xs:element name="DEVIOTESTER" type="DEVIOTESTER"/>
+</xs:schema>

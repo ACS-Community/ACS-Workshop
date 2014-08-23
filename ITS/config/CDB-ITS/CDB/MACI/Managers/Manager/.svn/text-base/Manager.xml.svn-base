@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Manager
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:schemas-cosylab-com:Manager:1.0 http://www.eso.org/schemas/ACS/Manager.xsd"
+    xmlns="urn:schemas-cosylab-com:Manager:1.0"
+    xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+    xmlns:log="urn:schemas-cosylab-com:LoggingConfig:1.0"
+    Timeout="50.0"
+    ClientPingInterval="10.0"
+    ContainerPingInterval="10.0"
+    AdministratorPingInterval="10.0">
+    <Startup> </Startup>
+    <ServiceComponents>
+        <cdb:_
+            string="Log"></cdb:_>
+        <cdb:_
+            string="LogFactory"></cdb:_>
+        <cdb:_
+            string="NotifyEventChannelFactory"></cdb:_>
+        <cdb:_
+            string="ArchivingChannel"></cdb:_>
+        <cdb:_
+            string="LoggingChannel"></cdb:_>
+        <cdb:_
+            string="InterfaceRepository"></cdb:_>
+        <cdb:_
+            string="CDB"></cdb:_>
+        <cdb:_
+            string="ACSLogSvc"></cdb:_>
+        <cdb:_
+            string="PDB"></cdb:_>
+        <cdb:_
+            string="AcsAlarmService"></cdb:_>
+    </ServiceComponents>
+    <LoggingConfig>
+        <log:_
+            Name="jacorb@Manager"
+            minLogLevel="5"
+            minLogLevelLocal="4"></log:_>
+    </LoggingConfig>
+</Manager>
+

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test
+END
+cppUnitTest_N.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test/cppUnitTest_N.cpp
+END
+testExampleTATPrologue
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test/testExampleTATPrologue
+END
+cppUnitTest.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test/cppUnitTest.cpp
+END
+TestList.sed
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test/TestList.sed
+END
+TestList.lite
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test/TestList.lite
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test/Makefile
+END
+TATEnvironment
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test/TATEnvironment
+END
+testExampleTATEpilogue
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ws2013/!svn/ver/8/trunk/EXTERNAL/INSTRUMENT/test/testExampleTATEpilogue
+END

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="sort.database.pojos.Proposal" table="PROPOSAL">
+		<id name="pid">
+			<generator class="native"/>
+		</id>
+		<property name="status" type="integer" column="STATUS"/>
+		<set name="targets" lazy="false" cascade="save-update, lock, delete">
+			<key column="PID"/>
+			<one-to-many class="sort.database.pojos.Target"/>
+		</set>
+	</class>
+	
+	<class name="sort.database.pojos.Target" table="TARGET">
+		<id name="id" type="integer" column="ID">
+			<generator class="native"/>
+		</id>
+		<property name="tid" type="integer" column="TID"/>
+		<property name="pid" type="integer" column="PID"/>
+		<property name="expTime" type="integer" column="EXP_TIME"/>
+		<component name="coordinates" class="sort.database.pojos.Position" lazy="false">
+			<property name="el" type="double" column="EL"/>
+			<property name="az" type="double" column="AZ"/>
+		</component>
+	</class>
+	
+	<class name="sort.database.pojos.Image" table="IMAGE">
+		<id name="id" type="integer" column="ID">
+			<generator class="native"/>
+		</id>
+		<property name="tid" type="integer" column="TID" />
+		<property name="pid" type="integer" column="PID"/>
+		<property name="image" type="byte[]" column="IMGBIN"/>
+	</class>
+	
+</hibernate-mapping>

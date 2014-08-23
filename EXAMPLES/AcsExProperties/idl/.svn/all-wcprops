@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/idl
+END
+MonitoringTester.midl
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/idl/MonitoringTester.midl
+END
+Simple.idl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/idl/Simple.idl
+END
+DevIOTester.midl
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/idl/DevIOTester.midl
+END
+MonitoringTester.idl
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/idl/MonitoringTester.idl
+END
+DevIOTester.idl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/idl/DevIOTester.idl
+END
+SimpleCharacteristic.idl
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/idl/SimpleCharacteristic.idl
+END
+OneProperty.idl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/idl/OneProperty.idl
+END

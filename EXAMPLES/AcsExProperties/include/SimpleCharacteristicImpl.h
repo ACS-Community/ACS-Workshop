@@ -1,0 +1,58 @@
+/* @(#) $Id: MonitoringTesterImpl.h,v 1.1 2007/06/06 23:04:30 rhiriart Exp $
+ *
+ * Copyright (C) 2001
+ * Associated Universities, Inc. Washington DC, USA.
+ *
+ * Produced for the ALMA project
+ *
+ * This library is free software; you can redistribute it and/or modify it it 
+ * under the terms of the GNU Library General Public License as published by 
+ * the Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public 
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public License 
+ * along with this library; if not, write to the Free Software Foundation, 
+ * Inc., 675 Massachusetts Ave, Cambridge, MA, 02139, USA.
+ *
+ * Correspondence concerning ALMA should be addressed as follows:
+ * Internet email: alma-sw-admin@nrao.edu
+ */
+ 
+#ifndef SimpleCharacteristicImpl_h
+#define SimpleCharacteristicImpl_h
+
+#ifndef __cplusplus
+#error This is a C++ include file and cannot be used from plain C
+#endif
+
+#include <baciCharacteristicComponentImpl.h>
+#include <SimpleCharacteristicS.h>
+
+using namespace baci;
+
+class SimpleCharacteristicImpl : public CharacteristicComponentImpl,
+			            public virtual POA_test::SimpleCharacteristic
+{
+    public:
+
+	SimpleCharacteristicImpl(const ACE_CString& name,
+		            maci::ContainerServices* containerServices);
+
+    virtual ~SimpleCharacteristicImpl();
+
+    void initialize() throw(acsErrTypeLifeCycle::LifeCycleExImpl);
+
+    virtual void sayHello();
+
+    private:
+
+    void operator=(const SimpleCharacteristicImpl&);
+
+};
+
+#endif /* SimpleCharacteristicImpl_h */

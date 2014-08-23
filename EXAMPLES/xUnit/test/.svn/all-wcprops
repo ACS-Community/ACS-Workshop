@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/ws2013/!svn/ver/43/trunk/EXAMPLES/xUnit/test
+END
+cppUnitExample.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/cppUnitExample.cpp
+END
+TATEpilogue
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/TATEpilogue
+END
+TATPrologue
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/TATPrologue
+END
+TestList.sed
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/TestList.sed
+END
+TestList.lite
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/TestList.lite
+END
+pyUnitExample.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/ws2013/!svn/ver/43/trunk/EXAMPLES/xUnit/test/pyUnitExample.py
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/Makefile
+END
+TATEnvironment
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/TATEnvironment
+END
+sed.scan
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/ws2013/!svn/ver/19/trunk/EXAMPLES/xUnit/test/sed.scan
+END

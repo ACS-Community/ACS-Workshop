@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+  targetNamespace="urn:schemas-cosylab-com:MONITORINGTESTER:1.0"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-cosylab-com:MONITORINGTESTER:1.0"
+  xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+  xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="urn:schemas-cosylab-com:CDB:1.0" schemaLocation="CDB.xsd"/>
+  <xs:import namespace="urn:schemas-cosylab-com:BACI:1.0" schemaLocation="BACI.xsd"/>
+  <xs:complexType name="MONITORINGTESTER">
+    <xs:sequence>
+      <xs:element name="doubleProp01" type="baci:RWdouble"/>
+      <xs:element name="longProp01" type="baci:RWlong"/>
+      <xs:element name="stringProp01" type="baci:RWstring"/>      
+      <xs:element name="floatProp01" type="baci:RWfloat"/>
+      <xs:element name="booleanProp01" type="baci:RWboolean"/>
+      <xs:element name="patternProp01" type="baci:RWpattern"/>
+      <xs:element name="doubleSeqProp01" type="baci:RWdoubleSeq"/>
+      <xs:element name="longLongProp01" type="baci:RWlongLong"/>
+      <xs:element name="uLongProp01" type="baci:RWuLong"/>
+      <xs:element name="uLongLongProp01" type="baci:RWuLongLong"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MONITORINGTESTER" type="MONITORINGTESTER"/>
+</xs:schema>

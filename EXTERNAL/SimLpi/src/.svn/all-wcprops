@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/ws2013/!svn/ver/4/trunk/EXTERNAL/SimLpi/src
+END
+lpiPropsDevIO.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/ws2013/!svn/ver/4/trunk/EXTERNAL/SimLpi/src/lpiPropsDevIO.cpp
+END
+lpiFrameDevIO.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/ws2013/!svn/ver/4/trunk/EXTERNAL/SimLpi/src/lpiFrameDevIO.cpp
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/ws2013/!svn/ver/4/trunk/EXTERNAL/SimLpi/src/Makefile
+END

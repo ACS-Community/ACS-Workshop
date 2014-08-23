@@ -1,0 +1,9 @@
+SOURCE TATEnvironment
+
+PROLOGUE ./TATPrologue
+
+1 cppUnitTest "../bin/DatabaseTest"
+2 javaUnitTest "acsStartJava -endorsed  alma.acs.testsupport.tat.TATJUnitRunner sort.database.DatabaseTest"
+3 pyUnitTest "python ../bin/pyUnitExample DatabaseTest"
+
+EPILOGUE ./TATEpilogue

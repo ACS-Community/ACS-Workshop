@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/ws2013/!svn/ver/9/trunk/EXTERNAL/SimNexstar/include
+END
+Mount2RefAltDevIO.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ws2013/!svn/ver/9/trunk/EXTERNAL/SimNexstar/include/Mount2RefAltDevIO.h
+END
+SerialRS232.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/ws2013/!svn/ver/4/trunk/EXTERNAL/SimNexstar/include/SerialRS232.h
+END
+Mount2RefAzDevIO.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/ws2013/!svn/ver/9/trunk/EXTERNAL/SimNexstar/include/Mount2RefAzDevIO.h
+END

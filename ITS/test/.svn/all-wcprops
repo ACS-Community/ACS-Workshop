@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/ws2013/!svn/ver/14/trunk/ITS/test
+END
+testExampleTATPrologue
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/ws2013/!svn/ver/3/trunk/ITS/test/testExampleTATPrologue
+END
+TestList.sed
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/ws2013/!svn/ver/3/trunk/ITS/test/TestList.sed
+END
+TestList.lite
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/ws2013/!svn/ver/3/trunk/ITS/test/TestList.lite
+END
+integrationTest.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/ws2013/!svn/ver/14/trunk/ITS/test/integrationTest.py
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/ws2013/!svn/ver/3/trunk/ITS/test/Makefile
+END
+TATEnvironment
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/ws2013/!svn/ver/3/trunk/ITS/test/TATEnvironment
+END
+testExampleTATEpilogue
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/ws2013/!svn/ver/3/trunk/ITS/test/testExampleTATEpilogue
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/ws2013/!svn/ver/70/trunk/EXTERNAL/DATABASE/src/sort/database
+END
+DataBaseHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/ws2013/!svn/ver/10/trunk/EXTERNAL/DATABASE/src/sort/database/DataBaseHelper.java
+END
+DatabaseImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/ws2013/!svn/ver/69/trunk/EXTERNAL/DATABASE/src/sort/database/DatabaseImpl.java
+END
+HibernateDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/ws2013/!svn/ver/70/trunk/EXTERNAL/DATABASE/src/sort/database/HibernateDaoImpl.java
+END
+database.hbm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/ws2013/!svn/ver/35/trunk/EXTERNAL/DATABASE/src/sort/database/database.hbm.xml
+END
+IntegerArrayBlobType.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/ws2013/!svn/ver/35/trunk/EXTERNAL/DATABASE/src/sort/database/IntegerArrayBlobType.java
+END

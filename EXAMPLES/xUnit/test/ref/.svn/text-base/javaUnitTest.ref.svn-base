@@ -1,0 +1,5 @@
+1 -  --endorsed -- alma.acs.testsupport.tat.TATJUnitRunner sort.database.DatabaseTest
+ 
+ 
+1 - TEST_RUNNER_REPORT success/total: 2/2
+1 - JUnit test run succeeded

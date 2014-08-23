@@ -1,0 +1,7 @@
+#!/bin/bash
+
+acsutilTATPrologue -l
+
+echo "Starting aragornContainer"
+acsutilAwaitContainerStart -py aragornContainer
+acsutilAwaitContainerStart -cpp bilboContainer

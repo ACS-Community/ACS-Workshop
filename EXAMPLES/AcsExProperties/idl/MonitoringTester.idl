@@ -1,0 +1,49 @@
+/******************************************************************************** $Id: JacPrep,v 1.13 2010/01/04 15:34:48 gchiozzi Exp $
+* DO NOT EDIT
+* Automatically generated from ../idl/MonitoringTester.midl
+* on Mon Sep  9 16:23:12 2013
+*******************************************************************************/
+#ifndef _MonitoringTester_midl_
+#define _MonitoringTester_midl_
+#ifndef _ACS_PREPROCESSED_
+#define _ACS_PREPROCESSED_
+#endif
+#include <baci.idl>
+
+#pragma prefix "alma"
+
+module test {
+  interface MonitoringTester : ACS::CharacteristicComponent {
+
+
+     readonly attribute ACS::RWdouble doubleProp01;
+
+
+     readonly attribute ACS::RWlong longProp01;
+
+
+     readonly attribute ACS::RWstring stringProp01;
+
+
+     readonly attribute ACS::RWfloat floatProp01;
+
+
+     readonly attribute ACS::RWboolean booleanProp01;
+
+
+     readonly attribute ACS::RWpattern patternProp01;
+
+
+     readonly attribute ACS::RWdoubleSeq doubleSeqProp01;
+
+
+     readonly attribute ACS::RWlongLong longLongProp01;
+
+
+     readonly attribute ACS::RWuLong uLongProp01;
+  };
+
+
+};
+
+#endif

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+acsutilTATPrologue -l
+
+echo "Starting javaContainer"
+acsutilAwaitContainerStart -java javaContainer

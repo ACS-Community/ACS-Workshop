@@ -1,0 +1,34 @@
+/******************************************************************************** $Id: JacPrep,v 1.13 2010/01/04 15:34:48 gchiozzi Exp $
+* DO NOT EDIT
+* Automatically generated from ../idl/DevIOTester.midl
+* on Mon Sep  9 16:23:11 2013
+*******************************************************************************/
+#ifndef _DevIOTester_midl_
+#define _DevIOTester_midl_
+#ifndef _ACS_PREPROCESSED_
+#define _ACS_PREPROCESSED_
+#endif
+#include <baci.idl>
+
+#pragma prefix "alma"
+
+module test {
+
+  interface DevIOTester : ACS::CharacteristicComponent {
+
+
+     readonly attribute ACS::RWdouble doubleProp01;
+
+
+     readonly attribute ACS::RWdouble doubleProp02;
+
+
+     readonly attribute ACS::ROdouble doubleProp03;
+
+     void setValue3(in double value);
+  };
+
+
+};
+
+#endif

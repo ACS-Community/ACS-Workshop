@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/ws2013/!svn/ver/58/trunk/TELESCOPE/test
+END
+TATEpilogue
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/ws2013/!svn/ver/33/trunk/TELESCOPE/test/TATEpilogue
+END
+TATPrologue
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/ws2013/!svn/ver/39/trunk/TELESCOPE/test/TATPrologue
+END
+TestList.sed
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/ws2013/!svn/ver/46/trunk/TELESCOPE/test/TestList.sed
+END
+TestList.lite
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/ws2013/!svn/ver/46/trunk/TELESCOPE/test/TestList.lite
+END
+telescopeTest.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/ws2013/!svn/ver/44/trunk/TELESCOPE/test/telescopeTest.py
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/ws2013/!svn/ver/33/trunk/TELESCOPE/test/Makefile
+END
+TATEnvironment
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/ws2013/!svn/ver/33/trunk/TELESCOPE/test/TATEnvironment
+END

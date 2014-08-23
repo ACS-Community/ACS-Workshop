@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/test/config
+END
+sqltool.rc
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/test/config/sqltool.rc
+END
+archiveConfig.properties
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/test/config/archiveConfig.properties
+END
+Configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/test/config/Configuration.xml
+END
+testEnv
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/ws2013/!svn/ver/21/trunk/EXAMPLES/AcsExProperties/test/config/testEnv
+END
+CDB.tar.gz
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/ws2013/!svn/ver/30/trunk/EXAMPLES/AcsExProperties/test/config/CDB.tar.gz
+END

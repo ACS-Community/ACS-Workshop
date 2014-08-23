@@ -1,0 +1,16 @@
+#!/bin/bash
+
+mkdir -p tmp
+acsutilTATPrologue -l
+
+# this was just for initial testing
+#echo "Starting gandalfContainer"
+#acsutilAwaitContainerStart -py gandalfContainer
+
+# this is for developmen
+echo "Starting sauronContainer"
+acsutilAwaitContainerStart -java sauronContainer
+echo "Starting javaContainer"
+acsutilAwaitContainerStart -java javaContainer
+echo "Starting pyContainer"
+acsutilAwaitContainerStart -py pyContainer

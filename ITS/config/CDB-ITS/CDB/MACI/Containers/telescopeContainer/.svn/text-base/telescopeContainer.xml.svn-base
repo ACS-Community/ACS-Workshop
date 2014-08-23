@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="urn:schemas-cosylab-com:Container:1.0 http://www.eso.org/schemas/ACS/Container.xsd"
+ xmlns="urn:schemas-cosylab-com:Container:1.0"
+ xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+ xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+ xmlns:log="urn:schemas-cosylab-com:LoggingConfig:1.0"
+ ImplLang="cpp"
+ ManagerRetry="10"
+ Timeout="20.0"
+ UseIFR="1">
+    <Autoload>
+        <cdb:_
+            string="baci"></cdb:_>
+    </Autoload>
+    <LoggingConfig
+        centralizedLogger="Log"
+        dispatchPacketSize="0"
+        immediateDispatchLevel="99"
+        minLogLevel="2"
+        minLogLevelLocal="2"> </LoggingConfig>
+</Container>

@@ -1,0 +1,7 @@
+SOURCE TATEnvironment
+
+PROLOGUE ./testExampleTATPrologue
+
+1 integrationTest "python ../bin/integrationTest.py ITS"
+
+EPILOGUE ./testExampleTATEpilogue

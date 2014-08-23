@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../config/Configuration.xsd"
+    name="Test" arrayReferenceX="1.0" arrayReferenceY="1.0" arrayReferenceZ="1.0"
+    telescopeName="AOS">
+    <!-- Static Antenna information. Some of this could be moved to the Mount
+         XML configuration (in table Assembly). -->
+    <Antenna name="DV01" type="VA"
+        commissionDate="2009-03-15T15:00:00Z"
+        xPosition="1.0" yPosition="2.0" zPosition="3.0"
+        xOffset="4.0" yOffset="5.0" zOffset="6.0" avgDelay="3.4"
+        loOffsettingIdx="0" walshSeq="0"/>
+    <Antenna name="DA41" type="AEC"
+        commissionDate="2009-03-15T15:00:00Z"
+        xPosition="0.0" yPosition="0.0" zPosition="0.0"
+        xOffset="0.0" yOffset="0.0" zOffset="0.0" avgDelay="3.1"
+        loOffsettingIdx="1" walshSeq="1"/>
+    <Antenna name="DA43" type="AEC"
+        commissionDate="2009-03-15T15:00:00Z"
+        xPosition="0.0" yPosition="0.0" zPosition="0.0"
+        xOffset="0.0" yOffset="0.0" zOffset="0.0" avgDelay="3.1"
+        loOffsettingIdx="1" walshSeq="1"/>
+    <!-- Frontends -->
+    <FrontEnd name="FE01"/>
+    <FrontEnd name="FE02"/>
+    <!-- Local oscillator and timing system -->
+    <LocalOscillator name="CentralLO"/>
+    <PhotonicReference name="PhotonicReference1"/>
+    <PhotonicReference name="PhotonicReference2"/>
+    <PhotonicReference name="PhotonicReference3"/>
+    <PhotonicReference name="PhotonicReference4"/>
+    <PhotonicReference name="PhotonicReference5"/>
+    <PhotonicReference name="PhotonicReference6"/>
+    <AOSTiming name="AOSTiming"/>
+    <WeatherStationController name="WeatherStationController"/>
+    <HolographyTower name="HT1" xPosition="0.0E1" yPosition="0.0E1" zPosition="0.0E1"/>
+    <!-- Static Pad information. -->        
+    <Pad name="Pad01" commissionDate="2009-04-20T01:00:15Z"
+        xPosition="1.0" yPosition="2.0" zPosition="3.0" avgDelay="0.1"/>
+    <Pad name="Pad02" commissionDate="2009-04-20T01:00:15Z"
+        xPosition="0.0" yPosition="0.0" zPosition="0.0" avgDelay="0.3"/>
+    <Pad name="Pad03" commissionDate="2009-04-20T01:00:15Z"
+        xPosition="0.0" yPosition="0.0" zPosition="0.0" avgDelay="0.3"/>
+    <!-- Mappings between Antennas and Pads valid from a given start time.  -->
+    <ArrayConfiguration>
+        <Antenna2Pad antenna="DV01" pad="Pad01" startTime="2008-12-01T00:00:00Z" an0="1.0" aw0="2.0"/>
+        <Antenna2Pad antenna="DA41" pad="Pad02" startTime="2008-12-01T00:00:00Z"/>
+        <Antenna2Pad antenna="DA43" pad="Pad03" startTime="2008-12-01T00:00:00Z"/>
+    </ArrayConfiguration>
+    <HolographyTowerPadAssociation>
+        <HolographyTower2Pad holographyTower="HT1" pad="Pad01" azimuth="0.0" elevation="0.0"/>
+    </HolographyTowerPadAssociation>
+    <!-- Startup scenarios.
+         What assemblies should be started in each antenna and in the
+         LO & timing system. -->
+    <StartupConfiguration name="Test">
+        <Antenna name="DV01">
+            <AssemblyRole type="Mount" />
+            <AssemblyRole type="LO2BBpr0" />
+        </Antenna>
+        <Antenna name="DA41">
+            <AssemblyRole type="Mount" />
+            <AssemblyRole type="LO2BBpr1" />
+            <FrontEnd>
+                <AssemblyRole type="ColdCart3" />
+            </FrontEnd>
+        </Antenna>
+        <Antenna name="DA43">
+            <AssemblyRole type="Mount" />
+            <AssemblyRole type="LO2BBpr1" />
+            <FrontEnd>
+                <AssemblyRole type="ColdCart3" />
+            </FrontEnd>
+        </Antenna>
+        <LocalOscillator name="CentralLO">
+            <AssemblyRole type="CRD" />
+            <PhotonicReference name="PhotonicReference1">
+                <AssemblyRole type="CVR" />
+            </PhotonicReference>
+        </LocalOscillator>
+        <AOSTiming name="AOSTiming">
+            <AssemblyRole type="CRD" />
+        </AOSTiming>
+        <WeatherStationController name="WeatherStationController">
+            <AssemblyRole type="WSOSF" />
+        </WeatherStationController>
+    </StartupConfiguration>
+    <!-- Focus model. -->
+    <FocusModel antenna="DV01">
+        <Coeff name="ONE" value="0.8374">
+            <Offset receiverBand="ALMA_RB_01" value="0.0001010"/>
+        </Coeff>
+        <Coeff name="TWO" value="0.2374">
+            <Offset receiverBand="ALMA_RB_02" value="0.0034301"/>
+        </Coeff>
+        <Coeff name="THREE" value="0.0921">
+            <Offset receiverBand="ALMA_RB_03" value="0.0006001"/>
+        </Coeff>
+    </FocusModel>
+    <!-- Pointing model. -->
+    <PointingModel antenna="DA41">
+        <Coeff name="ONE" value="0.0">
+            <Offset receiverBand="ALMA_RB_01" value="0.0"/>
+        </Coeff>
+        <Coeff name="TWO" value="0.0">
+            <Offset receiverBand="ALMA_RB_02" value="0.0"/>
+        </Coeff>
+        <Coeff name="THREE" value="0.0">
+            <Offset receiverBand="ALMA_RB_03" value="0.0"/>
+        </Coeff>
+    </PointingModel>
+    <!-- Delays. -->
+    <CrossPolarizationDelays>
+        <XPDelay receiverBand="ALMA_RB_01" baseband="BB_1" sideband="LSB" value="0.003820809343018374"/>
+        <XPDelay receiverBand="ALMA_RB_01" baseband="BB_2" sideband="LSB" value="250E-12"/>
+        <XPDelay receiverBand="ALMA_RB_01" baseband="BB_3" sideband="LSB" value="500E-12"/>
+        <XPDelay receiverBand="ALMA_RB_01" baseband="BB_4" sideband="LSB" value="502E-12"/>
+    </CrossPolarizationDelays>
+    <AntennaDelays antenna="DV01">
+        <FEDelay receiverBand="ALMA_RB_02" polarization="X" sideband="LSB" value="0.00810338017490193843"/>
+        <IFDelay baseband="BB_1" polarization="X" ifswitch="USB_LOW" value="0.003001"/>
+        <LODelay baseband="BB_1" value="0.008103"/>
+    </AntennaDelays>
+</Configuration>

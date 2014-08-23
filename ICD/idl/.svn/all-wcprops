@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/ws2013/!svn/ver/59/trunk/ICD/idl
+END
+Instrument.idl
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/ws2013/!svn/ver/2/trunk/ICD/idl/Instrument.idl
+END
+SORTErr.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/ws2013/!svn/ver/2/trunk/ICD/idl/SORTErr.xml
+END
+Scheduler.idl
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/ws2013/!svn/ver/2/trunk/ICD/idl/Scheduler.idl
+END
+Console.idl
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/ws2013/!svn/ver/2/trunk/ICD/idl/Console.idl
+END
+Telescope.idl
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/ws2013/!svn/ver/59/trunk/ICD/idl/Telescope.idl
+END
+DataBase.idl
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/ws2013/!svn/ver/2/trunk/ICD/idl/DataBase.idl
+END
+Types.idl
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/ws2013/!svn/ver/2/trunk/ICD/idl/Types.idl
+END

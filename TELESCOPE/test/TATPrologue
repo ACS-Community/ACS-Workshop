@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ ! -d "tmp" ]; then
+    mkdir tmp
+fi
+
+acsutilTATPrologue -l
+
+echo "Starting aragornContainer"
+acsutilAwaitContainerStart -py aragornContainer
+echo "Starting bilboContainer"
+acsutilAwaitContainerStart -cpp bilboContainer

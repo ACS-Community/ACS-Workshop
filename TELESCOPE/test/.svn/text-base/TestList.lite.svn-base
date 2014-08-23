@@ -1,0 +1,7 @@
+SOURCE TATEnvironment
+
+PROLOGUE ./TATPrologue
+
+1 telescopeTest "python ../bin/telescopeTest TelescopeTest"
+
+EPILOGUE ./TATEpilogue

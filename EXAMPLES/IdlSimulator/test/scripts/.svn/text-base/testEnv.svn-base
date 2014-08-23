@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# We require the config/testenv file.
+[ -f config/testEnv ] || exit $?
+
+# Source test configuration file. 
+. config/testEnv
+
+# Check that these variables have been defined, and export them.
+export ACS_INSTANCE
+export ACS_TMP
+export ACS_CDB
+export ACS_LOG_STDOUT
+export ACS_STARTUP_TIMEOUT_MULTIPLIER
+export JAVA_OPTIONS
+
+export TMCDB_STANDALONE_DEBUG
+export TMCDB_CONFIGURATION_NAME
+export TMCDB_STARTUP_NAME
+
+export ASDM_RELATIONAL_DB_MODE
+
+# The ORBgiopMaxMsgSize environment variable controls the maximum
+# message size that can be sent to python clients. By default its 2MB
+# and it needs to be made bigger (4MB) to run the TELCAL_PUBLISHER
+# component in the IDL simulator
+export ORBgiopMaxMsgSize=4194304
+
+RETVAL=0
+
+#
+# Common functions can be found in commonTestEnv, installed from
+# ICD/SharedCode/TestUtils.
+#
+. commonTestEnv
+
+case "$1" in
+    start)
+        createLock
+        printf "Starting test\n"
+        startACS
+        ;;
+    stop)
+        printf "Stopping test\n"
+        stopACS
+        clearLock
+        ;;
+    *)
+        printf "Usage: $0 {start|stop}\n"
+        exit 1
+esac
+
+exit $RETVAL

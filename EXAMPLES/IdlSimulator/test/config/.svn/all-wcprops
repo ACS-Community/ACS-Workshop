@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/ws2013/!svn/ver/22/trunk/EXAMPLES/IdlSimulator/test/config
+END
+sqltool.rc
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/ws2013/!svn/ver/22/trunk/EXAMPLES/IdlSimulator/test/config/sqltool.rc
+END
+archiveConfig.properties
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/ws2013/!svn/ver/22/trunk/EXAMPLES/IdlSimulator/test/config/archiveConfig.properties
+END
+Configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/ws2013/!svn/ver/22/trunk/EXAMPLES/IdlSimulator/test/config/Configuration.xml
+END
+testEnv
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/ws2013/!svn/ver/22/trunk/EXAMPLES/IdlSimulator/test/config/testEnv
+END
+CDB.tar.gz
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/ws2013/!svn/ver/22/trunk/EXAMPLES/IdlSimulator/test/config/CDB.tar.gz
+END
