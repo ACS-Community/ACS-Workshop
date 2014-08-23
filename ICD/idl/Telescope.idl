@@ -2,7 +2,8 @@
 #define _TELESCOPE_IDL_
 
 /*******************************************************************************
-*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
+*    ASTRI - Astrofisica con Specchi a Teccnologia Italiana
+*    (c) INAF - Instituto Nazionale di Astrofisica, 2012
 *    
 *    This library is free software; you can redistribute it and/or
 *    modify it under the terms of the GNU Lesser General Public
@@ -21,14 +22,14 @@
 
 #include <acscomponent.idl>
 #include <Types.idl>
-#include "SYSTEMErr.idl"
+#include "SORTErr.idl"
 
-#pragma prefix "acsws"
+#pragma prefix "astri"
 
 
 /** 
  * @file Telescope.idl
- * SYSTEMErr Telescope IDL file
+ * SORTErr Telescope IDL file
  */
 module TELESCOPE_MODULE
 {
@@ -50,7 +51,7 @@ module TELESCOPE_MODULE
 	 * 
 	 */
 	TYPES::ImageType observe(in TYPES::Position coordinates, in long exposureTime)
-		raises(SYSTEMErr::PositionOutOfLimitsEx);
+		raises(SORTErr::PositionOutOfLimitsEx);
 
 	/** 
 	 * Commands the telescope to move to the given position. Raises
@@ -60,7 +61,7 @@ module TELESCOPE_MODULE
 	 * @return None
 	 */
 	void moveTo(in TYPES::Position coordinates)
-		raises(SYSTEMErr::PositionOutOfLimitsEx);
+		raises(SORTErr::PositionOutOfLimitsEx);
 
 	/**
 	 * Get the current telescope position.

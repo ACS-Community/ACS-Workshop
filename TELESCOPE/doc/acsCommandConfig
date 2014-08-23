@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AcsCommandCenterProject xmlns="Alma/Acs/AcsCommandCenterProject"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    creator="acc-v8.1" xsi:type="AcsCommandCenterProject">
+    <mode>local</mode>
+    <servicesLocalJavaRoot>/home/telescope/sort/TELESCOPE/test/</servicesLocalJavaRoot>
+    <scriptBase>0</scriptBase>
+    <remoteHost></remoteHost>
+    <remoteAccount></remoteAccount>
+    <remotePassword></remotePassword>
+    <toolAgainstManagerHost></toolAgainstManagerHost>
+    <toolAgainstManagerPort></toolAgainstManagerPort>
+    <toolAgainstInterfaceRepository></toolAgainstInterfaceRepository>
+    <toolAgainstNameService></toolAgainstNameService>
+    <containers>
+        <select>0</select>
+        <againstManagerHost></againstManagerHost>
+        <againstManagerPort></againstManagerPort>
+        <againstCDB></againstCDB>
+        <againstInterfaceRepository></againstInterfaceRepository>
+        <container>
+            <name>aragornContainer</name>
+            <type>py</type>
+        </container>
+    </containers>
+</AcsCommandCenterProject>

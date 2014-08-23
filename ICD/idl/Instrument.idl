@@ -2,7 +2,8 @@
 #define _INSTRUMENT_IDL_
 
 /*******************************************************************************
-*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
+*    ASTRI - Astrofisica con Specchi a Teccnologia Italiana
+*    (c) INAF - Instituto Nazionale di Astrofisica, 2012
 *    
 *    This library is free software; you can redistribute it and/or
 *    modify it under the terms of the GNU Lesser General Public
@@ -21,14 +22,14 @@
 
 #include <acscomponent.idl>
 #include <Types.idl>
-#include "SYSTEMErr.idl"
+#include "SORTErr.idl"
 
-#pragma prefix "acsws"
+#pragma prefix "astri"
 
 
 /** 
  * @file Instrument.idl
- * SYSTEMErr Instrument IDL file
+ * SORTErr Instrument IDL file
  */
 
 module INSTRUMENT_MODULE 
@@ -64,7 +65,7 @@ module INSTRUMENT_MODULE
          * @return array of longs containing the image pixels
 	 */
 	TYPES::ImageType takeImage(in long exposureTime)
-		raises(SYSTEMErr::CameraIsOffEx);
+		raises(SORTErr::CameraIsOffEx);
         
         /* Camera settings */
 
@@ -73,21 +74,21 @@ module INSTRUMENT_MODULE
          * @param rgbConfig the TYPES::RGB configuration
          */
         void setRGB(in TYPES::RGB rgbConfig)
-		raises(SYSTEMErr::CameraIsOffEx);
+		raises(SORTErr::CameraIsOffEx);
         
         /** 
          * Set the pixel bias configuration of the camera 
          * @param bias the pixel bias configuration
          */
         void setPixelBias(in long bias)
-		raises(SYSTEMErr::CameraIsOffEx);
+		raises(SORTErr::CameraIsOffEx);
         
         /** 
          * Set the reset level configuration of the camera 
          * @param resetLevel the reset level configuration
          */
         void setResetLevel(in long resetLevel)
-		raises(SYSTEMErr::CameraIsOffEx);
+		raises(SORTErr::CameraIsOffEx);
 	};
 };
 

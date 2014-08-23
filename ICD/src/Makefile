@@ -1,5 +1,6 @@
 #*******************************************************************************
-# ACS Community - https://github.com/ACS-Community/ACS-Workshop
+# ASTRI - Astrofisica con Specchi a Teccnologia Italiana
+# (c) INAF - Instituto Nazionale di Astrofisica, 2012
 # 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -117,7 +118,7 @@ CDB_SCHEMAS =
 #
 # Generate ACS Error System classes
 #
-ACSERRDEF := SYSTEMErr
+ACSERRDEF := SORTErr
 
 # 
 # IDL Files and flags

@@ -2,7 +2,8 @@
 #define _SCHEDULER_IDL_
 
 /*******************************************************************************
-*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
+*    ASTRI - Astrofisica con Specchi a Teccnologia Italiana
+*    (c) INAF - Instituto Nazionale di Astrofisica, 2012
 *    
 *    This library is free software; you can redistribute it and/or
 *    modify it under the terms of the GNU Lesser General Public
@@ -20,20 +21,20 @@
 */
 
 #include <acscomponent.idl>
-#include "SYSTEMErr.idl"
+#include "SORTErr.idl"
 
-#pragma prefix "acsws"
+#pragma prefix "astri"
 
 
 /** 
  * @file Scheduler.idl
- * SYSTEMErr Scheduler IDL file
+ * SORTErr Scheduler IDL file
  */
 
 module SCHEDULER_MODULE
 {
     /** @interface Scheduler
-     *  This is a simple scheduler for the SYSTEMErr
+     *  This is a simple scheduler for the SORTErr
      */
     interface Scheduler : ACS::ACSComponent
 	{
@@ -45,7 +46,7 @@ module SCHEDULER_MODULE
 	 * @return None
 	 */
 	void start ()
-		raises(SYSTEMErr::SchedulerAlreadyRunningEx);
+		raises(SORTErr::SchedulerAlreadyRunningEx);
 
 	/**
 	 * Stops the scheduler.
@@ -58,7 +59,7 @@ module SCHEDULER_MODULE
 	 * @return None
 	 */
 	void stop ()
-		raises(SYSTEMErr::SchedulerAlreadyStoppedEx);
+		raises(SORTErr::SchedulerAlreadyStoppedEx);
 
 	/**
 	 * Returns the pid of the proposal currently under execution
@@ -67,7 +68,7 @@ module SCHEDULER_MODULE
 	 * @retun Proposal ID
 	 */
 	long proposalUnderExecution()
-		raises(SYSTEMErr::NoProposalExecutingEx);
+		raises(SORTErr::NoProposalExecutingEx);
 	};    
 
 };

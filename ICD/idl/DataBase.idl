@@ -2,7 +2,8 @@
 #define _DATABASE_IDL_
 
 /*******************************************************************************
-*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
+*    ASTRI - Astrofisica con Specchi a Teccnologia Italiana
+*    (c) INAF - Instituto Nazionale di Astrofisica, 2012
 *    
 *    This library is free software; you can redistribute it and/or
 *    modify it under the terms of the GNU Lesser General Public
@@ -21,14 +22,14 @@
 
 #include <acscomponent.idl>
 #include <Types.idl>
-#include "SYSTEMErr.idl"
+#include "SORTErr.idl"
 
-#pragma prefix "acsws"
+#pragma prefix "astri"
 
 
 /** 
  * @file Database.idl
- * SYSTEMErr Database IDL File
+ * SORTErr Database IDL File
  */
 
 module DATABASE_MODULE
@@ -75,7 +76,7 @@ module DATABASE_MODULE
 	 * @return Image list that belongs to this proposal
 	 */
 	TYPES::ImageList getProposalObservations(in long pid)
-		raises(SYSTEMErr::ProposalNotYetReadyEx);
+		raises(SORTErr::ProposalNotYetReadyEx);
 
 	/**
 	 * Returns stored proposals which have not been executed yet.
@@ -94,7 +95,7 @@ module DATABASE_MODULE
 	 * @return None
 	 */
 	void setProposalStatus(in long pid, in long status)
-		raises(SYSTEMErr::InvalidProposalStatusTransitionEx);
+		raises(SORTErr::InvalidProposalStatusTransitionEx);
 
 	/**
 	 * Stores an image for a given proposal and target. Raises an exception
@@ -108,7 +109,7 @@ module DATABASE_MODULE
 	void storeImage(in long pid, 
 			in long tid,
 			in TYPES::ImageType image)
-		raises(SYSTEMErr::ImageAlreadyStoredEx); // TODO raise also new exception "ProposalDoesNotExist"
+		raises(SORTErr::ImageAlreadyStoredEx); // TODO raise also new exception "ProposalDoesNotExist"
         /**
          * Clean all the proposals
          */

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+acsutilTATPrologue -l
+
+echo "Starting testContainer"
+acsutilAwaitContainerStart -cpp andreaContainer
+acsutilAwaitContainerStart -py aragornContainer

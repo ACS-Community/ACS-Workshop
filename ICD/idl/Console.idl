@@ -2,7 +2,8 @@
 #define _CONSOLE_IDL_
 
 /*******************************************************************************
-*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
+*    ASTRI - Astrofisica con Specchi a Teccnologia Italiana
+*    (c) INAF - Instituto Nazionale di Astrofisica, 2012
 *    
 *    This library is free software; you can redistribute it and/or
 *    modify it under the terms of the GNU Lesser General Public
@@ -21,14 +22,14 @@
 
 #include <acscomponent.idl>
 #include <Types.idl>
-#include "SYSTEMErr.idl"
+#include "SORTErr.idl"
 
-#pragma prefix "acsws"
+#pragma prefix "astri"
 
 
 /** 
  * @file Console.idl
- * SYSTEMErr Console IDL file
+ * SORTErr Console IDL file
  */
 
 module CONSOLE_MODULE 
@@ -48,7 +49,7 @@ module CONSOLE_MODULE
 	 *  @return void
 	 */
 	void setMode(in boolean mode)
-		raises(SYSTEMErr::AlreadyInAutomaticEx);
+		raises(SORTErr::AlreadyInAutomaticEx);
 	
 	/** 
 	 * Get the current operator's mode. 
@@ -63,7 +64,7 @@ module CONSOLE_MODULE
 	 *  @return void
 	 */
 	void cameraOn()
-		raises (SYSTEMErr::SystemInAutoModeEx);
+		raises (SORTErr::SystemInAutoModeEx);
 	
 	/** 
 	 * Set the camera off.
@@ -71,7 +72,7 @@ module CONSOLE_MODULE
 	 *  @return void
 	 */
 	void cameraOff()
-		raises (SYSTEMErr::SystemInAutoModeEx);
+		raises (SORTErr::SystemInAutoModeEx);
 	
 	/** 
 	 * Move telescope in synchronous mode. Raises an exception if the
@@ -81,7 +82,7 @@ module CONSOLE_MODULE
 	 *  @return void
 	 */    
 	void moveTelescope(in TYPES::Position coordinates) 
-		raises(SYSTEMErr::PositionOutOfLimitsEx, SYSTEMErr::SystemInAutoModeEx);
+		raises(SORTErr::PositionOutOfLimitsEx, SORTErr::SystemInAutoModeEx);
 
 	/** 
 	 * Current telescope position. 
@@ -96,7 +97,7 @@ module CONSOLE_MODULE
 	 *  @return Image from the camera
 	 */    
 	TYPES::ImageType getCameraImage()
-		raises(SYSTEMErr::SystemInAutoModeEx, SYSTEMErr::CameraIsOffEx);
+		raises(SORTErr::SystemInAutoModeEx, SORTErr::CameraIsOffEx);
 
          /* Camera settings */
 
@@ -105,21 +106,21 @@ module CONSOLE_MODULE
          * @param rgbConfig the TYPES::RGB configuration
          */
         void setRGB(in TYPES::RGB rgbConfig)
-                raises(SYSTEMErr::CameraIsOffEx);
+                raises(SORTErr::CameraIsOffEx);
         
         /** 
          * Set the pixel bias configuration of the camera 
          * @param bias the pixel bias configuration
          */
         void setPixelBias(in long bias)
-                raises(SYSTEMErr::CameraIsOffEx);
+                raises(SORTErr::CameraIsOffEx);
         
         /**  
          * Set the reset level configuration of the camera 
          * @param resetLevel the reset level configuration
          */
         void setResetLevel(in long resetLevel)
-                raises(SYSTEMErr::CameraIsOffEx);
+                raises(SORTErr::CameraIsOffEx);
 
 	};
 };
