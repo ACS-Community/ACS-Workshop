@@ -44,7 +44,7 @@
 
 SUBSYSTEM = "Toy Model"
 
-MODULES_TOY  = ICD
+MODULES_TOY  = ICD DataBase Instrument Telescope Scheduler
 
 MODULES =  $(foreach dir, $(MODULES_TOY), $(dir))
 
