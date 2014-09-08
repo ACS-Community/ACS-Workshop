@@ -56,12 +56,13 @@ INCLUDES        =
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = InstrumentImpl
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
-lllll_OBJECTS   =
+InstrumentImpl_OBJECTS   = InstrumentImpl
+InstrumentImpl_LIBS	 = acscomponent InstrumentStubs
 
 #
 # Scripts (public and local)
