@@ -79,6 +79,8 @@ class TelescopeImpl: public acscomponent::ACSComponentImpl,     //Standard compo
   
   virtual ::TYPES::Position getCurrentPosition (void);
   virtual void execute();
+  virtual void cleanUp();
+
  private:
   TYPES::Position Pos;
   INSTRUMENT_MODULE::Instrument_var inst_p;

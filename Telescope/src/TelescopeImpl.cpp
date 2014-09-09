@@ -33,7 +33,23 @@ void TelescopeImpl::execute()
   }
 }
 
-  TYPES::ImageType * 
+
+void TelescopeImpl::cleanUp()
+{
+    ACS_TRACE("TelescopeImpl::cleanUp");
+
+
+    if (inst_p != INSTRUMENT_MODULE::Instrument::_nil() ) {
+      getContainerServices()->releaseComponent("INSTRUMENT");
+      
+      // be sure to set the reference to nil
+      inst_p = INSTRUMENT_MODULE::Instrument::_nil();
+    }
+
+}
+
+
+TYPES::ImageType * 
 TelescopeImpl::observe (
 			const ::TYPES::Position & coordinates,
 			::CORBA::Long exposureTime) 
