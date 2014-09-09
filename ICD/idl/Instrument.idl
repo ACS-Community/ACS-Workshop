@@ -89,6 +89,18 @@ module INSTRUMENT_MODULE
         void setResetLevel(in long resetLevel)
 		raises(SYSTEMErr::CameraIsOffEx);
 	};
+
+  interface Camera : ACS::ACSComponent
+	{
+	/**
+	 * Retrieve image from the Instrument. Raises an exception if the 
+	 * camera is not on.
+         *
+         * @return array of longs containing the image pixels
+	 */
+	TYPES::ImageType getFrame(in long exposureTime)
+		raises(SYSTEMErr::CameraIsOffEx);
+	};
 };
 
 #endif

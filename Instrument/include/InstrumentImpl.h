@@ -34,7 +34,7 @@ class InstrumentImpl: public acscomponent::ACSComponentImpl,     //Standard comp
     
     /* --------------------- [ CORBA interface ] ----------------------*/
     /**
-     * Camera of       *
+     * Camera of       /**
          * Turns the Instrument camera on.
          *
          * @return None
@@ -82,18 +82,15 @@ class InstrumentImpl: public acscomponent::ACSComponentImpl,     //Standard comp
         virtual void setResetLevel(CORBA::Long resetLevel);
 
 
+// add by Danilo
+	virtual void execute();
+	virtual void cleanUp();
 
+	
 
-
-/* incluso por danilo
 private:
-	bool CameraState;
-
-
-*/
-
-
-
+	bool cameraState;
+	INSTRUMENT_MODULE::Camera_var camera;
 };
 /*\@}*/
 /*\@}*/

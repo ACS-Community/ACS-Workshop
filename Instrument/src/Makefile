@@ -56,15 +56,16 @@ INCLUDES        =
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       = InstrumentImpl
+LIBRARIES       = InstrumentImpl CameraImpl
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
 InstrumentImpl_OBJECTS   = InstrumentImpl
-InstrumentImpl_LIBS	 = acscomponent InstrumentStubs
+InstrumentImpl_LIBS	 = acscomponent InstrumentStubs maciErrType ACSErrTypeCORBA
+CameraImpl_OBJECTS   = CameraImpl
+CameraImpl_LIBS      = acscomponent InstrumentStubs
 
-#
 # Scripts (public and local)
 # ----------------------------
 SCRIPTS         =

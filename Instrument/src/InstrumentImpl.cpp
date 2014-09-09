@@ -5,29 +5,37 @@
 InstrumentImpl::InstrumentImpl(
 	     const ACE_CString &name,
 	     maci::ContainerServices *& containerServices):
-	acscomponent::ACSComponentImpl(name, containerServices)
+	acscomponent::ACSComponentImpl(name, containerServices),
+	cameraState(false)
 {
-
-   cameraOn();
 
 }
 
 InstrumentImpl::~InstrumentImpl()
 {
 
-   cameraOff();
+}
+
+void InstrumentImpl::execute()
+{
+//m_door_p = getContainerServices()->getComponent<acsexmplBuilding::Door>(frontDoorCobName.c_str()); 
+   camera = getContainerServices()->getComponent<INSTRUMENT_MODULE::Camera> ("CAMERA");
 
 }
 
+void InstrumentImpl::cleanUp()
+{
+    getContainerServices()->releaseComponent("CAMERA");
+}
 
 void InstrumentImpl::cameraOn()
 {
-   CameraState = true;   // Camera ON
+   cameraState = true;   // Camera ON
 }
 
 void InstrumentImpl::cameraOff()
 {
-   CameraState = false;   // Camera OFF
+   cameraState = false;   // Camera OFF
 }
 
 
