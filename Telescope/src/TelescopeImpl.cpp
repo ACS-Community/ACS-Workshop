@@ -51,14 +51,22 @@ void TelescopeImpl::cleanUp()
 
 TYPES::ImageType * 
 TelescopeImpl::observe (
-			const ::TYPES::Position & coordinates,
-			::CORBA::Long exposureTime) 
+		       const ::TYPES::Position & coordinates,
+		       ::CORBA::Long exposureTime) 
 {
+  TYPES::ImageType * image = NULL;
+
   ACS_SHORT_LOG((LM_INFO,"TelescopeImpl::observe"));
   moveTo(coordinates);
-  inst_p->takeImage(exposureTime);
-
-  return NULL;
+  
+  if (inst_p == INSTRUMENT_MODULE::Instrument::_nil() ) {    
+    ACS_SHORT_LOG((LM_ERROR,
+		   "TelescopeImpl::observe: cant retrive component Instrument"));
+  } else {
+    image = inst_p->takeImage(exposureTime);
+  }
+ 
+  return image;
 }
 
 
@@ -78,4 +86,5 @@ TYPES::Position TelescopeImpl::getCurrentPosition (void)
 }
 
 
+#include <maciACSComponentDefines.h>
 MACI_DLL_SUPPORT_FUNCTIONS (TelescopeImpl);

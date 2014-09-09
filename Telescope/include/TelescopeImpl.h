@@ -46,8 +46,6 @@
 #include <TelescopeS.h>
 #include <InstrumentC.h>
 
-#include <maciACSComponentDefines.h>
-
 
 ///CORBA generated servant stub
 //#include <acsexmplBuildingS.h>
