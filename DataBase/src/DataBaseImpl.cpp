@@ -39,6 +39,8 @@ CORBA::Long DataBaseImpl::getProposalStatus(const CORBA::Long pid)
 
 void DataBaseImpl::removeProposal(const CORBA::Long pid)
 {
+	pplist[pid].status = TYPES::PROPOSAL_STATUS_REMOVED;
+	return;
 }
 
 TYPES::ImageList *DataBaseImpl::getProposalObservations(const CORBA::Long pid)
