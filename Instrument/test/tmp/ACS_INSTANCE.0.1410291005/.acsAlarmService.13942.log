@@ -1,9 +1,0 @@
-2014-09-09T19:29:39.567 DEBUG Unable to determine the process ID from /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/pids/ACS_ALARM_SERVICE_PID.
-2014-09-09T19:29:39.598 DEBUG Unable to find the process ID for a program using the '3013' TCP port
-2014-09-09T19:29:39.603 DEBUG Unable to determine the process ID from TCP port 3013.
-2014-09-09T19:29:39.609 ERROR Unable to determine AlarmService's process ID.
-2014-09-09T19:29:39.619 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0 already exists!
-2014-09-09T19:29:39.628 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/USED_CONTAINER_PORTS already exists!
-2014-09-09T19:29:39.636 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/USED_NOTIFY_PORTS already exists!
-2014-09-09T19:29:39.644 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/pids already exists!
-2014-09-09T19:29:39.674 INFO Starting ACS AlarmService

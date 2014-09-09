@@ -56,7 +56,7 @@ TYPES::ProposalList* DataBaseImpl::getProposals()
 
 void DataBaseImpl::setProposalStatus(const CORBA::Long pid, const CORBA::Long status)
 {
-	if (status >= 0 && status < 3) pplist[pid].status = status ;
+	if (status >= 0 && status < 4) pplist[pid].status = status ;
 	return 0;
 
 }
