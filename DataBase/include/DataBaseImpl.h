@@ -10,6 +10,10 @@
 #include <SYSTEMErr.h>
 #include <DataBaseS.h>
 
+//const static ulong PROPOSAL_STATUS_QUEUED=0;
+//const static ulong PROPOSAL_STATUS_RUN=1;
+//const static ulong PROPOSAL_STATUS_READY=2;
+
 using namespace acscomponent;
 
 class DataBaseImpl:public virtual ACSComponentImpl,
@@ -27,9 +31,11 @@ public:
 	virtual void setProposalStatus(const CORBA::Long pid, const CORBA::Long status);
 	virtual void storeImage(CORBA::Long pid, CORBA::Long tid, const TYPES::ImageType& image);
 	virtual void clean();
-private:
 	
-
+private:
+	::CORBA::ULong currpid;
+	TYPES::ProposalList_var pplist;
+	
 };
 
 #endif

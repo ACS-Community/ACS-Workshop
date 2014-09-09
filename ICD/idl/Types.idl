@@ -67,6 +67,10 @@ module TYPES
             long blue;
     };
 
+    const long PROPOSAL_STATUS_QUEUED=0;
+    const long PROPOSAL_STATUS_RUN=1;
+    const long PROPOSAL_STATUS_READY=2;
+
 };
 
 #endif
