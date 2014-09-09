@@ -1,3 +1,0 @@
-2014-09-09T19:29:44.372 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/pids already exists!
-2014-09-09T19:29:44.476 INFO Running the container with these arguments: 'maciContainer toyContainer -ORBEndpoint iiop://192.168.0.114:4000 -m corbaloc::192.168.0.114:3000/Manager'
-2014-09-09T19:29:53.183 INFO Container: 'toyContainer' exited with code: 0.
