@@ -34,7 +34,7 @@ class InstrumentImpl: public acscomponent::ACSComponentImpl,     //Standard comp
     
     /* --------------------- [ CORBA interface ] ----------------------*/
     /**
-     * Camera of       /**
+     * Camera of       *
          * Turns the Instrument camera on.
          *
          * @return None
@@ -66,7 +66,7 @@ class InstrumentImpl: public acscomponent::ACSComponentImpl,     //Standard comp
          * Set the RGB configuration of the camera
          * @param rgbConfig the TYPES::RGB configuration
          */
-        virtual void setRGB(TYPES::RGB rgbConfig);
+        virtual void setRGB(const TYPES::RGB& rgbConfig);
 
         /**
          * Set the pixel bias configuration of the camera

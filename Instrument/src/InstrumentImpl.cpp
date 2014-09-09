@@ -34,7 +34,7 @@ TYPES::ImageType *InstrumentImpl::takeImage(CORBA::Long exposureTime)
   return NULL;
 }
 
-void InstrumentImpl::setRGB(TYPES::RGB rgbConfig)
+void InstrumentImpl::setRGB(const TYPES::RGB& rgbConfig)
 {
 
 }
@@ -51,4 +51,5 @@ void InstrumentImpl::setResetLevel(CORBA::Long resetLevel)
 }
 
 
-
+#include <maciACSComponentDefines.h>
+MACI_DLL_SUPPORT_FUNCTIONS(InstrumentImpl)

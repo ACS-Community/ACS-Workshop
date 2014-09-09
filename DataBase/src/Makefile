@@ -56,12 +56,13 @@ INCLUDES        =
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = DataBaseImpl
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
-lllll_OBJECTS   =
+DataBaseImpl_OBJECTS   = DataBaseImpl
+DataBaseImpl_LIBS   = DataBaseStubs acscomponent
 
 #
 # Scripts (public and local)
