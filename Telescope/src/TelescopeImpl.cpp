@@ -57,8 +57,6 @@ TelescopeImpl::observe (
 		       ::CORBA::Long exposureTime) 
 {
   TYPES::ImageType * image = NULL;
-
-  ACS_SHORT_LOG((LM_INFO,"TelescopeImpl::observe"));
   moveTo(coordinates);
   
   if (inst_p == INSTRUMENT_MODULE::Instrument::_nil() ) {    
@@ -71,9 +69,10 @@ TelescopeImpl::observe (
     ex.log();
     throw ex.getCORBAReferenceNilEx();
   } else {
+    ACS_SHORT_LOG((LM_INFO,"TelescopeImpl::observe"));
     image = inst_p->takeImage(exposureTime);
   }
- 
+  
   return image;
 }
 
