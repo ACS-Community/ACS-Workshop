@@ -1,7 +1,7 @@
 #include <DataBaseImpl.h>
 
 DataBaseImpl::DataBaseImpl(const ACE_CString &name,
-        maci::ContainerServices * containerServices) : acscomponent::ACSComponentImpl(name, containerServices)
+			   maci::ContainerServices * containerServices) : acscomponent::ACSComponentImpl(name, containerServices), pplist(new TYPES::ProposalList)
 {
 	currpid = 0;
 	pplist->length(0);
