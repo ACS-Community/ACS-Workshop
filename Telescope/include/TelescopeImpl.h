@@ -44,6 +44,10 @@
 #include <TypesS.h>
 
 #include <TelescopeS.h>
+
+#include <maciACSComponentDefines.h>
+
+
 ///CORBA generated servant stub
 //#include <acsexmplBuildingS.h>
 
@@ -81,6 +85,8 @@ class TelescopeImpl: public acscomponent::ACSComponentImpl,     //Standard compo
   virtual ::TYPES::Position
     getCurrentPosition (void);
 
+ private:
+  TYPES::Position Pos;
 
 }; 
 

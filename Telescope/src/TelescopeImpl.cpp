@@ -10,7 +10,9 @@ TelescopeImpl::TelescopeImpl(const ACE_CString& name, maci::ContainerServices *&
   POA_TELESCOPE_MODULE::Telescope(),
   acscomponent::ACSComponentImpl(name, containerServices)
  {
-
+   
+   Pos.el = 90.0;
+   Pos.az = 0.0;
 }
 
 
@@ -28,19 +30,22 @@ TelescopeImpl::observe (
 }
 
 
+
 void
 TelescopeImpl::moveTo (
 		       const ::TYPES::Position & coordinates){
 
+  this->Pos = coordinates;
   return;
 }
 
 
 TYPES::Position
 TelescopeImpl::getCurrentPosition (void) {
-  TYPES::Position Pos;
+  // TYPES::Position Pos;
 
-
-  return Pos;
+ 
+  return this->Pos;
 }
 
+MACI_DLL_SUPPORT_FUNCTIONS (TelescopeImpl);
