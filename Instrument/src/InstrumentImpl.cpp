@@ -8,23 +8,26 @@ InstrumentImpl::InstrumentImpl(
 	acscomponent::ACSComponentImpl(name, containerServices)
 {
 
+   cameraOn();
 
 }
 
 InstrumentImpl::~InstrumentImpl()
 {
 
+   cameraOff();
+
 }
 
 
 void InstrumentImpl::cameraOn()
 {
-
+   CameraState = true;   // Camera ON
 }
 
 void InstrumentImpl::cameraOff()
 {
-
+   CameraState = false;   // Camera OFF
 }
 
 
