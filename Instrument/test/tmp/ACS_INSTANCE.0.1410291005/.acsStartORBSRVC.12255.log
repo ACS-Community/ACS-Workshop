@@ -1,4 +1,0 @@
-2014-09-09T19:29:28.952 INFO Starting CORBA Services
-2014-09-09T19:29:28.963 INFO Orb options: -ORBDottedDecimalAddresses 1
-For this ACS session, please do an 'export ACS_INSTANCE=0' on all terminals running ACS clients.
-The acsStartORBSRVC script has now completed!
