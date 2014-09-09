@@ -22,12 +22,12 @@ InstrumentImpl::~InstrumentImpl()
 
 void InstrumentImpl::cameraOn()
 {
-   CameraState = true;
+   CameraState = true;   // Camera ON
 }
 
 void InstrumentImpl::cameraOff()
 {
-   CameraState = false;
+   CameraState = false;   // Camera OFF
 }
 
 
