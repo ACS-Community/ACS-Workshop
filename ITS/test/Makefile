@@ -82,7 +82,7 @@ lllll_OBJECTS   =
 # Scripts (public and local)
 # ----------------------------
 SCRIPTS         =
-SCRIPTS_L       =
+SCRIPTS_L       = TestPrologue
 
 #
 # TCL scripts (public and local)
@@ -94,7 +94,7 @@ TCL_SCRIPTS_L   =
 # Python stuff (public and local)
 # ----------------------------
 PY_SCRIPTS         =
-PY_SCRIPTS_L       =
+PY_SCRIPTS_L       = compTest
 
 PY_MODULES         =
 PY_MODULES_L       =
