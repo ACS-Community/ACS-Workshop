@@ -60,9 +60,9 @@ LIBRARIES       = TelescopeImpl
 LIBRARIES_L     =
 
 #
-# <brief description of lllll library>
+# <brief description of TelescopeImpl library>
 TelescopeImpl_OBJECTS   = TelescopeImpl
-TelescopeImpl_LIBS   = TelescopeStubs acscomponent
+TelescopeImpl_LIBS   = TelescopeStubs InstrumentStubs acscomponent ACSErrTypeCORBA maciErrType
 
 
 #
