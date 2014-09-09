@@ -40,9 +40,9 @@ EXECUTABLES_L   =
 
 #
 # <brief description of xxxxx program>
-xxxxx_OBJECTS   =	
+SchedulerImpl_OBJECTS   = SchedulerImpl
 xxxxx_LDFLAGS   =
-xxxxx_LIBS      =
+SchedulerImpl_LIBS      = SchedulerStubs acscomponent
 
 #
 # special compilation flags for single c sources
@@ -56,7 +56,7 @@ INCLUDES        =
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = SchedulerImpl
 LIBRARIES_L     =
 
 #
