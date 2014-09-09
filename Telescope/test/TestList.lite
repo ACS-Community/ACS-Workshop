@@ -1,7 +1,7 @@
 SOURCE TestEnv.tcl
 PROLOGUE TestPrologue
 
-1 "compTest" "acsutilTATTestRunner compTest"
+#1 "compTest" "acsutilTATTestRunner compTest"
 2 "test1" "acsutilTATTestRunner test1"
 #3 "<test3Name>" "acsutilTATTestRunner <script3> <arguments3>"
 #4 "<test4Name>" "acsutilTATTestRunner <script4> <arguments4>"
