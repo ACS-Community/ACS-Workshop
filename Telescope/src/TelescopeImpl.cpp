@@ -42,8 +42,6 @@ TelescopeImpl::moveTo (
 
 TYPES::Position
 TelescopeImpl::getCurrentPosition (void) {
-  // TYPES::Position Pos;
-
  
   return this->Pos;
 }
