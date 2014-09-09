@@ -29,10 +29,11 @@ void TelescopeImpl::execute()
   if (inst_p == INSTRUMENT_MODULE::Instrument::_nil() ) {
     
     ACS_SHORT_LOG((LM_ERROR,"Building::execute: cant retrive component Instrument"));
+
+  }
 }
 
-
-TYPES::ImageType * 
+  TYPES::ImageType * 
 TelescopeImpl::observe (
 			const ::TYPES::Position & coordinates,
 			::CORBA::Long exposureTime) 
