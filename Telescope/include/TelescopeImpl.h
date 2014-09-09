@@ -44,6 +44,7 @@
 #include <TypesS.h>
 
 #include <TelescopeS.h>
+#include <InstrumentC.h>
 
 #include <maciACSComponentDefines.h>
 
@@ -51,15 +52,11 @@
 ///CORBA generated servant stub
 //#include <acsexmplBuildingS.h>
 
-
 ///Include the smart prointer for the properties
 //#include <baciSmartPropertyPointer.h>
 
 ///Include the acs thread header 
 //#include <acsThread.h>
-
-/** @file acsexmplDoorImpl.h
- */
 
 //class TelescopeImpl; // declaration
 
@@ -69,25 +66,24 @@ class TelescopeImpl: public acscomponent::ACSComponentImpl,     //Standard compo
  public:
   
   TelescopeImpl(const ACE_CString& name,
-			     maci::ContainerServices *& 
+		maci::ContainerServices *& 
 		containerServices);
-
+  
   virtual ~TelescopeImpl();
-
+  
   virtual ::TYPES::ImageType *
     observe (const ::TYPES::Position & coordinates,
 	     ::CORBA::Long exposureTime);
-
-  virtual void
-    moveTo (
-      const ::TYPES::Position & coordinates);
-
-  virtual ::TYPES::Position
-    getCurrentPosition (void);
+  
+  virtual void moveTo (const ::TYPES::Position & coordinates);
+  
+  virtual ::TYPES::Position getCurrentPosition (void);
+  virtual void execute();
+  virtual void cleanUp();
 
  private:
   TYPES::Position Pos;
-
+  INSTRUMENT_MODULE::Instrument_var inst_p;
 }; 
 
 
