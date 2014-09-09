@@ -5,19 +5,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <_ Name="DATABASE" 	    
          Code="DataBaseImpl" 
-         Type="IDL:alma/DATABASE_MODULE/DataBase:1.0"
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
          Container="toyContainer" ImplLang="cpp" />
       <_ Name="SCHEDULER" 	    
          Code="SchedulerImpl" 
-         Type="IDL:alma/SCHEDULER_MODULE/Scheduler:1.0"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
          Container="toyContainer" ImplLang="cpp" />
       <_ Name="TELESCOPE" 	    
          Code="TelescopeImpl" 
-         Type="IDL:alma/TELESCOPE_MODULE/Telescope:1.0"
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
          Container="toyContainer" ImplLang="cpp" />
       <_ Name="INSTRUMENT" 	    
          Code="InstrumentImpl" 
-         Type="IDL:alma/INSTRUMENT_MODULE/Instrument:1.0"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
          Container="toyContainer" ImplLang="cpp" />
 </Components>
 

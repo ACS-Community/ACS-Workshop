@@ -24,7 +24,7 @@ class Scheduler: public acscomponent::ACSComponentImpl,
      */
     Scheduler(
 	 const ACE_CString& name,
-	 maci::ContainerServices * containerServices);
+	 maci::ContainerServices *& containerServices);
 
     /**
      * Destructor

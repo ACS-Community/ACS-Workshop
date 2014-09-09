@@ -2,7 +2,7 @@
 
 Scheduler::Scheduler (
 	 const ACE_CString& name,
-	 maci::ContainerServices * containerServices)
+	 maci::ContainerServices *& containerServices)
 : ACSComponentImpl(name, containerServices)
 {
 }
@@ -24,3 +24,5 @@ void Scheduler::stop (void)
   return 0;
 }
 
+#include <maciACSComponentDefines.h>
+MACI_DLL_SUPPORT_FUNCTIONS(Scheduler)

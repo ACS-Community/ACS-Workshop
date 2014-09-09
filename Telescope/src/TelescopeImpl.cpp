@@ -46,4 +46,5 @@ TelescopeImpl::getCurrentPosition (void) {
   return this->Pos;
 }
 
-MACI_DLL_SUPPORT_FUNCTIONS (TelescopeImpl);
+#include <maciACSComponentDefines.h>
+MACI_DLL_SUPPORT_FUNCTIONS(TelescopeImpl)

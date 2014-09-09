@@ -1,5 +1,20 @@
 #*******************************************************************************
-# PPPPPPPP
+# ALMA - Atacama Large Millimiter Array
+# Copyright (c) UNSPECIFIED - FILL IN, 2014 
+# 
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+# 
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 #
 # "@(#) $Id$"
 #
@@ -7,7 +22,7 @@
 #
 # who       when      what
 # --------  --------  ----------------------------------------------
-# teamd  08/09/14  created
+# almamgr  2014-09-09  created
 #
 
 #*******************************************************************************
@@ -56,13 +71,12 @@ INCLUDES        =
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       = DataBaseImpl
+LIBRARIES       =
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
-DataBaseImpl_OBJECTS   = DataBaseImpl
-DataBaseImpl_LIBS   = DataBaseStubs acscomponent
+lllll_OBJECTS   =
 
 #
 # Scripts (public and local)
