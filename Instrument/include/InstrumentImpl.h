@@ -85,6 +85,15 @@ class InstrumentImpl: public acscomponent::ACSComponentImpl,     //Standard comp
 
 
 
+/* incluso por danilo
+private:
+	bool CameraState;
+
+
+*/
+
+
+
 };
 /*\@}*/
 /*\@}*/
