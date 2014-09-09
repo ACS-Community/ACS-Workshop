@@ -62,7 +62,7 @@ LIBRARIES_L     =
 #
 # <brief description of lllll library>
 InstrumentImpl_OBJECTS   = InstrumentImpl
-InstrumentImpl_LIBS	 = acscomponent InstrumentStubs maciErrType ACSErrTypeCORBA
+InstrumentImpl_LIBS	 = acscomponent InstrumentStubs maciErrType ACSErrTypeCORBA SYSTEMErr
 CameraImpl_OBJECTS   = CameraImpl
 CameraImpl_LIBS      = acscomponent InstrumentStubs
 

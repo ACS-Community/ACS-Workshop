@@ -81,6 +81,8 @@ class InstrumentImpl: public acscomponent::ACSComponentImpl,     //Standard comp
          */
         virtual void setResetLevel(CORBA::Long resetLevel);
 
+        virtual bool checkCameraState();
+
 
 // add by Danilo
 	virtual void execute();

@@ -19,6 +19,7 @@ CameraImpl::~CameraImpl()
 
 TYPES::ImageType* CameraImpl::getFrame(CORBA::Long exposure)
 {
+   ACS_TRACE("CameraImpl::getFrame");
    TYPES::ImageType_var data(new TYPES::ImageType);
    data->length(500);
    for(int i=0;i<500;i++)
@@ -26,3 +27,5 @@ TYPES::ImageType* CameraImpl::getFrame(CORBA::Long exposure)
    return data._retn();
 }
 
+#include <maciACSComponentDefines.h>
+MACI_DLL_SUPPORT_FUNCTIONS(CameraImpl)
