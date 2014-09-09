@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by Bogdan Jeram (E.S.O.) -->
+<Type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="Alma/ACSError" xsi:schemaLocation="Alma/ACSError ACSError.xsd" name="ErrTelescope" type="15" _prefix="alma">
+        <ErrorCode name="ErrTelescopeCOOROOR"
+                        shortDescription="Coordinate out of renge"
+                        description="Coordinate Value out of range">
+                        <Member name="Elevation"
+                                type="double"
+                                description="Elevation angle"/>
+                        <Member name="Azimut"
+                                type="double"
+                                description="Azimut angle"/>
+        </ErrorCode>
+</Type>

@@ -3,6 +3,8 @@
 
 
 #include "TelescopeImpl.h"
+#include <ACSErrTypeCORBA.h>
+#include <ErrTelescope.h>
 
 
 TelescopeImpl::TelescopeImpl(const ACE_CString& name, maci::ContainerServices *& containerServices):
@@ -60,8 +62,14 @@ TelescopeImpl::observe (
   moveTo(coordinates);
   
   if (inst_p == INSTRUMENT_MODULE::Instrument::_nil() ) {    
-    ACS_SHORT_LOG((LM_ERROR,
+    /*  ACS_SHORT_LOG((LM_ERROR,
 		   "TelescopeImpl::observe: cant retrive component Instrument"));
+    */
+
+    ACSErrTypeCORBA::CORBAReferenceNilExImpl ex(__FILE__, __LINE__,"TelescopeImpl::observe");
+    ex.setVariable("Instrument");
+    ex.log();
+    throw ex.getCORBAReferenceNilEx();
   } else {
     image = inst_p->takeImage(exposureTime);
   }
@@ -69,13 +77,36 @@ TelescopeImpl::observe (
   return image;
 }
 
-
+// Manejo de errores si somos usuarios de observe():
+/*
+try {
+observe()
+  } catch(CORBAReferenceNilEx ex) {
+  ex.log()
+ }
+  } catch (...) {
+ }
+*/
 void TelescopeImpl::moveTo (const ::TYPES::Position & coordinates)
 {
+  ErrTelescope::ErrTelescopeCOOROORExImpl ex(__FILE__, __LINE__,"TelescopeImpl::moveTo");
+
+  if ( coordinates.el < 0 || coordinates.el > 90 ) {
+    ex.setElevation(coordinates.el);
+    ex.log();
+    throw ex.getErrTelescopeCOOROOREx();
+  }
+  if ( coordinates.az < 0 || coordinates.az > 360 ) {
+    ex.setAzimut(coordinates.az);
+    ex.log();
+    throw ex.getErrTelescopeCOOROOREx();
+  }
+
   ACS_SHORT_LOG((LM_INFO,
 		 "TelescopeImpl::moveTo: %.1f, %.1f",
 		 coordinates.el, coordinates.az));
-  this->Pos = coordinates;
+   this->Pos = coordinates;
+
   return;
 }
 

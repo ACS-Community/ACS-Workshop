@@ -57,14 +57,14 @@ INCLUDES        =
 # Libraries (public and local)
 # ----------------------------
 LIBRARIES       = TelescopeImpl
-LIBRARIES_L     =
+LIBRARIES_L     = 
 
 #
 # <brief description of TelescopeImpl library>
 TelescopeImpl_OBJECTS   = TelescopeImpl
-TelescopeImpl_LIBS   = TelescopeStubs InstrumentStubs acscomponent ACSErrTypeCORBA maciErrType
+TelescopeImpl_LIBS   = TelescopeStubs InstrumentStubs acscomponent ACSErrTypeCORBA maciErrType ErrTelescope
 
-
+ACSERRDEF = ErrTelescope
 #
 # Scripts (public and local)
 # ----------------------------
