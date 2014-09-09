@@ -1,0 +1,14 @@
+1 - E
+1 - ======================================================================
+1 - ERROR: testInstrument (__main__.InstrumentTest)
+1 - ----------------------------------------------------------------------
+1 - Traceback (most recent call last):
+1 -   File "/home/teami/ACS-Workshop/Instrument/bin/test1", line 17, in testInstrument
+1 -     if self.instrument.checkCameraState() == 1:
+1 - AttributeError: _objref_Instrument instance has no attribute 'checkCameraState'
+1 - 
+1 - ----------------------------------------------------------------------
+1 - Ran 1 test in 0.168s
+1 - 
+1 - FAILED (errors=1)
+1 - 2014-09-09T19:03:36.546 Python Client: initialized by teami@instrument disconnect - Disconnect called for client

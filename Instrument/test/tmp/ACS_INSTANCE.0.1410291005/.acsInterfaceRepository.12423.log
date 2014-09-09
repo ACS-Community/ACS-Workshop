@@ -1,0 +1,5 @@
+2014-09-09T19:29:30.311 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0 already exists!
+2014-09-09T19:29:30.324 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/USED_CONTAINER_PORTS already exists!
+2014-09-09T19:29:30.334 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/USED_NOTIFY_PORTS already exists!
+2014-09-09T19:29:30.342 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/pids already exists!
+2014-09-09T19:29:30.369 INFO Starting Interface Repository

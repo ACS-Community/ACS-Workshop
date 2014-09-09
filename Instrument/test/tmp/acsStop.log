@@ -1,0 +1,19 @@
+2014-09-09T19:29:51.906 INFO [acsStop] Stopping all ACS processes using 'ACS_INSTANCE=0'
+2014-09-09T19:29:51.919 INFO [acsStop] Shutting down containers...
+2014-09-09T19:29:51.932 INFO [acsStop] Shutting down toyContainer container
+2014-09-09T19:29:54.130 INFO [acsStop] Stopping Manager
+2014-09-09T19:29:56.454 INFO [acsManager] acsManager: done.
+2014-09-09T19:29:56.515 INFO [acsStopORBSRVC] Stopping the ORB Services and CDB using 'ACS_INSTANCE=0'
+2014-09-09T19:29:56.643 INFO [acsAlarmService] Stopping the AlarmService
+2014-09-09T19:29:58.947 INFO [acsConfigurationDatabase] Stopping the CDB
+2014-09-09T19:30:01.145 INFO [acsNamingService] Stopping the CORBA Naming Service
+2014-09-09T19:30:01.787 INFO [acsNotifyService] Stopping the CORBA Notification Service
+2014-09-09T19:30:02.167 INFO [acsNotifyService] Stopping the CORBA Logging Notification Service
+2014-09-09T19:30:02.817 INFO [acsNotifyService] Stopping the CORBA Archive Notification Service
+2014-09-09T19:30:03.442 INFO [acsNotifyService] Stopping the CORBA Alarm Notification Service
+2014-09-09T19:30:04.018 INFO [acsLoggingService] Stopping the CORBA Logging Service
+2014-09-09T19:30:04.607 INFO [acsInterfaceRepository] Stopping the CORBA Interface Repository
+2014-09-09T19:30:05.171 INFO [acsACSLogService] Stopping the ACS Log Service
+2014-09-09T19:30:05.519 INFO [acsStopORBSRVC] Killing any rogue ACS processes...
+2014-09-09T19:30:05.663 INFO [acsStopORBSRVC] Freeing /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0
+Freeing instance 0 removing lock file /alma/ACS-2014.2/acsdata/tmp/acsInstance0.lock

@@ -1,0 +1,12 @@
+1,5c1,4
+< 1 - 
+< 1 - ----------------------------------------------------------------------
+< 1 - .
+< 1 - CAMERA ON
+< 1 - OK
+---
+> 1 -                         ^
+> 1 -     def testCamera(self):
+> 1 -   File "/home/teami/ACS-Workshop/Instrument/bin/test1", line 24
+> 1 - IndentationError: unindent does not match any outer indentation level
+

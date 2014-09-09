@@ -1,0 +1,5 @@
+2014-09-09T19:29:31.890 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0 already exists!
+2014-09-09T19:29:31.899 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/USED_CONTAINER_PORTS already exists!
+2014-09-09T19:29:31.904 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/USED_NOTIFY_PORTS already exists!
+2014-09-09T19:29:31.907 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/pids already exists!
+2014-09-09T19:29:31.930 INFO Starting Notify Service

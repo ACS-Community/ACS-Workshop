@@ -1,0 +1,4 @@
+2014-09-09T19:29:51.906 INFO Stopping all ACS processes using 'ACS_INSTANCE=0'
+2014-09-09T19:29:51.919 INFO Shutting down containers...
+2014-09-09T19:29:51.932 INFO Shutting down toyContainer container
+2014-09-09T19:29:54.130 INFO Stopping Manager
