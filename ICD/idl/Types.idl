@@ -70,6 +70,7 @@ module TYPES
     const long PROPOSAL_STATUS_QUEUED=0;
     const long PROPOSAL_STATUS_RUN=1;
     const long PROPOSAL_STATUS_READY=2;
+    const long PROPOSAL_STATUS_REMOVED=3;
 
 };
 
