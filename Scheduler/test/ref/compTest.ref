@@ -1,0 +1,12 @@
+1 - Creating client
+1 - Client created
+1 - 
+1 - Obtaining scheduler component
+1 - Retrieved scheduler component. Testing component.
+1 - Testing start()
+1 - Testing stop()
+1 - Testing proposalUnderExecution():  0
+1 - Releasing scheduler component
+1 - Released scheduler component
+1 - 
+1 - timestamp localdomain disconnect - Disconnect called for client
