@@ -3,6 +3,7 @@ import unittest, logging
 from TYPES import *
 from TELESCOPE_MODULE import *
 from Acspy.Clients.SimpleClient import PySimpleClient
+from SYSTEMErr import *
 
 class TelescopeTest(unittest.TestCase):
     def setUp(self):
@@ -27,8 +28,19 @@ class TelescopeTest(unittest.TestCase):
         curpos = self.telescope.getCurrentPosition()
         # Assert the test
         self.assertEqual(curpos.el, testpos.el)
-        self.assertEqual(curpos.az, tespos.az )
-        
+        self.assertEqual(curpos.az, testpos.az )
+
+    def testTelescopeError(self):
+        pos = Position(500.9, -140.1)
+        #pos.el = 500.9
+        #pos.az = -140.1
+    
+        #self.assertRaises(ErrTelescopeCOOROOREx, self.telescope.moveTo, pos)
+        #pos.el = 30.0
+        #self.assertRaises(ErrTelescopeCOOROOREx, self.telescope.moveTo, pos)
+        self.assertRaises(PositionOutOfLimitsEx, self.telescope.moveTo, pos)
+        pos.el = 30.0
+        self.assertRaises(PositionOutOfLimitsEx, self.telescope.moveTo, pos)
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import unittest, logging
 from TYPES import *
+from SYSTEMErr import *
 from INSTRUMENT_MODULE import *
 from Acspy.Clients.SimpleClient import PySimpleClient
 
@@ -16,6 +17,8 @@ class InstrumentTest(unittest.TestCase):
 
     def testInstrument(self):
         self.instrument.cameraOn()
+	self.instrument.cameraOff()
+        self.assertRaises(CameraIsOffEx,self.instrument.takeImage,100)
         #Observe
         #CameraOff
         #Observe

@@ -1,7 +1,7 @@
 #include <DataBaseImpl.h>
 
 DataBaseImpl::DataBaseImpl(const ACE_CString &name,
-        maci::ContainerServices * containerServices) : acscomponent::ACSComponentImpl(name, containerServices)
+			   maci::ContainerServices * containerServices) : acscomponent::ACSComponentImpl(name, containerServices), pplist(new TYPES::ProposalList)
 {
 	currpid = 0;
 	pplist->length(0);
@@ -39,6 +39,8 @@ CORBA::Long DataBaseImpl::getProposalStatus(const CORBA::Long pid)
 
 void DataBaseImpl::removeProposal(const CORBA::Long pid)
 {
+	pplist[pid].status = TYPES::PROPOSAL_STATUS_REMOVED;
+	return;
 }
 
 TYPES::ImageList *DataBaseImpl::getProposalObservations(const CORBA::Long pid)
@@ -54,7 +56,7 @@ TYPES::ProposalList* DataBaseImpl::getProposals()
 
 void DataBaseImpl::setProposalStatus(const CORBA::Long pid, const CORBA::Long status)
 {
-	if (status >= 0 && status < 3) pplist[pid].status = status ;
+	if (status >= 0 && status < 4) pplist[pid].status = status ;
 	return 0;
 
 }
