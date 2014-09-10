@@ -57,6 +57,7 @@ void Scheduler::cleanUp()
     // Here we have to stop all threads
     getContainerServices()->getThreadManager()->stopAll();
     if (m_schedulerLoop_p != NULL) {
+      m_schedulerLoop_p->please_stop_early = true; // Flag for the work thread to stop observations early
       getContainerServices()->getThreadManager()->destroy(m_schedulerLoop_p);
       m_schedulerLoop_p = NULL;
     }
@@ -70,6 +71,7 @@ void Scheduler::start (void)
     // If it is already running, give an error (it means we were called twice).
     if (m_schedulerLoop_p->isSuspended()) {
       ACS_SHORT_LOG((LM_INFO,"Scheduler::start: Resume work thread."));
+      m_schedulerLoop_p->please_stop_early = false;  // Initialize stop-early flag to false
       m_schedulerLoop_p->resume();
     } else
       ACS_SHORT_LOG((LM_ERROR,"Scheduler::start: work thread is already running"));
@@ -85,6 +87,7 @@ void Scheduler::stop (void)
       // Pause observations by suspending the work thread
       // If it is already suspended, give an error (it means we were called twice).
       ACS_SHORT_LOG((LM_INFO,"Scheduler::stop: Suspend work thread."));
+      m_schedulerLoop_p->please_stop_early = true; // Flag for the work thread to stop observations early
       m_schedulerLoop_p->suspend();
     } else
       ACS_SHORT_LOG((LM_ERROR,"Scheduler::start: work thread is already running"));
@@ -111,7 +114,14 @@ void SchedulerThread::runLoop()
 {
   if (loopCounter_m < 10)
     ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop (start) %d", loopCounter_m));
-  ACE_OS::sleep(5);
+  for (int target = 0; target < 5; target++) {
+    if (please_stop_early) {
+      ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop stop early"));
+      break;
+    }
+    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop observing target number %d", target));
+    ACE_OS::sleep(1);
+  }
   if (loopCounter_m < 10)
     ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop (stop) %d", loopCounter_m));
   loopCounter_m++;

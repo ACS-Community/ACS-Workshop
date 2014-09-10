@@ -89,6 +89,8 @@ class SchedulerThread : public ACS::Thread
 
     virtual void runLoop();
 
+    bool please_stop_early; // Flag for exiting the runLoop early
+
   protected:
     int loopCounter_m;
     Scheduler * scheduler_p;
