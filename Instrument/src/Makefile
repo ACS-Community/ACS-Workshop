@@ -66,6 +66,7 @@ InstrumentImpl_LIBS	 = acscomponent InstrumentStubs maciErrType ACSErrTypeCORBA 
 CameraImpl_OBJECTS   = CameraImpl
 CameraImpl_LIBS      = acscomponent InstrumentStubs
 
+
 # Scripts (public and local)
 # ----------------------------
 SCRIPTS         =

@@ -1,5 +1,0 @@
-2014-09-09T19:29:29.096 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0 already exists!
-2014-09-09T19:29:29.107 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/USED_CONTAINER_PORTS already exists!
-2014-09-09T19:29:29.114 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/USED_NOTIFY_PORTS already exists!
-2014-09-09T19:29:29.122 WARNING /home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/pids already exists!
-2014-09-09T19:29:29.150 INFO Starting Naming Service

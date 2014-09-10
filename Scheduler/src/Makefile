@@ -42,7 +42,7 @@ EXECUTABLES_L   =
 # <brief description of xxxxx program>
 SchedulerImpl_OBJECTS   = SchedulerImpl
 xxxxx_LDFLAGS   =
-SchedulerImpl_LIBS      = SchedulerStubs acscomponent
+SchedulerImpl_LIBS      = SchedulerStubs acscomponent DataBaseStubs InstrumentStubs TelescopeStubs ACSErrTypeCORBA maciErrType
 
 #
 # special compilation flags for single c sources

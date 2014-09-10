@@ -1,6 +1,0 @@
-2014-09-09T19:29:54.455 Local file logger: Cache saved to '/home/teami/ACS-Workshop/Instrument/test/tmp/ACS_INSTANCE.0/acs_local_log_maciManagerShutdown_15074'.
-2014-09-09T19:29:54.457 [GlobalLogger - maci::MACIHelper::resolveManager] ManagerReference generated using localhost address: 'corbaloc::192.168.0.114:3000/Manager'
-2014-09-09T19:29:54.462 [GlobalLogger - maci::MACIHelper::resolveManager] Resolving reference: 'corbaloc::192.168.0.114:3000/Manager'
-2014-09-09T19:29:54.467 [GlobalLogger - maci::MACIHelper::resolveManager] Manager reference narrowed.
-2014-09-09T19:29:54.468 [GlobalLogger - ] Calling maci::Manager::shutdown()...
-2014-09-09T19:29:54.470 [GlobalLogger - ] Done.

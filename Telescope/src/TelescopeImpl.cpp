@@ -4,7 +4,7 @@
 
 #include "TelescopeImpl.h"
 #include <ACSErrTypeCORBA.h>
-#include <ErrTelescope.h>
+#include <SYSTEMErr.h>
 
 
 TelescopeImpl::TelescopeImpl(const ACE_CString& name, maci::ContainerServices *& containerServices):
@@ -88,17 +88,17 @@ observe()
 */
 void TelescopeImpl::moveTo (const ::TYPES::Position & coordinates)
 {
-  ErrTelescope::ErrTelescopeCOOROORExImpl ex(__FILE__, __LINE__,"TelescopeImpl::moveTo");
+  SYSTEMErr::PositionOutOfLimitsExImpl ex(__FILE__, __LINE__,"TelescopeImpl::moveTo");
 
   if ( coordinates.el < 0 || coordinates.el > 90 ) {
-    ex.setElevation(coordinates.el);
+    //ex.setElevation(coordinates.el);
     ex.log();
-    throw ex.getErrTelescopeCOOROOREx();
+    throw ex.getPositionOutOfLimitsEx();
   }
   if ( coordinates.az < 0 || coordinates.az > 360 ) {
-    ex.setAzimut(coordinates.az);
+    //ex.setAzimut(coordinates.az);
     ex.log();
-    throw ex.getErrTelescopeCOOROOREx();
+    throw ex.getPositionOutOfLimitsEx();
   }
 
   ACS_SHORT_LOG((LM_INFO,
