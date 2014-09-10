@@ -1,27 +1,106 @@
 #include "SchedulerImpl.h"
 
+///Include the acs thread header 
+#include <acsThread.h>
+
 Scheduler::Scheduler (
 	 const ACE_CString& name,
 	 maci::ContainerServices *& containerServices)
-: ACSComponentImpl(name, containerServices)
+: ACSComponentImpl(name, containerServices),
+  m_schedulerLoop_p(NULL)
 {
 }
 
 Scheduler::~Scheduler ()
 {
+    if (m_schedulerLoop_p != NULL)
+	getContainerServices()->getThreadManager()->destroy(m_schedulerLoop_p);
+}
+
+void Scheduler::execute()
+{
+  ACS_SHORT_LOG((LM_INFO,"Scheduler::execute"));
+
+  instrument_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
+  telescope_p  = getContainerServices()->getComponent<TELESCOPE_MODULE::Telescope>("TELESCOPE");
+  database_p = getContainerServices()->getComponent<DATABASE_MODULE::DataBase>("DATABASE");
+
+  if (instrument_p == INSTRUMENT_MODULE::Instrument::_nil() )
+    ACS_SHORT_LOG((LM_ERROR,"Scheduler::execute: cant retrieve component Instrument"));
+
+  if (telescope_p == TELESCOPE_MODULE::Telescope::_nil() )
+    ACS_SHORT_LOG((LM_ERROR,"Scheduler::execute: cant retrieve component Telescope"));
+
+  if (database_p == DATABASE_MODULE::DataBase::_nil() )
+    ACS_SHORT_LOG((LM_ERROR,"Scheduler::execute: cant retrieve component DataBase"));
+}
+
+
+void Scheduler::cleanUp()
+{
+    ACS_TRACE("Scheduler::cleanUp");
+
+    if (instrument_p != INSTRUMENT_MODULE::Instrument::_nil() ) {
+      getContainerServices()->releaseComponent("INSTRUMENT");
+      instrument_p = INSTRUMENT_MODULE::Instrument::_nil();
+    }
+    if (telescope_p != TELESCOPE_MODULE::Telescope::_nil() ) {
+      getContainerServices()->releaseComponent("TELESCOPE");
+      telescope_p = TELESCOPE_MODULE::Telescope::_nil();
+    }
+    if (database_p != DATABASE_MODULE::DataBase::_nil() ) {
+      getContainerServices()->releaseComponent("DATABASE");
+      database_p = DATABASE_MODULE::DataBase::_nil();
+    }
+    // Here we have to stop all threads
+    getContainerServices()->getThreadManager()->stopAll();
 }
 
 void Scheduler::start (void)
 {
+  ACS_SHORT_LOG((LM_INFO,"Scheduler::start"));
+  if (m_schedulerLoop_p == NULL) {
+    Scheduler * selfPtr = this;
+    m_schedulerLoop_p = getContainerServices()->getThreadManager()->
+                        create<SchedulerThread, Scheduler*>("schedulerLoop", selfPtr);
+    m_schedulerLoop_p->resume();
+  } else
+    ACS_SHORT_LOG((LM_INFO,"Scheduler::start: already started"));
 }
 
 void Scheduler::stop (void)
 {
+  ACS_SHORT_LOG((LM_INFO,"Scheduler::stop"));
+  if (m_schedulerLoop_p != NULL) {
+    getContainerServices()->getThreadManager()->destroy(m_schedulerLoop_p);
+    m_schedulerLoop_p = NULL;
+  } else
+    ACS_SHORT_LOG((LM_INFO,"Scheduler::stop: not started"));
 }
 
 ::CORBA::Long Scheduler::proposalUnderExecution (void)
 {
   return 0;
+}
+
+void SchedulerThread::onStart()
+{
+  ACS_SHORT_LOG((LM_INFO,"SchedulerThread: started"));
+}
+
+void SchedulerThread::onStop()
+{
+  ACS_SHORT_LOG((LM_INFO,"SchedulerThread: stopped"));
+}
+
+void SchedulerThread::runLoop()
+{
+  if (loopCounter_m < 10)
+    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop (start) %d", loopCounter_m));
+  ACE_OS::sleep(5);
+  if (loopCounter_m < 10)
+    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop (stop) %d", loopCounter_m));
+  loopCounter_m++;
 }
 
 #include <maciACSComponentDefines.h>

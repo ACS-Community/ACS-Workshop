@@ -94,7 +94,7 @@ TCL_SCRIPTS_L   =
 # Python stuff (public and local)
 # ----------------------------
 PY_SCRIPTS         =
-PY_SCRIPTS_L       = compTest
+PY_SCRIPTS_L       = compTest test1
 
 PY_MODULES         =
 PY_MODULES_L       =
