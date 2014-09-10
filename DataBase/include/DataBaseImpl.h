@@ -10,9 +10,11 @@
 #include <SYSTEMErr.h>
 #include <DataBaseS.h>
 
-//const static ulong PROPOSAL_STATUS_QUEUED=0;
-//const static ulong PROPOSAL_STATUS_RUN=1;
-//const static ulong PROPOSAL_STATUS_READY=2;
+
+struct StructIntImList {
+	::CORBA::Long pid,tid;
+	TYPES::ImageType_var image;
+};
 
 using namespace acscomponent;
 
@@ -33,10 +35,15 @@ public:
 	virtual void clean();
 	
 private:
+	static const long MAXIMUM_IMAGE_BUFFER_SIZE=100;
+	::CORBA::Long image_list_ptr;
 	::CORBA::ULong currpid;
 	TYPES::ProposalList_var pplist;
-	
+	struct StructIntImList IntImageList[MAXIMUM_IMAGE_BUFFER_SIZE];	
 };
+
+
+
 
 #endif
 
