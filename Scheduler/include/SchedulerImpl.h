@@ -13,6 +13,8 @@
 #include <TelescopeC.h>
 #include <DataBaseC.h>
 
+class SchedulerThread;
+
 class Scheduler: public acscomponent::ACSComponentImpl,
 	    public virtual POA_SCHEDULER_MODULE::Scheduler
 {
@@ -43,10 +45,45 @@ class Scheduler: public acscomponent::ACSComponentImpl,
 
     virtual void cleanUp();
 
-private:
+    // These are public (in the implementation only) because are needed
+    // by the SchedulerThread
     INSTRUMENT_MODULE::Instrument_var instrument_p;
     TELESCOPE_MODULE::Telescope_var telescope_p;
     DATABASE_MODULE::DataBase_var database_p;
+
+private:
+    SchedulerThread *m_schedulerLoop_p;
+};
+
+/**
+ * The class SchedulerThread is a thread used by the Scheduler class
+ * to run the proposals.
+ */
+class SchedulerThread : public ACS::Thread
+{
+  public:
+    SchedulerThread(const ACE_CString& name,
+                    Scheduler * scheduler,
+                    const ACS::TimeInterval& responseTime=ThreadBase::defaultResponseTime,
+                    const ACS::TimeInterval& sleepTime=ThreadBase::defaultSleepTime) :
+                    ACS::Thread(name)
+    {
+      ACS_TRACE("SchedulerThread::SchedulerThread");
+      loopCounter_m = 0;
+      scheduler_p = scheduler;
+    }
+
+    ~SchedulerThread() { ACS_TRACE("SchedulerThread::~SchedulerThread"); }
+
+    virtual void onStart();
+
+    virtual void onStop();
+
+    virtual void runLoop();
+
+  protected:
+    int loopCounter_m;
+    Scheduler * scheduler_p;
 };
 
 #endif /*!SchedulerImpl_H*/
