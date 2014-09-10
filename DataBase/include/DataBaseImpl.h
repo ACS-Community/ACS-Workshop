@@ -25,6 +25,7 @@ public:
 	DataBaseImpl(const ACE_CString& name, maci::ContainerServices* containerServices);	
 	~DataBaseImpl();
 
+	virtual void execute();
 	virtual CORBA::Long storeProposal(const TYPES::TargetList& targets);
 	virtual CORBA::Long getProposalStatus(const CORBA::Long pid);
 	virtual void removeProposal(const CORBA::Long pid);

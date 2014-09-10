@@ -153,6 +153,8 @@ void SchedulerThread::runLoop()
   }
   if (p_len > 0)
     ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop: finished processing proposals (%d)", loopCounter_m));
+  if (p_len == 0)
+      ACE_OS::sleep(5);
 }
 
 #include <maciACSComponentDefines.h>

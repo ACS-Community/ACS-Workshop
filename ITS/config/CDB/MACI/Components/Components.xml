@@ -3,6 +3,7 @@
        xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
        xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!--
       <_ Name="DATABASE" 	    
          Code="DataBaseImpl" 
          Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
@@ -23,7 +24,7 @@
          Code="CameraImpl" 
          Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
          Container="toyContainer" ImplLang="cpp" />
-<!--
+-->
       <_ Name="DATABASE" 	    
          Code="DataBaseImpl" 
          Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
@@ -44,6 +45,6 @@
          Code="CameraImpl" 
          Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
          Container="iToyContainer" ImplLang="cpp" />
--->
+
 </Components>
 

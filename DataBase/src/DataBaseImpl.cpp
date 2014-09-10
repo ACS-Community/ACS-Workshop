@@ -13,8 +13,14 @@ DataBaseImpl::~DataBaseImpl()
 {
 }
 
+void DataBaseImpl::execute()
+{
+	ACS_TRACE("DataBaseImpl::execute");
+}
+
 CORBA::Long DataBaseImpl::storeProposal(const TYPES::TargetList &targets)
 {
+	ACS_TRACE("DataBaseImpl::storeProposal");
 	TYPES::Proposal currentproposal;
 	::CORBA::ULong curlen;
 	//Validate targets!!!
@@ -24,17 +30,17 @@ CORBA::Long DataBaseImpl::storeProposal(const TYPES::TargetList &targets)
 	currentproposal.targets = targets ;
 	currentproposal.status = TYPES::PROPOSAL_STATUS_QUEUED;
 
-	// Append the new Proposal to the List
+	//// Append the new Proposal to the List
 	curlen = pplist->length();
 	pplist->length(++curlen);
-	pplist[curlen] = currentproposal;
+	pplist[curlen-1] = currentproposal;
 
-	// Return the Proposal ID
 	return currentproposal.pid;
 }
 
 CORBA::Long DataBaseImpl::getProposalStatus(const CORBA::Long pid)
 {
+	ACS_TRACE("DataBaseImpl::getProposalStatus");
 	//Return the status of the >>pid<< elements in the Proposal List
         TYPES::Proposal p = (*pplist)[pid];
         return p.status;
@@ -43,12 +49,14 @@ CORBA::Long DataBaseImpl::getProposalStatus(const CORBA::Long pid)
 
 void DataBaseImpl::removeProposal(const CORBA::Long pid)
 {
+	ACS_TRACE("DataBaseImpl::removeProposal");
 	(*pplist)[pid].status = TYPES::PROPOSAL_STATUS_REMOVED;
 	return;
 }
 
 TYPES::ImageList *DataBaseImpl::getProposalObservations(const CORBA::Long pid)
 {
+	ACS_TRACE("DataBaseImpl::getProposalObservations");
         TYPES::ImageList_var imlist(new TYPES::ImageList);
 	imlist->length(0);
 	::CORBA::ULong curlen;
@@ -58,7 +66,7 @@ TYPES::ImageList *DataBaseImpl::getProposalObservations(const CORBA::Long pid)
 			curlen=imlist->length();
 			++curlen;
 			imlist->length(curlen);
-			imlist[curlen]=IntImageList[ii].image;
+			imlist[curlen-1]=IntImageList[ii].image;
 		}
 			
 	return imlist._retn();
@@ -66,7 +74,8 @@ TYPES::ImageList *DataBaseImpl::getProposalObservations(const CORBA::Long pid)
 
 TYPES::ProposalList* DataBaseImpl::getProposals()
 {
-	TYPES::ProposalList_var myplist;
+	ACS_TRACE("DataBaseImpl::getProposals");
+	TYPES::ProposalList_var myplist(new TYPES::ProposalList);
 	::CORBA::ULong curlen;
 	myplist->length(0);
 	for (unsigned int ii=0;ii<pplist->length();ii++)
@@ -75,7 +84,7 @@ TYPES::ProposalList* DataBaseImpl::getProposals()
 		{
 			curlen = myplist->length();
 			myplist->length(++curlen);
-			myplist[curlen] = pplist[ii];
+			myplist[curlen-1] = pplist[ii];
 		}
 	}		
 
@@ -85,12 +94,14 @@ TYPES::ProposalList* DataBaseImpl::getProposals()
 
 void DataBaseImpl::setProposalStatus(const CORBA::Long pid, const CORBA::Long status)
 {
+	ACS_TRACE("DataBaseImpl::setProposalStatus");
 	if (status >= 0 && status < 4) (*pplist)[pid].status = status ;
 	return;
 }
 
 void DataBaseImpl::storeImage(CORBA::Long pid, CORBA::Long tid, const TYPES::ImageType& image)
 {
+	ACS_TRACE("DataBaseImpl::storeImage");
 	// Append the new Proposal to the List
 	IntImageList[image_list_ptr].pid=pid;
 	IntImageList[image_list_ptr].tid=tid;
@@ -102,6 +113,7 @@ void DataBaseImpl::storeImage(CORBA::Long pid, CORBA::Long tid, const TYPES::Ima
 
 void DataBaseImpl::clean()
 {
+	ACS_TRACE("DataBaseImpl::clean");
 	for (unsigned int ii=0;ii<pplist->length();ii++)
 		(*pplist)[ii].targets.length(0);
 	pplist->length(0);
