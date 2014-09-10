@@ -112,19 +112,47 @@ void SchedulerThread::onStop()
 
 void SchedulerThread::runLoop()
 {
-  if (loopCounter_m < 10)
-    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop (start) %d", loopCounter_m));
-  for (int target = 0; target < 5; target++) {
+  loopCounter_m++;
+  // Get proposals from DataBase
+
+  TYPES::ProposalList& proposals = *scheduler_p->database_p->getProposals();
+
+  int p_len = proposals.length(); // number of proposals
+  int p; // proposal counter
+  if (p_len > 0)
+    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop: get proposals (%d)", loopCounter_m));
+
+  // Loop over the proposals
+  for (p = 0; p < p_len; p++) {
     if (please_stop_early) {
       ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop stop early"));
       break;
     }
-    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop observing target number %d", target));
-    ACE_OS::sleep(1);
+    TYPES::Proposal& proposal = proposals[p];
+    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop observing proposal number %d", proposal.pid));
+
+    scheduler_p->database_p->setProposalStatus(proposal.pid, 2); // running
+
+    int t_len = proposal.targets.length(); // number of targets in this proposal
+    int t; // target counter
+    // Loop over targets
+    for (t = 0; t < t_len; t++) {
+      TYPES::Target& target = proposal.targets[t];
+      ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop observing target number %d", target.tid));
+
+      scheduler_p->instrument_p->cameraOn();
+      TYPES::ImageType * image = scheduler_p->telescope_p->observe(target.coordinates, target.expTime);
+      ACE_OS::sleep(1);
+      scheduler_p->instrument_p->cameraOff();
+      scheduler_p->database_p->storeImage(proposal.pid, target.tid, *image);
+
+    }
+
+    scheduler_p->database_p->setProposalStatus(proposal.pid, 3); // done
+
   }
-  if (loopCounter_m < 10)
-    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop (stop) %d", loopCounter_m));
-  loopCounter_m++;
+  if (p_len > 0)
+    ACS_SHORT_LOG((LM_INFO,"SchedulerThread::runLoop: finished processing proposals (%d)", loopCounter_m));
 }
 
 #include <maciACSComponentDefines.h>
