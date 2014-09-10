@@ -9,7 +9,9 @@
 
 #include <acscomponentImpl.h>
 #include <SchedulerS.h>
-
+#include <InstrumentC.h>
+#include <TelescopeC.h>
+#include <DataBaseC.h>
 
 class Scheduler: public acscomponent::ACSComponentImpl,
 	    public virtual POA_SCHEDULER_MODULE::Scheduler
@@ -36,8 +38,15 @@ class Scheduler: public acscomponent::ACSComponentImpl,
     virtual void stop (void);
 
     virtual ::CORBA::Long proposalUnderExecution (void);
- 
-};
 
+    virtual void execute();
+
+    virtual void cleanUp();
+
+private:
+    INSTRUMENT_MODULE::Instrument_var instrument_p;
+    TELESCOPE_MODULE::Telescope_var telescope_p;
+    DATABASE_MODULE::DataBase_var database_p;
+};
 
 #endif /*!SchedulerImpl_H*/
