@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+       xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+       xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <_ Name="PBEND_B_01"   Code="acsexmplPowerSupplyImpl"
+                             Type="IDL:alma/PS/PowerSupply:1.0"
+                             Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="INSTRUMENT"   Code="alma.demo.InstrumentComponentHelper"
+                             Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+                             Container="frodoContainer" ImplLang="java" />
+      <_ Name="PBUMP_B_01"   Code="acsexmplPowerSupplyImpl"
+                             Type="IDL:alma/PS/PowerSupply:1.0"
+                             Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="PBUMP_B_02"   Code="acsexmplPowerSupplyImpl"
+                             Type="IDL:alma/PS/PowerSupply:1.0"
+                             Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="TEST_PS_1"    Code="acsexmplPowerSupplyImpl"
+                             Type="IDL:alma/PS/PowerSupply:1.0"
+                             Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="TEST_PS_2"    Code="acsexmplPowerSupplyImpl"
+                             Type="IDL:alma/PS/PowerSupply:1.0"
+                             Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="TEST_PS_3"    Code="acsexmplPowerSupplyImpl"
+                             Type="IDL:alma/PS/PowerSupply:1.0"
+                             Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="TEST_PS_4"    Code="acsexmplPowerSupplyImpl"
+                             Type="IDL:alma/PS/PowerSupply:1.0"
+                             Container="bilboContainer" ImplLang="cpp" />
+</Components>
+

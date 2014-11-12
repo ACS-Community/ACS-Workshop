@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+	<SimulatedComponent 
+		xmlns="urn:schemas-cosylab-com:SimulatedComponent:1.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<pythonImports>
+			from acstime import Duration
+		</pythonImports>
+		<initialize>
+			logger=parameters[0].getLogger()
+			logger.logInfo("Component initialized!")
+        	</initialize>
+		<cleanUp>
+			print 'Simulated component cleaning up'
+	        </cleanUp>
+		<_corbaMethod Name="objfix" Timeout="0">
+			print "objfix called with params ",parameters
+		</_corbaMethod>
+</SimulatedComponent>

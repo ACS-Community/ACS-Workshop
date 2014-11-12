@@ -1,0 +1,22 @@
+#ifndef _MOUNT_ACS_COURSE_IDL_
+#define _MOUNT_ACS_COURSE_IDL_
+
+#include <acscomponent.idl>
+
+#pragma prefix "alma"
+
+module ACS_COURSE
+{
+    /** @interface Mount
+     *  Defines the interface for controlling and monitoring a single 
+     *  antenna's position.
+     */
+    interface MountExample : ACS::ACSComponent
+	{
+	void objfix (in double az,
+		     in double elev);
+	
+	};    
+};
+
+#endif
