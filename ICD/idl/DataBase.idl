@@ -44,7 +44,8 @@ module DATABASE_MODULE
 	 * @param targets Target list composing this proposal.
 	 * @return Assigned proposal ID (pid).
 	 */
-	long storeProposal (in TYPES::TargetList targets);
+	//long storeProposal (in TYPES::TargetList targets);
+	long storeProposal ();
 	
 	
 	const long STATUS_INITIAL_PROPOSAL = 0;
@@ -57,14 +58,16 @@ module DATABASE_MODULE
 	 * @param pid Proposal ID
 	 * @return status
 	 */
-	long getProposalStatus(in long pid);
+	long getProposalStatus();
+	//long getProposalStatus(in long pid);
 	
 	/** 
 	 * Remove proposal.
 	 *
 	 * @param pid Proposal ID
 	 */
-        void removeProposal(in long pid);
+        void removeProposal();
+        //void removeProposal(in clong pid);
 
 	/**
 	 * Retuns all images for a given proposal. 
@@ -74,8 +77,10 @@ module DATABASE_MODULE
 	 * @param pid Proposal ID
 	 * @return Image list that belongs to this proposal
 	 */
-	TYPES::ImageList getProposalObservations(in long pid)
-		raises(SYSTEMErr::ProposalNotYetReadyEx);
+	long getProposalObservations();
+
+	//TYPES::ImageList getProposalObservations(in long pid)
+	//	raises(SYSTEMErr::ProposalNotYetReadyEx);
 
 	/**
 	 * Returns stored proposals which have not been executed yet.
@@ -83,7 +88,8 @@ module DATABASE_MODULE
 	 * @return Proposals with queued status. If there are no 
 	 * pending proposals returns an empty list
 	 */
-	TYPES::ProposalList getProposals();
+	long getProposals();
+	//TYPES::ProposalList getProposals();
 	
 	/**
 	 * Set the proposal status. Raises an exception if the change is not from
@@ -93,8 +99,9 @@ module DATABASE_MODULE
 	 * @param tid target ID
 	 * @return None
 	 */
-	void setProposalStatus(in long pid, in long status)
-		raises(SYSTEMErr::InvalidProposalStatusTransitionEx);
+	void setProposalStatus();
+	//void setProposalStatus(in long pid, in long status)
+	//	raises(SYSTEMErr::InvalidProposalStatusTransitionEx);
 
 	/**
 	 * Stores an image for a given proposal and target. Raises an exception
@@ -105,10 +112,11 @@ module DATABASE_MODULE
 	 * @param tid target ID
 	 * @return None
 	 */
-	void storeImage(in long pid, 
-			in long tid,
-			in TYPES::ImageType image)
-		raises(SYSTEMErr::ImageAlreadyStoredEx); // TODO raise also new exception "ProposalDoesNotExist"
+	void storeImage();
+	//void storeImage(in long pid, 
+	//		in long tid,
+	//		in TYPES::ImageType image)
+	//	raises(SYSTEMErr::ImageAlreadyStoredEx); // TODO raise also new exception "ProposalDoesNotExist"
         /**
          * Clean all the proposals
          */

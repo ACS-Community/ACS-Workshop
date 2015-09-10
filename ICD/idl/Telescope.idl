@@ -49,8 +49,9 @@ module TELESCOPE_MODULE
 	 * @return Image 
 	 * 
 	 */
-	TYPES::ImageType observe(in TYPES::Position coordinates, in long exposureTime)
-		raises(SYSTEMErr::PositionOutOfLimitsEx);
+	long observe();
+	//TYPES::ImageType observe(in TYPES::Position coordinates, in long exposureTime)
+	//	raises(SYSTEMErr::PositionOutOfLimitsEx);
 
 	/** 
 	 * Commands the telescope to move to the given position. Raises
@@ -59,15 +60,17 @@ module TELESCOPE_MODULE
 	 * @param coordinates Requested telescope position
 	 * @return None
 	 */
-	void moveTo(in TYPES::Position coordinates)
-		raises(SYSTEMErr::PositionOutOfLimitsEx);
+	void moveTo();
+	//void moveTo(in TYPES::Position coordinates)
+	//	raises(SYSTEMErr::PositionOutOfLimitsEx);
 
 	/**
 	 * Get the current telescope position.
 	 *
 	 * @return current telescope position
 	 */
-	TYPES::Position getCurrentPosition();
+	long getCurrentPosition();
+	//TYPES::Position getCurrentPosition();
 	};
 };
 

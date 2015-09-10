@@ -1,0 +1,90 @@
+/*
+ * ALMA - Atacama Large Millimiter Array (c) European Southern Observatory,
+ * 2002 Copyright by ESO (in the framework of the ALMA collaboration), All
+ * rights reserved
+ * 
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+package InstrumentImpl;
+import java.util.logging.Logger;
+
+import org.omg.CORBA.DoubleHolder;
+import org.omg.CORBA.IntHolder;
+
+import alma.ACS.ComponentStates;
+import alma.acs.component.ComponentLifecycle;
+import alma.acs.container.ContainerServices;
+
+
+
+/**
+ * A very simple component that does not make use of 
+ * {@link alma.acs.component.ComponentImplBase}.
+ * 
+ * Javadoc comments have been removed to keep the
+ * listing for the tutorial shorter.
+ * 
+ * @author hsommer
+ */
+public class InstrumentImpl implements ComponentLifecycle
+	private ContainerServices m_containerServices;
+	private Logger m_logger;
+    
+
+/////////////////////////////////////////////////////////////
+	// Implementation of ComponentLifecycle
+	/////////////////////////////////////////////////////////////
+    boolean statecam=false;
+
+	public void cameraOn() {
+	    if(statecam==false){
+		statecam=true;
+		system.out.print("camara encendida");
+	}
+    
+	public void cameraOff(Boolean state) {
+	 if(statcame==true){
+	     statecam=false;
+	     system.out.print("Camereoff");
+	}
+    
+	 public long takeImage() {
+	     long num=1099686868877555;
+	     return num;
+	}
+    
+	public void setRGB() {
+	   
+	    //	cleanUp();
+	    //	m_logger.info("managed to abort...");
+	    //System.out.println("HelloDemo component managed to abort... you should know this even if the logger did not flush correctly!");
+	}
+	
+	/////////////////////////////////////////////////////////////
+	// Implementation of ACSComponent
+	/////////////////////////////////////////////////////////////
+	
+	public void setPixelBias() {
+	    //	return m_containerServices.getComponentStateManager().getCurrentState();
+	}
+	public void setResetLevel() {
+	
+	}
+	
+	/////////////////////////////////////////////////////////////
+	// Implementation of HelloDemoOperations
+	/////////////////////////////////////////////////////////////
+	
+}

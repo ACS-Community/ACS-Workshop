@@ -1,0 +1,8 @@
+*.so
+*.o
+*.jar
+*~
+*.log
+object/*
+*.swp
+lib/*
