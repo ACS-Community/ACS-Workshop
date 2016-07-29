@@ -32,12 +32,12 @@
  */
 module TELESCOPE_MODULE
 {
-    /** @interface Telescope
-     * High level interface to communicate with the hardware
-     * related component.
-     */
-    
-    interface Telescope : ACS::ACSComponent
+	/** @interface Telescope
+	 * High level interface to communicate with the hardware
+	 * related component.
+	 */
+	
+	interface Telescope : ACS::ACSComponent
 	{
 	/** 
 	 * Moves to the given position and takes an exposure
