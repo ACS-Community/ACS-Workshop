@@ -8,7 +8,9 @@ SchedulerImpl::SchedulerImpl (
 	 const ACE_CString& name,
 	 maci::ContainerServices *& containerServices):
 	ACSComponentImpl(name, containerServices),
-	m_schedulerLoop_p(NULL)
+	m_schedulerLoop_p(NULL),
+	m_executingProposalId(-1),
+	m_running(false)
 {
 }
 
@@ -107,6 +109,18 @@ bool SchedulerImpl::isSchedulerReady() {
 }
 
 void SchedulerImpl::schedule() {
+
+	if (!isSchedulerReady()) {
+		ACS_SHORT_LOG((LM_WARNING,"SchedulerImpl::schedule: Work thread running without proper references to components. Reinitializing scheduler."));
+		initializeScheduler();
+		if (!isSchedulerReady()) {
+			ACS_SHORT_LOG((LM_ERROR,"SchedulerImpl::schedule: Scheduler references failed to be obtained. Skipping loop"));
+			return;
+		} else {
+			ACS_SHORT_LOG((LM_INFO,"SchedulerImpl::schedule: Scheduler references were correctly obtained. Resuming the work thread"));
+		}
+	}
+
 	// Get proposals from DataBase
 	TYPES::ProposalList_var proposals = m_database_p->getProposals();
 
@@ -178,16 +192,6 @@ void SchedulerImpl::schedule() {
 void SchedulerImpl::start (void)
 {
 	ACS_SHORT_LOG((LM_INFO,"SchedulerImpl::start"));
-	if (!isSchedulerReady()) {
-		ACS_SHORT_LOG((LM_WARNING,"SchedulerImpl::start: Trying to start work thread without proper references to components. Reinitializing scheduler."));
-		initializeScheduler();
-		if (!isSchedulerReady()) {
-			ACS_SHORT_LOG((LM_ERROR,"SchedulerImpl::start: Scheduler references failed to be obtained. Aborting start of the work thread"));
-			return;
-		} else {
-			ACS_SHORT_LOG((LM_INFO,"SchedulerImpl::start: Scheduler references were correctly obtained. Continuing with the start of the work thread"));
-		}
-	}
 	if (m_schedulerLoop_p != NULL) {
 		// Restart observations by resuming the work thread
 		// If it is already running, give an error (it means we were called twice).
