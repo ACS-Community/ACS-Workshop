@@ -122,7 +122,7 @@ ACSERRDEF := SYSTEMErr
 # 
 # IDL Files and flags
 # 
-IDL_FILES = Types Console DataBase Instrument Scheduler Telescope
+IDL_FILES = Types Console DataBase Instrument Scheduler Telescope TelescopeControl
 IDL_TAO_FLAGS = 
 USER_IDL =
 
@@ -132,6 +132,7 @@ DataBaseStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
 InstrumentStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
 SchedulerStubs_LIBS = acscomponent SYSTEMErrStubs
 TelescopeStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
+TelescopeControlStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
 #
 # Jarfiles and their directories
 #
