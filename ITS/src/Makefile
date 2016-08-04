@@ -1,6 +1,20 @@
+
 #*******************************************************************************
-# ALMA - Atacama Large Millimiter Array
-# Copyright (c) UNSPECIFIED - FILL IN, 2014 
+# PPPPPPPP
+#
+# "@(#) $Id$"
+#
+# Makefile of ........
+#
+# who       when      what
+# --------  --------  ----------------------------------------------
+# tstaig  28/07/16  created
+#
+
+# ALMA - Atacama Large Millimeter Array
+# Copyright (c) ESO - European Southern Observatory, 2014
+# (in the framework of the ALMA collaboration).
+# All rights reserved.
 # 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -9,24 +23,16 @@
 # 
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 # Lesser General Public License for more details.
 # 
 # You should have received a copy of the GNU Lesser General Public
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
-#
-# "@(#) $Id$"
-#
-# Makefile of ........
-#
-# who       when      what
-# --------  --------  ----------------------------------------------
-# almamgr  2014-09-09  created
-#
+#*******************************************************************************
 
 #*******************************************************************************
-# This Makefile follows VLT Standards (see Makefile(5) for more).
+# This Makefile follows ALMA/ACS Standards (see Makefile(5) for more).
 #*******************************************************************************
 # REMARKS
 #    None
@@ -82,7 +88,7 @@ lllll_OBJECTS   =
 # Scripts (public and local)
 # ----------------------------
 SCRIPTS         =
-SCRIPTS_L       = TestPrologue
+SCRIPTS_L       =
 
 #
 # TCL scripts (public and local)
@@ -94,7 +100,7 @@ TCL_SCRIPTS_L   =
 # Python stuff (public and local)
 # ----------------------------
 PY_SCRIPTS         =
-PY_SCRIPTS_L       = unitTest
+PY_SCRIPTS_L       =
 
 PY_MODULES         =
 PY_MODULES_L       =

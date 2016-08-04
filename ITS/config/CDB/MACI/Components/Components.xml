@@ -24,6 +24,10 @@
          Code="CameraImpl" 
          Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
          Container="toyContainer" ImplLang="cpp" />
+      <_ Name="MOUNT"
+         Code="MOUNT2"
+         Type="IDL:acsws/TelescopeControl/TelescopeControl:1.0"
+         Container="toyContainer" ImplLang="cpp" />
 -->
       <_ Name="DATABASE" 	    
          Code="DataBaseImpl" 
@@ -45,6 +49,9 @@
          Code="CameraImpl" 
          Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
          Container="iToyContainer" ImplLang="cpp" />
-
+      <_ Name="MOUNT"
+         Code="MOUNT2"
+         Type="IDL:acsws/TelescopeControl/TelescopeControl:1.0"
+         Container="tToyContainer" ImplLang="cpp" />
 </Components>
 
