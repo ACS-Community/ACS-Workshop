@@ -65,7 +65,7 @@
 
 SUBSYSTEM = "EXTERNAL"
 
-MODULES = Serial Nexstar
+MODULES = Serial Nexstar Storage
 
 #
 # If option KEEP_GOING=on is present in the make command line gnu_make is NOT interrupted 
