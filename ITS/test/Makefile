@@ -1,5 +1,6 @@
 #*******************************************************************************
-# ACS Community - https://github.com/ACS-Community/ACS-Workshop
+# ALMA - Atacama Large Millimiter Array
+# Copyright (c) UNSPECIFIED - FILL IN, 2014 
 # 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -15,6 +16,15 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 #
+# "@(#) $Id$"
+#
+# Makefile of ........
+#
+# who       when      what
+# --------  --------  ----------------------------------------------
+# almamgr  2014-09-09  created
+#
+
 #*******************************************************************************
 # This Makefile follows VLT Standards (see Makefile(5) for more).
 #*******************************************************************************
@@ -72,7 +82,7 @@ lllll_OBJECTS   =
 # Scripts (public and local)
 # ----------------------------
 SCRIPTS         =
-SCRIPTS_L       =
+SCRIPTS_L       = TestPrologue
 
 #
 # TCL scripts (public and local)
@@ -84,7 +94,7 @@ TCL_SCRIPTS_L   =
 # Python stuff (public and local)
 # ----------------------------
 PY_SCRIPTS         =
-PY_SCRIPTS_L       =
+PY_SCRIPTS_L       = unitTest
 
 PY_MODULES         =
 PY_MODULES_L       =
@@ -114,34 +124,23 @@ tttlll_OBJECTS  =
 # ----------------------------
 CDB_SCHEMAS = 
 
-#
-# Generate ACS Error System classes
-#
-ACSERRDEF := SYSTEMErr
-
 # 
 # IDL Files and flags
 # 
-IDL_FILES = Types Console DataBase Instrument Scheduler Telescope TelescopeControl
-IDL_TAO_FLAGS = 
+IDL_FILES =
+TAO_IDLFLAGS =
 USER_IDL =
-
-TypesStubs_LIBS = acscomponentStubs
-ConsoleStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-DataBaseStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-InstrumentStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-SchedulerStubs_LIBS = acscomponentStubs SYSTEMErrStubs
-TelescopeStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-TelescopeControlStubs_LIBS = baciStubs acscomponentStubs SYSTEMErrStubs TypesStubs
 #
 # Jarfiles and their directories
 #
 JARFILES= 
 jjj_DIRS=
-jjj_EXTRAS= 
+jjj_EXTRAS=
+# For expressing dependencies between jarfiles (parallel builds)
+jjj_JLIBS= 
 #
 # java sources in Jarfile on/off
-DEBUG=on 
+DEBUG= 
 #
 # ACS XmlIdl generation on/off
 #
@@ -149,7 +148,7 @@ XML_IDL=
 #
 # Java Component Helper Classes generation on/off
 #
-COMPONENT_HELPERS=on
+COMPONENT_HELPERS=
 #
 # Java Entity Classes generation on/off
 #
