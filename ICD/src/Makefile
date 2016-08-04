@@ -126,13 +126,13 @@ IDL_FILES = Types Console DataBase Instrument Scheduler Telescope TelescopeContr
 IDL_TAO_FLAGS = 
 USER_IDL =
 
-TypesStubs_LIBS = acscomponent
-ConsoleStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
-DataBaseStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
-InstrumentStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
-SchedulerStubs_LIBS = acscomponent SYSTEMErrStubs
-TelescopeStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
-TelescopeControlStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
+TypesStubs_LIBS = acscomponentStubs
+ConsoleStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
+DataBaseStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
+InstrumentStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
+SchedulerStubs_LIBS = acscomponentStubs SYSTEMErrStubs
+TelescopeStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
+TelescopeControlStubs_LIBS = baciStubs acscomponentStubs SYSTEMErrStubs TypesStubs
 #
 # Jarfiles and their directories
 #
