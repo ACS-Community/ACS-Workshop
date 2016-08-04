@@ -1,20 +1,15 @@
 #*******************************************************************************
-# ACS Community - https://github.com/ACS-Community/ACS-Workshop
-# 
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-# 
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-# 
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+# PPPPPPPP
 #
+# "@(#) $Id: Makefile,v 1.2 2008/11/24 02:40:45 almamgr Exp $"
+#
+# Makefile of ........
+#
+# who       when      what
+# --------  --------  ----------------------------------------------
+# wg2  09/07/07  created
+#
+
 #*******************************************************************************
 # This Makefile follows VLT Standards (see Makefile(5) for more).
 #*******************************************************************************
@@ -28,8 +23,31 @@
 
 #
 # additional include and library search paths
-#USER_INC = 
-#USER_LIB = 
+USER_INC = 
+USER_LIB = -lACE \
+	-lTAO \
+	-lTAO_DsLogAdmin \
+	-lTAO_CosNaming \
+	-lTAO_IORTable \
+	-lTAO_PortableServer \
+	-lTAO_Svc_Utils \
+	-lTAO_CosTrading \
+	-lTAO_CosNotification \
+	-lTAO_DynamicAny \
+	-lTAO_IFR_Client \
+	-lTAO_CosProperty \
+	-lacsutil \
+	-lcdb \
+	-llogging \
+	-lacscomponent \
+	-lbaci \
+	-lmaci \
+	-lacsErrTypeComponent \
+	-lmaciClient \
+	-lacserr \
+	-lm \
+	-lloki \
+	-lacstime
 
 #
 # MODULE CODE DESCRIPTION:
@@ -40,7 +58,7 @@
 #
 # C programs (public and local)
 # -----------------------------
-EXECUTABLES     =
+EXECUTABLES     = 
 EXECUTABLES_L   = 
 
 #
@@ -51,22 +69,23 @@ xxxxx_LIBS      =
 
 #
 # special compilation flags for single c sources
-#yyyyy_CFLAGS   = 
+#MOUNT2_CFLAGS  =
 
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = MOUNT2.h
 
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = MOUNT2
 LIBRARIES_L     =
 
 #
-# <brief description of lllll library>
-lllll_OBJECTS   =
+# <brief description of MOUNT2 library>
+MOUNT2_OBJECTS   = MOUNT2Impl Mount2RefAzDevIO Mount2RefAltDevIO 
+MOUNT2_LIBS   = TelescopeControlStubs ACSErrTypeDevIO NexstarCom
 
 #
 # Scripts (public and local)
@@ -112,27 +131,14 @@ tttlll_OBJECTS  =
 #
 # Configuration Database Files
 # ----------------------------
-CDB_SCHEMAS = 
-
-#
-# Generate ACS Error System classes
-#
-ACSERRDEF := SYSTEMErr
+CDB_SCHEMAS = TelescopeControl
 
 # 
 # IDL Files and flags
 # 
-IDL_FILES = Types Console DataBase Instrument Scheduler Telescope TelescopeControl
-IDL_TAO_FLAGS = 
+IDL_FILES =
+IDL_TAO_FLAGS =
 USER_IDL =
-
-TypesStubs_LIBS = acscomponent
-ConsoleStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
-DataBaseStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
-InstrumentStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
-SchedulerStubs_LIBS = acscomponent SYSTEMErrStubs
-TelescopeStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs
-TelescopeControlStubs_LIBS = acscomponent SYSTEMErrStubs TypesStubs baciStubs
 #
 # Jarfiles and their directories
 #
@@ -141,7 +147,7 @@ jjj_DIRS=
 jjj_EXTRAS= 
 #
 # java sources in Jarfile on/off
-DEBUG=on 
+DEBUG= 
 #
 # ACS XmlIdl generation on/off
 #
@@ -149,7 +155,7 @@ XML_IDL=
 #
 # Java Component Helper Classes generation on/off
 #
-COMPONENT_HELPERS=on
+COMPONENT_HELPERS=
 #
 # Java Entity Classes generation on/off
 #
