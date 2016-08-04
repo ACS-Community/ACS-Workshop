@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="acsws.uos.database.wrappers.Proposal" table="PROPOSAL">
+		<id name="pid" type="integer" column="PID">
+			<generator class="assigned"/>
+		</id>
+		<property name="status" type="integer" column="STATUS" not-null="true"/>
+		<list name="targets" table="TARGET" lazy="false">
+			<key column="PID"/>
+			<list-index column="IDX"/>
+			<one-to-many class="acsws.uos.database.wrappers.Target"/>
+		</list>
+	</class>
+	
+	<class name="acsws.uos.database.wrappers.Target" table="TARGET">
+		<composite-id>
+			<key-property name="tid" type="integer" column="TID"/>
+			<key-property name="pid" column="PID" type="integer"/>			
+		</composite-id>
+		<component name="coordinates" class="acsws.uos.database.wrappers.Position">
+			<property name="az" type="double" column="AZ"/>
+			<property name="el" type="double" column="EL"/>
+		</component>
+	</class>
+	
+	<class name="acsws.uos.database.wrappers.ImageTypeBlob" table="IMAGE">
+		<composite-id>
+			<key-property name="tid" type="integer" column="TID"/>
+			<key-property name="pid" type="integer" column="PID"/>
+		</composite-id>
+		<property name="image" type="byte[]" column="IMAGE_BLOB"/>
+	</class>
+	
+</hibernate-mapping>
