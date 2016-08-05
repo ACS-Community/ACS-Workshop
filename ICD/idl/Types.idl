@@ -33,9 +33,9 @@
 
 module TYPES
 { 
-	// Image types
-	typedef sequence<octet> ImageType;
-	typedef sequence<ImageType> ImageList;
+    // Image types
+    typedef sequence<octet> ImageType;
+    typedef sequence<ImageType> ImageList;
 
 	// Coordinates type
 	struct Position {
