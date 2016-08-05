@@ -63,9 +63,11 @@
 #
 # Modify as appropriate to your subsystem
 
-SUBSYSTEM = "OSTM"
+SUBSYSTEM = "OSTM 2016"
 
-MODULES =  ICD EXTERNAL
+MODULES_EXTERNAL = EXTERNAL
+
+MODULES = ICD $(foreach dir, $(MODULES_EXTERNAL), Beta/$(dir)) 
 
 #
 # If option KEEP_GOING=on is present in the make command line gnu_make is NOT interrupted 
