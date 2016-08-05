@@ -34,38 +34,37 @@
 module TYPES
 { 
     // Image types
-    typedef sequence<long> ImageType;
+    typedef sequence<octet> ImageType;
     typedef sequence<ImageType> ImageList;
 
-    // Coordinates type
-    struct Position
-    {
-	double az;
-	double el;
-    };
+	// Coordinates type
+	struct Position {
+		double az;
+		double el;
+	};
 
-    // Targets types
-    struct Target {
-	long     tid;
-	Position coordinates;
-	long   expTime;  /* seconds */
-    } ;
-    typedef sequence<Target>  TargetList;
+	// Targets types
+	struct Target {
+		long     tid;
+		Position coordinates;
+		long   expTime;  /* seconds */
+	};
+	typedef sequence<Target>  TargetList;
 
-    // Proposal types
-    struct Proposal {
-	long pid; /* proposal ID */
-	TargetList targets;
-	long status; /* 0 queued, 1 running, 2 ready */
-    };
-    typedef sequence<Proposal>  ProposalList;
+	// Proposal types
+	struct Proposal {
+		long pid; /* proposal ID */
+		TargetList targets;
+		long status; /* 0 queued, 1 running, 2 ready */
+	};
+	typedef sequence<Proposal>  ProposalList;
 
-    // RGB Configuration of the CCD
-    struct RGB { 
-            long red; 
-            long green;
-            long blue;
-    };
+	// RGB Configuration of the CCD
+	struct RGB { 
+		long red; 
+		long green;
+		long blue;
+	};
 
 };
 

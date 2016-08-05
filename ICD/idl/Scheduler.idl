@@ -32,15 +32,15 @@
 
 module SCHEDULER_MODULE
 {
-    /** @interface Scheduler
-     *  This is a simple scheduler for the SYSTEMErr
-     */
-    interface Scheduler : ACS::ACSComponent
+	/** @interface Scheduler
+	 *  This is a simple scheduler for the SYSTEMErr
+	 */
+	interface Scheduler : ACS::ACSComponent
 	{
 	/**
 	 * Start the scheduler.
-         * The scheduler will loop through all available proposals,
-         * either until all proposals are done or until the stop method is called.
+	 * The scheduler will loop through all available proposals,
+	 * either until all proposals are done or until the stop method is called.
 	 * Raises an exception if called twice.
 	 * @return None
 	 */
@@ -68,7 +68,7 @@ module SCHEDULER_MODULE
 	 */
 	long proposalUnderExecution()
 		raises(SYSTEMErr::NoProposalExecutingEx);
-	};    
+	};
 
 };
 

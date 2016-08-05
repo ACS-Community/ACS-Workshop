@@ -33,87 +33,87 @@
 
 module DATABASE_MODULE
 {
-    /** @interface Database
-     *  Interface to get access to the UOS database
-     */
-    interface DataBase : ACS::ACSComponent
+	/** @interface Database
+	 *  Interface to get access to the UOS database
+	 */
+	interface DataBase : ACS::ACSComponent
 	{
-	/**
-	 * Stores a new Proposal.
-	 * 
-	 * @param targets Target list composing this proposal.
-	 * @return Assigned proposal ID (pid).
-	 */
-	long storeProposal (in TYPES::TargetList targets);
-	
-	
-	const long STATUS_INITIAL_PROPOSAL = 0;
-	const long STATUS_NO_SUCH_PROPOSAL = -999; // it is not recomended to use this constant. this constant may be removed in future.
-	
-	/** 
-	 * Get the current proposal status for the given
-	 * proposal.
-	 *
-	 * @param pid Proposal ID
-	 * @return status
-	 */
-	long getProposalStatus(in long pid);
-	
-	/** 
-	 * Remove proposal.
-	 *
-	 * @param pid Proposal ID
-	 */
-        void removeProposal(in long pid);
+		/**
+		 * Stores a new Proposal.
+		 * 
+		 * @param targets Target list composing this proposal.
+		 * @return Assigned proposal ID (pid).
+		 */
+		long storeProposal (in TYPES::TargetList targets);
+		
+		
+		const long STATUS_INITIAL_PROPOSAL = 0;
+		const long STATUS_NO_SUCH_PROPOSAL = -999; // it is not recomended to use this constant. this constant may be removed in future.
+		
+		/** 
+		 * Get the current proposal status for the given
+		 * proposal.
+		 *
+		 * @param pid Proposal ID
+		 * @return status
+		 */
+		long getProposalStatus(in long pid);
+		
+		/** 
+		 * Remove proposal.
+		 *
+		 * @param pid Proposal ID
+		 */
+		void removeProposal(in long pid);
 
-	/**
-	 * Retuns all images for a given proposal. 
-	 * Raises an exception if proposal has not been 
-	 * executed yet.
-	 *
-	 * @param pid Proposal ID
-	 * @return Image list that belongs to this proposal
-	 */
-	TYPES::ImageList getProposalObservations(in long pid)
-		raises(SYSTEMErr::ProposalNotYetReadyEx);
+		/**
+		 * Retuns all images for a given proposal. 
+		 * Raises an exception if proposal has not been 
+		 * executed yet.
+		 *
+		 * @param pid Proposal ID
+		 * @return Image list that belongs to this proposal
+		 */
+		TYPES::ImageList getProposalObservations(in long pid)
+			raises(SYSTEMErr::ProposalNotYetReadyEx);
 
-	/**
-	 * Returns stored proposals which have not been executed yet.
-	 *
-	 * @return Proposals with queued status. If there are no 
-	 * pending proposals returns an empty list
-	 */
-	TYPES::ProposalList getProposals();
-	
-	/**
-	 * Set the proposal status. Raises an exception if the change is not from
-	 * queued(0) to running(1) or from running(1) to ready(2).
-	 *
-	 * @param pid Proposal ID
-	 * @param tid target ID
-	 * @return None
-	 */
-	void setProposalStatus(in long pid, in long status)
-		raises(SYSTEMErr::InvalidProposalStatusTransitionEx);
+		/**
+		 * Returns stored proposals which have not been executed yet.
+		 *
+		 * @return Proposals with queued status. If there are no 
+		 * pending proposals returns an empty list
+		 */
+		TYPES::ProposalList getProposals();
+		
+		/**
+		 * Set the proposal status. Raises an exception if the change is not from
+		 * queued(0) to running(1) or from running(1) to ready(2).
+		 *
+		 * @param pid Proposal ID
+		 * @param tid target ID
+		 * @return None
+		 */
+		void setProposalStatus(in long pid, in long status)
+			raises(SYSTEMErr::InvalidProposalStatusTransitionEx);
 
-	/**
-	 * Stores an image for a given proposal and target. Raises an exception
-	 * if an image has already been stored for the given 
-	 * tid and pid.
-	 *
-	 * @param pid Proposal ID
-	 * @param tid target ID
-	 * @return None
-	 */
-	void storeImage(in long pid, 
-			in long tid,
-			in TYPES::ImageType image)
-		raises(SYSTEMErr::ImageAlreadyStoredEx); // TODO raise also new exception "ProposalDoesNotExist"
-        /**
-         * Clean all the proposals
-         */
-        void clean();
-	};    
+		/**
+		 * Stores an image for a given proposal and target. Raises an exception
+		 * if an image has already been stored for the given 
+		 * tid and pid.
+		 *
+		 * @param pid Proposal ID
+		 * @param tid target ID
+		 * @return None
+		 */
+		void storeImage(in long pid, 
+				in long tid,
+				in TYPES::ImageType image)
+			raises(SYSTEMErr::ImageAlreadyStoredEx); // TODO raise also new exception "ProposalDoesNotExist"
+		/**
+		 * Clean all the proposals
+		 */
+		void clean();
+	};
 };
 
 #endif

@@ -1,0 +1,13 @@
+all: lala
+
+libCamera.so: capture.o
+	$(CC) -shared -o $@ $? -lgphoto2
+
+%.o: %.cpp
+	$(CXX) -fPIC -c -Wall -ggdb3 $?
+
+lala: capture-main.o
+	$(CXX) -L. $? -o $@ -lCamera -lgphoto2
+
+clean:
+	rm -rf *.o lala	

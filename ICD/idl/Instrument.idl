@@ -33,11 +33,11 @@
 
 module INSTRUMENT_MODULE 
 {
-    /********************************************************************/
-    /** @interface Instrument
-     *  This is the Webcam interface for the 50mm telescope.
-     */
-  interface Instrument : ACS::ACSComponent
+	/********************************************************************/
+	/** @interface Instrument
+	 *  This is the Webcam interface for the 50mm telescope.
+	 */
+	interface Instrument : ACS::ACSComponent
 	{
 	/**
 	 * Turns the Instrument camera on.
@@ -51,7 +51,7 @@ module INSTRUMENT_MODULE
 	 * A NULL string as the target identifier indicates that no image file
 	 * should be saved.
 	 *
-	 * @todo  Function should be refactored so that only one operation is performed.
+	 * @todo Function should be refactored so that only one operation is performed.
 	 *
 	 * @return None
 	 */
@@ -60,33 +60,33 @@ module INSTRUMENT_MODULE
 	/**
 	 * Retrieve image from the Instrument. Raises an exception if the 
 	 * camera is not on.
-         *
-         * @return array of longs containing the image pixels
+	 *
+	 * @return array of longs containing the image pixels
 	 */
 	TYPES::ImageType takeImage(in long exposureTime)
 		raises(SYSTEMErr::CameraIsOffEx);
-        
-        /* Camera settings */
+	
+	/* Camera settings */
 
-        /** 
-         * Set the RGB configuration of the camera 
-         * @param rgbConfig the TYPES::RGB configuration
-         */
-        void setRGB(in TYPES::RGB rgbConfig)
+	/** 
+	 * Set the RGB configuration of the camera 
+	 * @param rgbConfig the TYPES::RGB configuration
+	 */
+	void setRGB(in TYPES::RGB rgbConfig)
 		raises(SYSTEMErr::CameraIsOffEx);
-        
-        /** 
-         * Set the pixel bias configuration of the camera 
-         * @param bias the pixel bias configuration
-         */
-        void setPixelBias(in long bias)
+	
+	/** 
+	 * Set the pixel bias configuration of the camera 
+	 * @param bias the pixel bias configuration
+	 */
+	void setPixelBias(in long bias)
 		raises(SYSTEMErr::CameraIsOffEx);
-        
-        /** 
-         * Set the reset level configuration of the camera 
-         * @param resetLevel the reset level configuration
-         */
-        void setResetLevel(in long resetLevel)
+	
+	/** 
+	 * Set the reset level configuration of the camera 
+	 * @param resetLevel the reset level configuration
+	 */
+	void setResetLevel(in long resetLevel)
 		raises(SYSTEMErr::CameraIsOffEx);
 	};
 };

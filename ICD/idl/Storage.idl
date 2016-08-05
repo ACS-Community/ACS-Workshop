@@ -1,0 +1,62 @@
+#ifndef _STORAGE_IDL_
+#define _STORAGE_IDL_
+
+
+/*******************************************************************************
+*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
+*    
+*    This library is free software; you can redistribute it and/or
+*    modify it under the terms of the GNU Lesser General Public
+*    License as published by the Free Software Foundation; either
+*    version 2.1 of the License, or (at your option) any later version.
+*    
+*    This library is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+*    Lesser General Public License for more details.
+*    
+*    You should have received a copy of the GNU Lesser General Public
+*    License along with this library; if not, write to the Free Software
+*    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+*/
+
+#include <acscomponent.idl>
+#include <Types.idl>
+
+#pragma prefix "acsws"
+
+module STORAGE_MODULE
+{
+    /**
+     * Special storage created for the observatory
+     * The storage has been designed to be written only 
+     * once and read many times per observation
+     */
+    interface Storage :  ACS::ACSComponent
+    {
+   
+        /**
+         * @return the next valid ID to store a proposal
+         */
+        long getNextValidId(); 
+
+        /**
+         * Store in the Storage the completed observation
+         * The number of Targets within proposal must match 
+         * the number of images
+         */
+        void storeObservation(in TYPES::Proposal prop, in TYPES::ImageList images);
+        
+        /** 
+         * Wipe out the storage
+         */
+        void clearAllData();
+
+        /**
+         * Retrieve a completed proposal from Storage
+         */
+        TYPES::ImageList getObservation(in long pid);
+    };
+};
+
+#endif
