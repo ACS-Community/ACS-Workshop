@@ -34,7 +34,7 @@
 module TYPES
 { 
 	// Image types
-	typedef sequence<long> ImageType;
+	typedef sequence<octet> ImageType;
 	typedef sequence<ImageType> ImageList;
 
 	// Coordinates type
