@@ -1,5 +1,20 @@
+
 #*******************************************************************************
-# ACS Community - https://github.com/ACS-Community/ACS-Workshop
+# PPPPPPPP
+#
+# "@(#) $Id$"
+#
+# Makefile of ........
+#
+# who       when      what
+# --------  --------  ----------------------------------------------
+# almamgr  04/08/16  created
+#
+
+# ALMA - Atacama Large Millimeter Array
+# Copyright (c) ESO - European Southern Observatory, 2014
+# (in the framework of the ALMA collaboration).
+# All rights reserved.
 # 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -8,15 +23,16 @@
 # 
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 # Lesser General Public License for more details.
 # 
 # You should have received a copy of the GNU Lesser General Public
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
-#
 #*******************************************************************************
-# This Makefile follows VLT Standards (see Makefile(5) for more).
+
+#*******************************************************************************
+# This Makefile follows ALMA/ACS Standards (see Makefile(5) for more).
 #*******************************************************************************
 # REMARKS
 #    None
@@ -29,7 +45,30 @@
 #
 # additional include and library search paths
 #USER_INC = 
-#USER_LIB = 
+USER_LIB = -lACE \
+	-lTAO \
+	-lTAO_DsLogAdmin \
+	-lTAO_CosNaming \
+	-lTAO_IORTable \
+	-lTAO_PortableServer \
+	-lTAO_Svc_Utils \
+	-lTAO_CosTrading \
+	-lTAO_CosNotification \
+	-lTAO_DynamicAny \
+	-lTAO_IFR_Client \
+	-lTAO_CosProperty \
+	-lacsutil \
+	-lcdb \
+	-llogging \
+	-lacscomponent \
+	-lbaci \
+	-lmaci \
+	-lacsErrTypeComponent \
+	-lmaciClient \
+	-lacserr \
+	-lm \
+	-lloki \
+	-lacstime
 
 #
 # MODULE CODE DESCRIPTION:
@@ -61,11 +100,14 @@ INCLUDES        =
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = CameraImpl
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
+CameraImpl_OBJECTS   = CameraDevIO CameraImpl
+CameraImpl_LIBS = gphoto2 Camera CameraStubs baci
+
 lllll_OBJECTS   =
 
 #
@@ -112,39 +154,25 @@ tttlll_OBJECTS  =
 #
 # Configuration Database Files
 # ----------------------------
-CDB_SCHEMAS = 
-
-#
-# Generate ACS Error System classes
-#
-ACSERRDEF := SYSTEMErr
+CDB_SCHEMAS = Camera 
 
 # 
 # IDL Files and flags
 # 
-IDL_FILES = Types Console DataBase Instrument Scheduler Telescope TelescopeControl Camera Storage
-IDL_TAO_FLAGS = 
+IDL_FILES =
+TAO_IDLFLAGS =
 USER_IDL =
-
-TypesStubs_LIBS = acscomponentStubs
-ConsoleStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-DataBaseStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-InstrumentStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-SchedulerStubs_LIBS = acscomponentStubs SYSTEMErrStubs
-TelescopeStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-TelescopeControlStubs_LIBS = baciStubs acscomponentStubs SYSTEMErrStubs TypesStubs
-CameraStubs_LIBS = baciStubs acscomponentStubs SYSTEMErrStubs TypesStubs
-StorageStubs_LIBS = acscomponent TypesStubs
-
 #
 # Jarfiles and their directories
 #
 JARFILES= 
 jjj_DIRS=
-jjj_EXTRAS= 
+jjj_EXTRAS=
+# For expressing dependencies between jarfiles (parallel builds)
+jjj_JLIBS= 
 #
 # java sources in Jarfile on/off
-DEBUG=on 
+DEBUG= 
 #
 # ACS XmlIdl generation on/off
 #
@@ -152,7 +180,7 @@ XML_IDL=
 #
 # Java Component Helper Classes generation on/off
 #
-COMPONENT_HELPERS=on
+COMPONENT_HELPERS=
 #
 # Java Entity Classes generation on/off
 #

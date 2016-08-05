@@ -1,5 +1,7 @@
+
 #*******************************************************************************
-# ACS Community - https://github.com/ACS-Community/ACS-Workshop
+# ALMA - Atacama Large Millimiter Array
+# Copyright (c) UNSPECIFIED - FILL IN, 2016 
 # 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -15,8 +17,37 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 #
+# "@(#) $Id$"
+#
+# Makefile of ........
+#
+# who       when      what
+# --------  --------  ----------------------------------------------
+# almamgr  2016-08-04  created
+#
+
+# ALMA - Atacama Large Millimeter Array
+# Copyright (c) ESO - European Southern Observatory, 2014
+# (in the framework of the ALMA collaboration).
+# All rights reserved.
+# 
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+# 
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 #*******************************************************************************
-# This Makefile follows VLT Standards (see Makefile(5) for more).
+
+#*******************************************************************************
+# This Makefile follows ALMA/ACS Standards (see Makefile(5) for more).
 #*******************************************************************************
 # REMARKS
 #    None
@@ -56,16 +87,19 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = capture.h
 
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = Camera
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
+Camera_OBJECTS   = capture 
+Camera_LIBS := gphoto2
+
 lllll_OBJECTS   =
 
 #
@@ -114,37 +148,23 @@ tttlll_OBJECTS  =
 # ----------------------------
 CDB_SCHEMAS = 
 
-#
-# Generate ACS Error System classes
-#
-ACSERRDEF := SYSTEMErr
-
 # 
 # IDL Files and flags
 # 
-IDL_FILES = Types Console DataBase Instrument Scheduler Telescope TelescopeControl Camera Storage
-IDL_TAO_FLAGS = 
+IDL_FILES =
+TAO_IDLFLAGS =
 USER_IDL =
-
-TypesStubs_LIBS = acscomponentStubs
-ConsoleStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-DataBaseStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-InstrumentStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-SchedulerStubs_LIBS = acscomponentStubs SYSTEMErrStubs
-TelescopeStubs_LIBS = acscomponentStubs SYSTEMErrStubs TypesStubs
-TelescopeControlStubs_LIBS = baciStubs acscomponentStubs SYSTEMErrStubs TypesStubs
-CameraStubs_LIBS = baciStubs acscomponentStubs SYSTEMErrStubs TypesStubs
-StorageStubs_LIBS = acscomponent TypesStubs
-
 #
 # Jarfiles and their directories
 #
 JARFILES= 
 jjj_DIRS=
-jjj_EXTRAS= 
+jjj_EXTRAS=
+# For expressing dependencies between jarfiles (parallel builds)
+jjj_JLIBS= 
 #
 # java sources in Jarfile on/off
-DEBUG=on 
+DEBUG= 
 #
 # ACS XmlIdl generation on/off
 #
@@ -152,7 +172,7 @@ XML_IDL=
 #
 # Java Component Helper Classes generation on/off
 #
-COMPONENT_HELPERS=on
+COMPONENT_HELPERS=
 #
 # Java Entity Classes generation on/off
 #

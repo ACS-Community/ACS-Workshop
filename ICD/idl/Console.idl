@@ -33,14 +33,14 @@
 
 module CONSOLE_MODULE 
 {
-    
-    /** @interface Console
-     * Operator's interface to set automatic and manual modes.
-     * Grants manual access to low level components.
-     */
-    interface Console :  ACS::ACSComponent
+	
+	/** @interface Console
+	 * Operator's interface to set automatic and manual modes.
+	 * Grants manual access to low level components.
+	 */
+	interface Console :  ACS::ACSComponent
 	{
-	/** 
+	/**
 	 * Set the automatic / manual mode for the operator. Raises an exception 
 	 * if the automatic mode is asked twice.
 	 *
@@ -50,14 +50,14 @@ module CONSOLE_MODULE
 	void setMode(in boolean mode)
 		raises(SYSTEMErr::AlreadyInAutomaticEx);
 	
-	/** 
+	/**
 	 * Get the current operator's mode. 
 	 *
 	 *  @return current operator's mode
 	 */
 	boolean getMode();
 	
-	/** 
+	/**
 	 * Set the camera on.
 	 *
 	 *  @return void
@@ -65,7 +65,7 @@ module CONSOLE_MODULE
 	void cameraOn()
 		raises (SYSTEMErr::SystemInAutoModeEx);
 	
-	/** 
+	/**
 	 * Set the camera off.
 	 *
 	 *  @return void
@@ -73,7 +73,7 @@ module CONSOLE_MODULE
 	void cameraOff()
 		raises (SYSTEMErr::SystemInAutoModeEx);
 	
-	/** 
+	/**
 	 * Move telescope in synchronous mode. Raises an exception if the
 	 * requested position is out of limits.
 	 *
@@ -83,14 +83,14 @@ module CONSOLE_MODULE
 	void moveTelescope(in TYPES::Position coordinates) 
 		raises(SYSTEMErr::PositionOutOfLimitsEx, SYSTEMErr::SystemInAutoModeEx);
 
-	/** 
+	/**
 	 * Current telescope position. 
 	 *
 	 *  @return Telescope position
 	 */    
 	TYPES::Position getTelescopePosition();
 	
-	/** 
+	/**
 	 * Get an image from the camera (from actual position of telescope).
 	 *
 	 *  @return Image from the camera
@@ -98,29 +98,28 @@ module CONSOLE_MODULE
 	TYPES::ImageType getCameraImage()
 		raises(SYSTEMErr::SystemInAutoModeEx, SYSTEMErr::CameraIsOffEx);
 
-         /* Camera settings */
+	 /* Camera settings */
 
-        /** 
-         * Set the RGB configuration of the camera 
-         * @param rgbConfig the TYPES::RGB configuration
-         */
-        void setRGB(in TYPES::RGB rgbConfig)
-                raises(SYSTEMErr::CameraIsOffEx);
-        
-        /** 
-         * Set the pixel bias configuration of the camera 
-         * @param bias the pixel bias configuration
-         */
-        void setPixelBias(in long bias)
-                raises(SYSTEMErr::CameraIsOffEx);
-        
-        /**  
-         * Set the reset level configuration of the camera 
-         * @param resetLevel the reset level configuration
-         */
-        void setResetLevel(in long resetLevel)
-                raises(SYSTEMErr::CameraIsOffEx);
+	/**
+	 * Set the RGB configuration of the camera 
+	 * @param rgbConfig the TYPES::RGB configuration
+	 */
+	void setRGB(in TYPES::RGB rgbConfig)
+		raises(SYSTEMErr::CameraIsOffEx);
 
+	/**
+	 * Set the pixel bias configuration of the camera 
+	 * @param bias the pixel bias configuration
+	 */
+	void setPixelBias(in long bias)
+		raises(SYSTEMErr::CameraIsOffEx);
+
+	/**
+	 * Set the reset level configuration of the camera 
+	 * @param resetLevel the reset level configuration
+	 */
+	void setResetLevel(in long resetLevel)
+		raises(SYSTEMErr::CameraIsOffEx);
 	};
 };
 
