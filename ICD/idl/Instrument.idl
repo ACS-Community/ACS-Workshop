@@ -1,0 +1,95 @@
+#ifndef _INSTRUMENT_IDL_
+#define _INSTRUMENT_IDL_
+
+/*******************************************************************************
+*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
+*    
+*    This library is free software; you can redistribute it and/or
+*    modify it under the terms of the GNU Lesser General Public
+*    License as published by the Free Software Foundation; either
+*    version 2.1 of the License, or (at your option) any later version.
+*    
+*    This library is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+*    Lesser General Public License for more details.
+*    
+*    You should have received a copy of the GNU Lesser General Public
+*    License along with this library; if not, write to the Free Software
+*    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+*/
+
+#include <acscomponent.idl>
+#include <Types.idl>
+#include "SYSTEMErr.idl"
+
+#pragma prefix "acsws"
+
+
+/** 
+ * @file Instrument.idl
+ * SYSTEMErr Instrument IDL file
+ */
+
+module INSTRUMENT_MODULE 
+{
+	/********************************************************************/
+	/** @interface Instrument
+	 *  This is the Webcam interface for the 50mm telescope.
+	 */
+	interface Instrument : ACS::ACSComponent
+	{
+	/**
+	 * Turns the Instrument camera on.
+	 *
+	 * @return None
+	 */
+	void cameraOn ();
+
+	/**
+	 * Turns the Instrument off.
+	 * A NULL string as the target identifier indicates that no image file
+	 * should be saved.
+	 *
+	 * @todo Function should be refactored so that only one operation is performed.
+	 *
+	 * @return None
+	 */
+	void cameraOff ();
+
+	/**
+	 * Retrieve image from the Instrument. Raises an exception if the 
+	 * camera is not on.
+	 *
+	 * @return array of longs containing the image pixels
+	 */
+	TYPES::ImageType takeImage(in long exposureTime)
+		raises(SYSTEMErr::CameraIsOffEx);
+	
+	/* Camera settings */
+
+	/** 
+	 * Set the RGB configuration of the camera 
+	 * @param rgbConfig the TYPES::RGB configuration
+	 */
+	void setRGB(in TYPES::RGB rgbConfig)
+		raises(SYSTEMErr::CameraIsOffEx);
+	
+	/** 
+	 * Set the pixel bias configuration of the camera 
+	 * @param bias the pixel bias configuration
+	 */
+	void setPixelBias(in long bias)
+		raises(SYSTEMErr::CameraIsOffEx);
+	
+	/** 
+	 * Set the reset level configuration of the camera 
+	 * @param resetLevel the reset level configuration
+	 */
+	void setResetLevel(in long resetLevel)
+		raises(SYSTEMErr::CameraIsOffEx);
+	};
+};
+
+#endif
+

@@ -1,0 +1,126 @@
+#ifndef _CONSOLE_IDL_
+#define _CONSOLE_IDL_
+
+/*******************************************************************************
+*    ACS Community - https://github.com/ACS-Community/ACS-Workshop
+*    
+*    This library is free software; you can redistribute it and/or
+*    modify it under the terms of the GNU Lesser General Public
+*    License as published by the Free Software Foundation; either
+*    version 2.1 of the License, or (at your option) any later version.
+*    
+*    This library is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+*    Lesser General Public License for more details.
+*    
+*    You should have received a copy of the GNU Lesser General Public
+*    License along with this library; if not, write to the Free Software
+*    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+*/
+
+#include <acscomponent.idl>
+#include <Types.idl>
+#include "SYSTEMErr.idl"
+
+#pragma prefix "acsws"
+
+
+/** 
+ * @file Console.idl
+ * SYSTEMErr Console IDL file
+ */
+
+module CONSOLE_MODULE 
+{
+	
+	/** @interface Console
+	 * Operator's interface to set automatic and manual modes.
+	 * Grants manual access to low level components.
+	 */
+	interface Console :  ACS::ACSComponent
+	{
+	/**
+	 * Set the automatic / manual mode for the operator. Raises an exception 
+	 * if the automatic mode is asked twice.
+	 *
+	 *  @param mode if true then automatic mode otherwise manual mode.
+	 *  @return void
+	 */
+	void setMode(in boolean mode)
+		raises(SYSTEMErr::AlreadyInAutomaticEx);
+	
+	/**
+	 * Get the current operator's mode. 
+	 *
+	 *  @return current operator's mode
+	 */
+	boolean getMode();
+	
+	/**
+	 * Set the camera on.
+	 *
+	 *  @return void
+	 */
+	void cameraOn()
+		raises (SYSTEMErr::SystemInAutoModeEx);
+	
+	/**
+	 * Set the camera off.
+	 *
+	 *  @return void
+	 */
+	void cameraOff()
+		raises (SYSTEMErr::SystemInAutoModeEx);
+	
+	/**
+	 * Move telescope in synchronous mode. Raises an exception if the
+	 * requested position is out of limits.
+	 *
+	 *  @coordinates az, el coordinates
+	 *  @return void
+	 */    
+	void moveTelescope(in TYPES::Position coordinates) 
+		raises(SYSTEMErr::PositionOutOfLimitsEx, SYSTEMErr::SystemInAutoModeEx);
+
+	/**
+	 * Current telescope position. 
+	 *
+	 *  @return Telescope position
+	 */    
+	TYPES::Position getTelescopePosition();
+	
+	/**
+	 * Get an image from the camera (from actual position of telescope).
+	 *
+	 *  @return Image from the camera
+	 */    
+	TYPES::ImageType getCameraImage()
+		raises(SYSTEMErr::SystemInAutoModeEx, SYSTEMErr::CameraIsOffEx);
+
+	 /* Camera settings */
+
+	/**
+	 * Set the RGB configuration of the camera 
+	 * @param rgbConfig the TYPES::RGB configuration
+	 */
+	void setRGB(in TYPES::RGB rgbConfig)
+		raises(SYSTEMErr::CameraIsOffEx);
+
+	/**
+	 * Set the pixel bias configuration of the camera 
+	 * @param bias the pixel bias configuration
+	 */
+	void setPixelBias(in long bias)
+		raises(SYSTEMErr::CameraIsOffEx);
+
+	/**
+	 * Set the reset level configuration of the camera 
+	 * @param resetLevel the reset level configuration
+	 */
+	void setResetLevel(in long resetLevel)
+		raises(SYSTEMErr::CameraIsOffEx);
+	};
+};
+
+#endif
