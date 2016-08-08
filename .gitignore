@@ -1,0 +1,9 @@
+*.o
+*.a
+*.so
+*.class
+*.pyc
+*.jar
+*.d
+*.bak
+*.swp
