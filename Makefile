@@ -65,7 +65,7 @@
 
 SUBSYSTEM = "OSTM 2016"
 
-MODULES_EXTERNAL = Camera Canon Serial Nexstar Storage
+MODULES_EXTERNAL = Canon Serial Camera Nexstar Storage
 MODULES = ICD $(foreach dir, $(MODULES_EXTERNAL), EXTERNAL/$(dir)) 
 
 #
