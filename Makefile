@@ -66,7 +66,13 @@
 SUBSYSTEM = "OSTM 2016"
 
 MODULES_EXTERNAL = Canon Serial Camera Nexstar Storage
-MODULES = ICD $(foreach dir, $(MODULES_EXTERNAL), EXTERNAL/$(dir)) 
+MODULES = ICD $(foreach dir, $(MODULES_EXTERNAL), EXTERNAL/$(dir)) \
+	Console1 Console2 \
+	Instrument1 Instrument2 \
+	Database1 Database2 \
+	Scheduler1 Scheduler2 Scheduler3 \
+	Telescope1 Telescope2 \
+	Integration
 
 #
 # If option KEEP_GOING=on is present in the make command line gnu_make is NOT interrupted 
