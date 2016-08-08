@@ -69,7 +69,7 @@ MODULES_EXTERNAL = Canon Serial Camera Nexstar Storage
 MODULES = ICD $(foreach dir, $(MODULES_EXTERNAL), EXTERNAL/$(dir)) \
 	Console1 Console2 \
 	Instrument1 Instrument2 \
-	Database1 Database2 \
+	DataBase1 Database2 \
 	Scheduler1 Scheduler2 Scheduler3 \
 	Telescope1 Telescope2 \
 	Integration
