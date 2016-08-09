@@ -41,13 +41,15 @@ public String name() {
 }
 
 public void start() {
-	System.out.println("Hello world");
+	System.out.println("Scheduler started");
 }
 
 public void stop() {
+	System.out.println("Scheduler stopped");
 }
 
 public int proposalUnderExecution(){
+	System.out.println("Excecuting proposal");
 	return 0;
 }
 
