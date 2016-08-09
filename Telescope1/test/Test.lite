@@ -1,6 +1,6 @@
 SOURCE TestEnv.tcl
 PROLOGUE TestPrologue
 
-1 "T1_test" "acsutilTATTestRunner T1_test"
+1 "unitTest" "acsutilTATTestRunner unitTest"
 
 EPILOGUE acsutilTATEpilogue
