@@ -17,13 +17,13 @@ import alma.acs.container.ComponentHelper;
  * and modify the instance name of the component and the container: 
  * @author alma-component-helper-generator-tool
  */
-public class SchedulerHelper extends ComponentHelper
+public class Scheduler2Helper extends ComponentHelper
 {
         /**
          * Constructor
          * @param containerLogger logger used only by the parent class.
          */
-        public SchedulerHelper(Logger containerLogger)
+        public Scheduler2Helper(Logger containerLogger)
         {
                 super(containerLogger);
         }
@@ -33,7 +33,7 @@ public class SchedulerHelper extends ComponentHelper
         */
         protected ComponentLifecycle _createComponentImpl()
         {
-                return new SchedulerImpl();
+                return new Scheduler2Impl();
         }
 
         /**

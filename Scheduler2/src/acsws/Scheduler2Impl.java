@@ -1,34 +1,33 @@
 package acsws;
 
-//import java.util.logging.Logger;
+import java.util.logging.Logger;
 import alma.ACS.ComponentStates;
 import alma.acs.component.ComponentLifecycle;
 import alma.acs.container.ContainerServices;
 import acsws.SCHEDULER_MODULE.SchedulerOperations;
 
-public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
+public class Scheduler2Impl implements ComponentLifecycle, SchedulerOperations {
 
 private ContainerServices m_containerServices;
-//private Logger m_logger;
+private Logger m_logger;
 
 public void initialize (ContainerServices containerServices) {
 	m_containerServices = containerServices;
-	//m_logger = m_containerServices.getLogger();
+	m_logger = m_containerServices.getLogger();
+	m_logger.info("initialize() called...");
 }
 
 public void execute() {
-	// TODO Auto-generated method stub
+	m_logger.info("execute() called...");
 	
 }
 
 public void cleanUp() {
-	// TODO Auto-generated method stub
-	
+	m_logger.info("cleanUP() called... nothing to clean up.");
 }
 
 public void aboutToAbort() {
-	// TODO Auto-generated method stub
-	
+	m_logger.info("managed to abort");
 }
 
 public ComponentStates componentState() {
@@ -40,16 +39,16 @@ public String name() {
 }
 
 public void start() {
-	System.out.println("Scheduler started");
+	m_logger.info("Scheduler started");
 }
 
 public void stop() {
-	System.out.println("Scheduler stopped");
+	m_logger.info("Scheduler stopped");
 	
 }
 
 public int proposalUnderExecution(){
-	System.out.println("Excecuting proposal");
+	m_logger.info("Excecuting proposal");
 	return 0;
 }
 
