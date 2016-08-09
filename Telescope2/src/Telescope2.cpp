@@ -1,16 +1,14 @@
-#include <telescope.h>
+#include <Telescope2.h>
 #include <iostream>
 using namespace std;
-
-
 TelescopeImpl::TelescopeImpl(const ACE_CString& name,
-                                            maci::ContainerServices* containerServices){
-	        //component_name = name.c_str();
-	        //component_running = true;
-
+                                            maci::ContainerServices* containerServices):
+	ACSComponentImpl(name, containerServices)
+{
 }
 
-TelescopeImpl::~TelescopeImpl(){
+TelescopeImpl::~TelescopeImpl()
+{
 }
 
 void TelescopeImpl::initialize(void){
@@ -44,3 +42,8 @@ TYPES::Position TelescopeImpl::getCurrentPosition(){
 	cout << "Position \n";
 	return TYPES::Position();
 }
+
+/* --------------- [ MACI DLL support functions ] -----------------*/
+
+#include <maciACSComponentDefines.h>
+MACI_DLL_SUPPORT_FUNCTIONS(TelescopeImpl)

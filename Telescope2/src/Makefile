@@ -45,7 +45,7 @@
 #
 # additional include and library search paths
 #USER_INC = 
-#USER_LIB = 
+#USER_LIB = -lmaci
 
 #
 # MODULE CODE DESCRIPTION:
@@ -61,9 +61,9 @@ EXECUTABLES_L   =
 
 #
 # <brief description of xxxxx program>
-xxxxx_OBJECTS   =	
-xxxxx_LDFLAGS   =
-xxxxx_LIBS      =
+Telescope2_OBJECTS   = Telescope2	
+Telescope2_LDFLAGS   =
+Telescope2_LIBS      = TelescopeStubs acscomponent ACSErrTypeDevIO
 
 #
 # special compilation flags for single c sources
@@ -72,7 +72,7 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        = telescope.h
+INCLUDES        = Telescope2.h
 
 #
 # Libraries (public and local)
@@ -82,8 +82,7 @@ LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
-Telescope2_OBJECTS   = telescope
-Telescope2_LIBS = TelescopeStubs ACSErrTypeDevIO
+lllll_OBJECTS   = 
 
 #
 # Scripts (public and local)

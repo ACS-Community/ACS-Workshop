@@ -11,13 +11,12 @@
 #include <TypesC.h>
 
 
-class TelescopeImpl : public virtual POA_ACS::ACSComponent,
+class TelescopeImpl : public virtual acscomponent::ACSComponentImpl,
 			public virtual POA_TELESCOPE_MODULE::Telescope
 
 {
 	public:
 		// Lifecycle
-		//
 		TelescopeImpl(const ACE_CString& name,
                                             maci::ContainerServices* containerServices);
 
@@ -30,7 +29,6 @@ class TelescopeImpl : public virtual POA_ACS::ACSComponent,
 		virtual void cleanUp(void);
 
 		virtual void aboutToAbort(void);
-
 		// End-Lifecycle
 
 		virtual TYPES::ImageType* observe(const ::TYPES::Position & coordinates,
