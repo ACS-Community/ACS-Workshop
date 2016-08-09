@@ -61,9 +61,9 @@ EXECUTABLES_L   =
 
 #
 # <brief description of xxxxx program>
-xxxxx_OBJECTS   =	
-xxxxx_LDFLAGS   =
-xxxxx_LIBS      =
+Telescope1Impl_OBJECT   =  Telescope1Impl	
+Telescope1Impl_LDFLAGS  =  
+Telescope1Impl_LIBS     =  TelescopeStubs baci
 
 #
 # special compilation flags for single c sources
@@ -72,12 +72,12 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = Telescope1Impl.h
 
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = Telescope1Impl
 LIBRARIES_L     =
 
 #
