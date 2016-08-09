@@ -28,6 +28,7 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 	public ComponentStates componentState() {
 		// TODO Auto-generated method stub
+		System.out.print("Hello World");
 		return null;
 	}
 
@@ -35,46 +36,49 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	
 	public int storeProposal(Target[] targets) {
 		// TODO Auto-generated method stub
+		System.out.print("Hello World");
 		return 0;
 	}
 
 	public int getProposalStatus(int pid) {
 		// TODO Auto-generated method stub
+		System.out.print("Hello World");
 		return 0;
 	}
 
 	public void removeProposal(int pid) {
 		// TODO Auto-generated method stub
-		
+		System.out.print("Hello World");
 	}
 
 	public byte[][] getProposalObservations(int pid)
 			throws ProposalNotYetReadyEx {
 		// TODO Auto-generated method stub
+		System.out.print("Hello World");
 		return null;
 	}
 
 	public Proposal[] getProposals() {
 		// TODO Auto-generated method stub
-		
+		System.out.print("Hello World");
 		return null;
 	}
 
 	public void setProposalStatus(int pid, int status)
 			throws InvalidProposalStatusTransitionEx {
 		// TODO Auto-generated method stub
-		
+		System.out.print("Hello World");
 	}
 
 	public void storeImage(int pid, int tid, byte[] image)
 			throws ImageAlreadyStoredEx {
 		// TODO Auto-generated method stub
-		
+		System.out.print("Hello World");
 	}
 
 	public void clean() {
 		// TODO Auto-generated method stub
-		
+		System.out.print("Hello World");
 	}
 
 	// Implementation of LifeCycle
@@ -90,17 +94,17 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 	public void execute() throws ComponentLifecycleException {
 		// TODO Auto-generated method stub
-		
+		System.out.print("Hello World");
 	}
 
 	public void cleanUp() throws AcsJComponentCleanUpEx {
 		// TODO Auto-generated method stub
-		
+		System.out.print("Hello World");
 	}
 
 	public void aboutToAbort() {
 		// TODO Auto-generated method stub
-		
+		System.out.print("Hello World");
 	}
 
 }
