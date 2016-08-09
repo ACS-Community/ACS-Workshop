@@ -12,7 +12,9 @@ import  acsws.SCHEDULER_MODULE.SchedulerPOATie;
   * To create an entry for your component in the Configuration Database,
   * copy the line below into a new entry in the file $ACS_CDB/CDB/MACI/Components/Components.xml
   * and modify the instance name of the component and the container:
-  * Name="SCHEDULER1" Code="acsws.SchedulerImpl.SchedulerHelper" Type="IDL:acsws/Scheduler:1.0" Container="frodoContainer"
+  * Name="SCHEDULER1" Code="acsws.SchedulerHelper" 
+  * Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0" Container="frodoContainer"
+  * Default="true" ImplLang="java"
   */
 public class SchedulerHelper extends ComponentHelper {
 	public SchedulerHelper(Logger containerLogger) {

@@ -1,10 +1,7 @@
-#include <vltPort.h>
-
-static char * rcsId = "@(#) $Id: $";
-static void * use_rcsId = ((void) &use_rcsId, (void *) &rcsId);
-
 #include <baciDB.h>
 #include <InstrumentS.h>
+#include <iostream>
+#include <InstrumentImpl.h>
 
 using namespace baci;
 
@@ -14,6 +11,11 @@ ACE_Log_Priority LOCAL_LOGGING_LEVEL = LM_INFO;
 
 const static int MAX_LOGS = 5;
 
+Instrument::Instrument(const ACE_CString &name, maci::ContainerServices * containerServices) :
+                ACSComponentImpl(name, containerServices),
+
+                on(false)
+{}
 
 void Instrument::cameraOn()
 {
@@ -32,12 +34,14 @@ void Instrument::cameraOff()
 ::TYPES::ImageType * Instrument::takeImage (::CORBA::Long exposureTime)
 {
 	if (on) {
-		std::cout << "Instrument::takeImage(" << exposureTime << ");" << std::endl;	
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage(%li);", (long)exposureTime));	
 	} else {
-		std::cout << "Instrument::takeImage failed! Camera is off." << std::endl;
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage failed! Camera is off."));
 	}
 
 	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "takeImage"));
+	
+	return NULL;
 }
 
 void Instrument::setRGB (const ::TYPES::RGB & rgbConfig)

@@ -6,7 +6,7 @@ from Acspy.Servants.ContainerServices import ContainerServices
 from Acspy.Servants.ComponentLifecycle import ComponentLifecycle
 from Acspy.Servants.ACSComponent import ACSComponent
 
-class Console2(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycle, ACSComponent):
+class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycle, ACSComponent):
 
 	def __init__(self):
 		ACSComponent.__init__(self)
@@ -42,6 +42,36 @@ class Console2(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycl
 		'''
 		self.getLogger().logInfo("called...") 
 		return "hello from Console2"
+
+	def setMode(self, *args):
+		pass
+
+	def getMode(self, *args):
+		pass
+
+	def cameraOn(self, *args):
+		pass
+	
+	def cameraOff(self, *args):
+		pass
+
+	def moveTelescope(self, *args):
+		pass
+
+	def getTelescopePosition(self, *args):
+		pass
+
+	def getCameraImage(self, *args):
+		pass
+
+	def setRGB(self, *args):
+		pass
+
+	def setPixelBias(self, *args):
+		pass
+
+	def setResetLevel(self, *args):
+		pass
 
 if __name__ == "__main__":
 	con2=Console2()
