@@ -4,8 +4,8 @@
        xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <_ Name="CONSOLE2_TEST" 	    
-         Code="Console2_test.Console2" 
-         Type="IDL:/home/almaproc/ostm/ICD/idl/Console:1.0"
+         Code="Console2_test" 
+         Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
          Container="aragornContainer" ImplLang="py" />
 </Components>
 

@@ -133,17 +133,17 @@
                              Type="IDL:alma/xmlstore/ArchiveConnection:1.0"
                              Container="frodoContainer"
                              Default="true" ImplLang="java" />
-      <_ Name="ERRORCOMP_CPP" 	    
-         Code="acsexmplErrorComponentImpl" 
-         Type="IDL:alma/acsexmplErrorComponent/ErrorComponent:1.0"
-         Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="Scheduler2" 	    
+         Code="acsws.SchedulerHelper" 
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="frodoContainer" ImplLang="java" />
       <_ Name="ERRORCOMP_JAVA" 
          Code="alma.acsexmplErrorComponent.ErrorComponentImpl.ErrorComponentHelper" 
          Type="IDL:alma/acsexmplErrorComponent/ErrorComponent:1.0" 
          Container="frodoContainer"  ImplLang="java" />
-      <_ Name="CONSOLE2_TEST" 	    
-         Code="Console2_test.Console2" 
-         Type="IDL:/home/almaproc/ostm/ICD/idl/Console:1.0"
+      <_ Name="ERRORCOMP_PY" 	    
+         Code="acsexmplErrorComponentImpl.ErrorComponent" 
+         Type="IDL:alma/acsexmplErrorComponent/ErrorComponent:1.0"
          Container="aragornContainer" ImplLang="py" />
 </Components>
 
