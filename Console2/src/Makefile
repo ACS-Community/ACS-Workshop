@@ -102,7 +102,7 @@ TCL_SCRIPTS_L   =
 PY_SCRIPTS         =
 PY_SCRIPTS_L       =
 
-PY_MODULES         =
+PY_MODULES         = Console2_test
 PY_MODULES_L       =
 
 PY_PACKAGES        =
@@ -133,7 +133,7 @@ CDB_SCHEMAS =
 # 
 # IDL Files and flags
 # 
-IDL_FILES =
+IDL_FILES = 
 TAO_IDLFLAGS =
 USER_IDL =
 #

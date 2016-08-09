@@ -139,11 +139,11 @@ USER_IDL =
 #
 # Jarfiles and their directories
 #
-JARFILES= 
-jjj_DIRS=
-jjj_EXTRAS=
+JARFILES= Scheduler1
+Scheduler1_DIRS= acsws
+Scheduler1_EXTRAS=
 # For expressing dependencies between jarfiles (parallel builds)
-jjj_JLIBS= 
+Scheduler1_JLIBS= 
 #
 # java sources in Jarfile on/off
 DEBUG= 
