@@ -9,8 +9,8 @@ from Acspy.Servants.ACSComponent import ACSComponent
 class Console2(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycle, ACSComponent):
 
 	def __init__(self):
-		#ACSComponent.__init__(self)
-		#ContainerServices.__init__(self)
+		ACSComponent.__init__(self)
+		ContainerServices.__init__(self)
 		pass
 
 	def initialize(self):
