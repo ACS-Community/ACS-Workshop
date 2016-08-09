@@ -72,17 +72,18 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = telescope.h
 
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = Telescope2
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
-lllll_OBJECTS   =
+Telescope2_OBJECTS   = telescope
+Telescope2_LIBS = TelescopeStubs ACSErrTypeDevIO
 
 #
 # Scripts (public and local)
