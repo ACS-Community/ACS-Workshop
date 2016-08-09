@@ -11,6 +11,11 @@ ACE_Log_Priority LOCAL_LOGGING_LEVEL = LM_INFO;
 
 const static int MAX_LOGS = 5;
 
+Instrument::Instrument(const ACE_CString &name, maci::ContainerServices * containerServices) :
+                ACSComponentImpl(name, containerServices),
+
+                on(false)
+{}
 
 void Instrument::cameraOn()
 {
@@ -29,12 +34,14 @@ void Instrument::cameraOff()
 ::TYPES::ImageType * Instrument::takeImage (::CORBA::Long exposureTime)
 {
 	if (on) {
-		std::cout << "Instrument::takeImage(" << exposureTime << ");" << std::endl;	
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage(%li);", (long)exposureTime));	
 	} else {
-		std::cout << "Instrument::takeImage failed! Camera is off." << std::endl;
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage failed! Camera is off."));
 	}
 
 	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "takeImage"));
+	
+	return NULL;
 }
 
 void Instrument::setRGB (const ::TYPES::RGB & rgbConfig)
@@ -52,7 +59,6 @@ void Instrument::setResetLevel(::CORBA::Long resetLevel)
 	std::cout << "Instrument::setResetLevel(" << resetLevel << ");" << std::endl;
 }
 
-/*
 void Instrument::initialize() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
 {
 }
@@ -68,7 +74,6 @@ void Instrument::cleanUp()
 void Instrument::aboutToAbort()
 {
 }
-*/
 
 
 #include <maciACSComponentDefines.h>
