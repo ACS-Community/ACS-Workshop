@@ -8,7 +8,6 @@ import acsws.SYSTEMErr.SchedulerAlreadyRunningEx;
 import acsws.SYSTEMErr.SchedulerAlreadyStoppedEx;
 import acsws.DATABASE_MODULE.DataBase;
 import acsws.DATABASE_MODULE.DataBaseHelper;
-import acsws.DATABASE_MODULE.DataBaseOperations;
 import acsws.TYPES.*;
 
 import alma.ACS.ComponentStates;
@@ -24,7 +23,7 @@ import alma.acs.container.ContainerServices;
  * @author Exequiel Fuentes
  * 
  */
-public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
+public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 	private ContainerServices m_containerServices;
 	private Logger m_logger;
 	
@@ -86,17 +85,21 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
 			System.out.println("Scheduler1 inside start method");
 			m_logger.info("Scheduler1 inside start method");
 			
-			/*
 			try {
-				DataBase databaseComp = DataBaseHelper.narrow(m_containerServices.getComponent("Database1"));
+				DataBase databaseComp = DataBaseHelper.narrow(m_containerServices.getComponent("DATABASE"));
 				
-				databaseComp.getProposals();
+				Proposal[] proposalArr = databaseComp.getProposals();
+				
+				for(int i=0; i<proposalArr.length; i++) {
+					m_logger.info("Proposal PID: " + proposalArr[i].pid);
+					m_logger.info("Proposal status: " + proposalArr[i].status);
+				}
 			} catch (AcsJContainerServicesEx e) {
 				m_logger.severe("Error in start method while getting proposals" + e.getMessage());
 				e.printStackTrace();
 			}
-			*/
 			
+			/*
 			int[] proposals = new int[2];
 			proposals[0] = 0;
 			proposals[1] = 1;
@@ -111,6 +114,7 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
 					break;
 				}
 			}
+			*/
 		} else {
 			m_logger.severe("Start method was already called");
 			throw new SchedulerAlreadyRunningEx("Start method was already called", null);
