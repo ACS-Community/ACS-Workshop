@@ -2,6 +2,9 @@
 
 import CONSOLE_MODULE__POA
 
+import sys
+import os
+from sys import stdout
 from Acspy.Servants.ContainerServices import ContainerServices
 from Acspy.Servants.ComponentLifecycle import ComponentLifecycle
 from Acspy.Servants.ACSComponent import ACSComponent
@@ -45,9 +48,11 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 
 	def setMode(self, *args):
 		pass
-
+		
 	def getMode(self, *args):
-		pass
+		self.getLogger().logInfo("GET MODE ACCESS") 
+		return True
+		
 
 	def cameraOn(self, *args):
 		pass
