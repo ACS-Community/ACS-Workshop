@@ -1,10 +1,7 @@
-#include <vltPort.h>
-
-static char * rcsId = "@(#) $Id: $";
-static void * use_rcsId = ((void) &use_rcsId, (void *) &rcsId);
-
 #include <baciDB.h>
 #include <InstrumentS.h>
+#include <iostream>
+#include <InstrumentImpl.h>
 
 using namespace baci;
 
@@ -14,6 +11,11 @@ ACE_Log_Priority LOCAL_LOGGING_LEVEL = LM_INFO;
 
 const static int MAX_LOGS = 5;
 
+Instrument::Instrument(const ACE_CString &name, maci::ContainerServices * containerServices) :
+                ACSComponentImpl(name, containerServices),
+
+                on(false)
+{}
 
 void Instrument::cameraOn()
 {

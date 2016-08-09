@@ -1,20 +1,22 @@
-#include <baciCharacteristicComponentImpl.h>
+#ifndef __cplusplus
+#error This is a C++ include file and cannot be used from plain C
+#endif
+
+#include <acscomponentImpl.h>
 
 ///CORBA generated servant stub
 #include <InstrumentS.h>
 
 
 
-class Instrument : public baci::CharacteristicComponentImpl,    //Standard component superclass
+class Instrument : public acscomponent::ACSComponentImpl,    //Standard component superclass
 		     public virtual POA_INSTRUMENT_MODULE::Instrument    //CORBA servant stub
 {
 private:
 	bool on;
 
 public:
-	Instrument() :
-		on(false)
-	{}
+	Instrument(const ACE_CString &name, maci::ContainerServices * containerServices);
 
 	virtual ~Instrument() = default;
 
@@ -38,5 +40,8 @@ public:
 
 	virtual void aboutToAbort();
 
-	void operator=(const FridgeControl&);
+	void operator=(const Instrument& other)
+	{
+		on = other.on;	
+	}
 };
