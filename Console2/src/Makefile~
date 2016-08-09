@@ -133,7 +133,7 @@ CDB_SCHEMAS =
 # 
 # IDL Files and flags
 # 
-IDL_FILES =
+IDL_FILES = Types Console DataBase Instrument Scheduler Telescope TelescopeControl Camera Storage
 TAO_IDLFLAGS =
 USER_IDL =
 #

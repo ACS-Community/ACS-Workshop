@@ -41,7 +41,7 @@ class Console2(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycl
 		string sayHello();
 		'''
 		self.getLogger().logInfo("called...") 
-		return "hello"
+		return "hello from Console2"
 
 if __name__ == "__main__":
 	con2=Console2()
