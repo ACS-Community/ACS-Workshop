@@ -31,32 +31,19 @@ class Instrument1: public virtual acscomponent::ACSComponentImpl,     //Componen
     virtual ~Instrument1();
     
     /* --------------------- [ CORBA interface ] ----------------------*/    
-    /**
-	 * Turns the Instrument camera on.
-	 *
-	 * @return None
-	 */
-	virtual void cameraOn (void) = 0;
+    
+	virtual void cameraOn (void);
 
-	/**
-	 * Turns the Instrument off.
-	 * A NULL string as the target identifier indicates that no image file
-	 * should be saved.
-	 *
-	 * @todo Function should be refactored so that only one operation is performed.
-	 *
-	 * @return None
-	 */
-	virtual void cameraOff (void) = 0;
+	virtual void cameraOff (void);
 
-	/**
-	 * Retrieve image from the Instrument. Raises an exception if the 
-	 * camera is not on.
-	 *
-	 * @return array of longs containing the image pixels
-	 */
-	 virtual TYPES::ImageType * takeImage (CORBA::Long exposureTime) = 0;
- 
+	virtual TYPES::ImageType * takeImage (CORBA::Long exposureTime);
+
+	virtual void setRGB (const TYPES::RGB & rgbConfig);
+
+	virtual void setPixelBias (CORBA::Long bias);
+
+	virtual void setResetLevel (CORBA::Long resetLevel);
+
 };
 /*\@}*/
 /*\@}*/

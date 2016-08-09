@@ -19,48 +19,41 @@
     ACSComponentImpl(name, containerServices)
 {}
     
-    /**
+   /**
      * Destructor
      */
 	Instrument1::~Instrument1(){}
     
-    /* --------------------- [ CORBA interface ] ----------------------*/    
-    /**
-	* Turns the Instrument camera on.
-	*
-	* @return None
-	*/
+   /* --------------------- [ CORBA interface ] ----------------------*/    
+    
 	void Instrument1::cameraOn()
 	{
 		std::cout << "cameraOn OK" << std::endl;
 		
 	}
 
-	/**
-	 * Turns the Instrument off.
-	 * A NULL string as the target identifier indicates that no image file
-	 * should be saved.
-	 *
-	 * @todo Function should be refactored so that only one operation is performed.
-	 *
-	 * @return None
-	 */
 	void Instrument1::cameraOff ()
 	{
 		std::cout << "cameraOff OK" << std::endl;	
 	}
 
-	/**
-	 * Retrieve image from the Instrument. Raises an exception if the 
-	 * camera is not on.
-	 *
-	 * @return array of longs containing the image pixels
-	 */
 	TYPES::ImageType* Instrument1::takeImage(CORBA::Long exposureTime)
 	{
 		std::cout << "takeImage OK" << std::endl;
 		return NULL;	
 	}
+
+	void Instrument1::setRGB (const TYPES::RGB & rgbConfig){}
+
+	void Instrument1::setPixelBias (CORBA::Long bias){}
+
+	void Instrument1::setResetLevel (CORBA::Long resetLevel){}
+
+	
+/*--------------- [ MACI DLL support functions] -------------------*/
+#include <maciACSComponentDefines.h>
+MACI_DLL_SUPPORT_FUNCTIONS(Instrument1)
+/*-----------------------------------------------------------------*/
 	 
 /*\@}*/
 /*\@}*/
