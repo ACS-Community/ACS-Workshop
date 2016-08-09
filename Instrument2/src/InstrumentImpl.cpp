@@ -2,6 +2,7 @@
 #include <InstrumentS.h>
 #include <iostream>
 #include <InstrumentImpl.h>
+#include <SYSTEMErr.h>
 
 using namespace baci;
 
@@ -35,13 +36,14 @@ void Instrument::cameraOff()
 {
 	if (on) {
 		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage(%li);", (long)exposureTime));	
-	} else {
-		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage failed! Camera is off."));
-	}
 
-	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "takeImage"));
+		// chill, this is just a test.
+		return new ::TYPES::ImageType();
+	}
 	
-	return NULL;
+	SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::takeImage");
+
+	throw ex.getCameraIsOffEx();
 }
 
 void Instrument::setRGB (const ::TYPES::RGB & rgbConfig)
