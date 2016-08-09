@@ -7,6 +7,8 @@
 *.d
 *.bak
 *.swp
-Scheduler1/.classpath
-Scheduler1/.project
-Scheduler1/bin/
+bin/
+lib/
+object/
+.classpath
+.project
