@@ -3,8 +3,8 @@
        xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
        xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <_ Name="ERRORCOMP_JAVA" 
-         Code="acsws.DataBase.DataBaseImpl.DataBaseHelper" 
+      <_ Name="DATABASE_MODULE_JAVA" 
+         Code="acsws.Database2.DatabaseComponentHelper" 
          Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0" 
          Container="frodoContainer"  ImplLang="java" />
 </Components>
