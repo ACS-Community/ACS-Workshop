@@ -72,17 +72,19 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = Instrument1.h
 
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = Instrument1
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
 lllll_OBJECTS   =
+Instrument1_OBJECTS   = Instrument1Impl
+Instrument1_LIBS   = InstrumentStubs TypesStubs acscomponent
 
 #
 # Scripts (public and local)
