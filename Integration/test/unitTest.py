@@ -16,17 +16,23 @@ class SchedulerTest(unittest.TestCase):
 
     def retrieveResources(self):
         self.mount = self.client.getComponent('MOUNT')
+        self.camera = self.client.getComponent('CAMERA')
+        self.storage = self.client.getComponent('STORAGE')
         self.database = self.client.getComponent('DATABASE')
         self.telescope = self.client.getComponent('TELESCOPE')
         self.instrument = self.client.getComponent('INSTRUMENT')
         self.scheduler = self.client.getComponent('SCHEDULER')
+        self.console = self.client.getComponent('CONSOLE')
 
     def releaseResources(self):
         self.client.releaseComponent(self.mount.name())
+        self.client.releaseComponent(self.camera.name())
+        self.client.releaseComponent(self.storage.name())
         self.client.releaseComponent(self.database.name())
         self.client.releaseComponent(self.telescope.name())
         self.client.releaseComponent(self.instrument.name())
         self.client.releaseComponent(self.scheduler.name())
+        self.client.releaseComponent(self.console.name())
 
     def getTargets(self):
         targets = TargetList()
@@ -50,45 +56,6 @@ class SchedulerTest(unittest.TestCase):
         targets[1] = tar
         return targets
         
-    #storeProposal(TargetList) #Stores proposal, returns pid.
-    #getProposalStatus(pid) #Retrieves proposal status, returns status.
-    #removeProposal(pid) #Removes proposal.
-    #getProposalObservations(pid) #Returns images of observed targets. Raises ProposalNotYetReadyEx.
-    #getProposals() #Returns observations waiting to be observed.
-    #setProposalStatus(pid, status) #Sets the status of a given proposal. Raises InvalidProposalStatusTransitionEx.
-    #storeImage(pid, tid, image) #Stores image for a given <pid,tid>. Raises ImageAlreadyStoredEx.
-    #clean() #Cleans the database.
-    def testDatabase(self):
-        #Test getting proposal status of an incorrect id.
-	self.assertEqual(self.database.getProposalStatus(0),-1) #Not sure the expected behavior when the pid doesn't exist.
-        props = self.database.getProposals()
-        self.assertEqual(len(props),0)
-        #Test storing proposal.
-        pid = self.database.storeProposal(self.getTargets())
-	self.assertNotEqual(self.database.getProposalStatus(pid),1)
-        props = self.database.getProposals()
-        self.assertEqual(len(props),1)
-        self.assertEqual(props[0].pid,pid)
-        #Test remove proposal.
-        self.removeProposal(pid)
-	self.assertEqual(self.database.getProposalStatus(0),-1) #Not sure the expected behavior when the pid doesn't exist.
-        #Test store image.
-        targets = self.getTargets()
-        pid = self.database.storeProposal(targets)
-        img0 = [0]
-        img1 = [1]
-        self.database.setProposalStatus(pid, 1)
-        self.database.storeImage(pid, targets[0].tid, img)
-        self.database.storeImage(pid, targets[1].tid, img)
-        self.database.setProposalStatus(pid, 2)
-        imgs = self.database.getProposalObservations(pid)
-        self.assertEqual(imgs[0], img0)
-        self.assertEqual(imgs[1], img1)
-        props = self.database.getProposals()
-        self.assertEqual(len(props),0)
-        #Test clean
-        self.database.clean()
-
     #setTo(alt,az) #Moves to required position, unless uncalibrated.
     #offSet(alt,az) #Adds offset movement to each axis, unless uncalibrated.
     #zenith() #Moves the telescope to the zenith, unless uncalibrated.
@@ -190,6 +157,52 @@ class SchedulerTest(unittest.TestCase):
         self.assertAlmostEquals(self.mount.actualAltitude(), 0, delta=1)
         self.assertAlmostEquals(self.mount.actualAzimuth(), 0, delta=1)
 
+    testCamera(self):
+        pass
+
+    testStorage(self):
+        pass
+
+    #storeProposal(TargetList) #Stores proposal, returns pid.
+    #getProposalStatus(pid) #Retrieves proposal status, returns status.
+    #removeProposal(pid) #Removes proposal.
+    #getProposalObservations(pid) #Returns images of observed targets. Raises ProposalNotYetReadyEx.
+    #getProposals() #Returns observations waiting to be observed.
+    #setProposalStatus(pid, status) #Sets the status of a given proposal. Raises InvalidProposalStatusTransitionEx.
+    #storeImage(pid, tid, image) #Stores image for a given <pid,tid>. Raises ImageAlreadyStoredEx.
+    #clean() #Cleans the database.
+    def testDatabase(self):
+        #Test getting proposal status of an incorrect id.
+	self.assertEqual(self.database.getProposalStatus(0),-1) #Not sure the expected behavior when the pid doesn't exist.
+        props = self.database.getProposals()
+        self.assertEqual(len(props),0)
+        #Test storing proposal.
+        pid = self.database.storeProposal(self.getTargets())
+	self.assertNotEqual(self.database.getProposalStatus(pid),1)
+        props = self.database.getProposals()
+        self.assertEqual(len(props),1)
+        self.assertEqual(props[0].pid,pid)
+        #Test remove proposal.
+        self.removeProposal(pid)
+	self.assertEqual(self.database.getProposalStatus(0),-1) #Not sure the expected behavior when the pid doesn't exist.
+        #Test store image.
+        targets = self.getTargets()
+        pid = self.database.storeProposal(targets)
+        img0 = [0]
+        img1 = [1]
+        self.database.setProposalStatus(pid, 1)
+        self.database.storeImage(pid, targets[0].tid, img)
+        self.database.storeImage(pid, targets[1].tid, img)
+        self.database.setProposalStatus(pid, 2)
+        imgs = self.database.getProposalObservations(pid)
+        self.assertEqual(imgs[0], img0)
+        self.assertEqual(imgs[1], img1)
+        props = self.database.getProposals()
+        self.assertEqual(len(props),0)
+        #Test clean
+        self.database.clean()
+
+
     #observe(coords, expTime) #Executes an observation, returns image. Raises PositionOutOfLimitsEx.
     #moveTo(coords) #Moves the telescope. Raises PositionOutOfLimitsEx.
     #getCurrentPosition() #Retrieves current position, returns coords.
@@ -272,6 +285,9 @@ class SchedulerTest(unittest.TestCase):
         self.instrument.cameraOn()
         img = takeImage(3)
         self.instrument.cameraOff()
+
+    testConsole(self):
+        pass
 
 if __name__ == "__main__":
     unittest.main()
