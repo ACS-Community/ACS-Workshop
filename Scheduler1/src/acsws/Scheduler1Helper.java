@@ -16,13 +16,13 @@ import  acsws.SCHEDULER_MODULE.SchedulerPOATie;
   * Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0" Container="frodoContainer"
   * Default="true" ImplLang="java"
   */
-public class SchedulerHelper extends ComponentHelper {
-	public SchedulerHelper(Logger containerLogger) {
+public class Scheduler1Helper extends ComponentHelper {
+	public Scheduler1Helper(Logger containerLogger) {
 		super(containerLogger);
 	}
 	
 	protected ComponentLifecycle _createComponentImpl() {
-		return new SchedulerImpl();
+		return new Scheduler1Impl();
 	}
 	
 	protected Class _getPOATieClass() {
