@@ -16,11 +16,7 @@ private:
 	bool on;
 
 public:
-	Instrument(const ACE_CString &name, maci::ContainerServices * containerServices) :
-		ACSComponentImpl(name, containerServices),
-
-		on(false)
-	{}
+	Instrument(const ACE_CString &name, maci::ContainerServices * containerServices);
 
 	virtual ~Instrument() = default;
 
@@ -44,5 +40,8 @@ public:
 
 	virtual void aboutToAbort();
 
-	void operator=(const FridgeControl&);
+	void operator=(const Instrument& other)
+	{
+		on = other.on;	
+	}
 };

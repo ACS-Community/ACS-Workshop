@@ -11,6 +11,11 @@ ACE_Log_Priority LOCAL_LOGGING_LEVEL = LM_INFO;
 
 const static int MAX_LOGS = 5;
 
+Instrument::Instrument(const ACE_CString &name, maci::ContainerServices * containerServices) :
+                ACSComponentImpl(name, containerServices),
+
+                on(false)
+{}
 
 void Instrument::cameraOn()
 {
@@ -52,7 +57,6 @@ void Instrument::setResetLevel(::CORBA::Long resetLevel)
 	std::cout << "Instrument::setResetLevel(" << resetLevel << ");" << std::endl;
 }
 
-/*
 void Instrument::initialize() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
 {
 }
@@ -68,7 +72,6 @@ void Instrument::cleanUp()
 void Instrument::aboutToAbort()
 {
 }
-*/
 
 
 #include <maciACSComponentDefines.h>
