@@ -20,28 +20,31 @@ Instrument::Instrument(const ACE_CString &name, maci::ContainerServices * contai
 
 void Instrument::cameraOn()
 {
+	ACS_TRACE("::Instrument::cameraOn");
+
 	on = true;
-	
-	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument on."));
 }
 
 void Instrument::cameraOff()
 {
-	on = false;
+	ACS_TRACE("::Instrument::cameraOff");
 
-	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument off."));
+	on = false;
 }
 
 ::TYPES::ImageType * Instrument::takeImage (::CORBA::Long exposureTime)
 {
+	ACS_TRACE("::Instrument::takeImage");
+
 	if (on) {
-		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage(%li);", (long)exposureTime));	
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "TakeImage with exposureTime = %li", (long)exposureTime));	
 
 		// chill, this is just a test.
 		return new ::TYPES::ImageType();
 	}
 	
 	SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::takeImage");
+	ex.log();
 
 	throw ex.getCameraIsOffEx();
 }
