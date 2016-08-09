@@ -27,7 +27,7 @@ void TelescopeImpl::aboutToAbort(void){
 TYPES::ImageType* TelescopeImpl::observe(const ::TYPES::Position & coordinates,
       ::CORBA::Long exposureTime)
 {
-	cout << "Observe \n";
+	ACS_SHORT_LOG((LM_WARNING, "Not Implemented Yet"));
 	return NULL;
 }
 
@@ -35,11 +35,11 @@ TYPES::ImageType* TelescopeImpl::observe(const ::TYPES::Position & coordinates,
 
 void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 {
-	cout << " Moving \n";
+	ACS_SHORT_LOG((LM_WARNING, "Not Implemented Yet"));
 }
 
 TYPES::Position TelescopeImpl::getCurrentPosition(){
-	cout << "Position \n";
+	ACS_SHORT_LOG((LM_WARNING, "Not Implemented Yet"));
 	return TYPES::Position();
 }
 

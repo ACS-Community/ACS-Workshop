@@ -61,7 +61,7 @@ EXECUTABLES_L   =
 
 #
 # <brief description of xxxxx program>
-Telescope1Impl_OBJECT   =  Telescope1Impl	
+Telescope1Impl_OBJECTS   =  Telescope1Impl	
 Telescope1Impl_LDFLAGS  =  
 Telescope1Impl_LIBS     =  TelescopeStubs baci
 
