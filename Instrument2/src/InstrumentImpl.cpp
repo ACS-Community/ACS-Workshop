@@ -1,10 +1,7 @@
-#include <vltPort.h>
-
-static char * rcsId = "@(#) $Id: $";
-static void * use_rcsId = ((void) &use_rcsId, (void *) &rcsId);
-
 #include <baciDB.h>
 #include <InstrumentS.h>
+#include <iostream>
+#include <InstrumentImpl.h>
 
 using namespace baci;
 
@@ -55,6 +52,7 @@ void Instrument::setResetLevel(::CORBA::Long resetLevel)
 	std::cout << "Instrument::setResetLevel(" << resetLevel << ");" << std::endl;
 }
 
+/*
 void Instrument::initialize() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
 {
 }
@@ -70,6 +68,7 @@ void Instrument::cleanUp()
 void Instrument::aboutToAbort()
 {
 }
+*/
 
 
 #include <maciACSComponentDefines.h>
