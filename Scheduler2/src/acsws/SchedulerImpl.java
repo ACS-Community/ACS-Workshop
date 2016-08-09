@@ -45,6 +45,7 @@ public void start() {
 
 public void stop() {
 	System.out.println("Scheduler stopped");
+	
 }
 
 public int proposalUnderExecution(){
