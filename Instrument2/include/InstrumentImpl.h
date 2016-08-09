@@ -16,13 +16,9 @@ private:
 	bool on;
 
 public:
-	Instrument(const ACE_CString &name, maci::ContainerServices * containerServices) :
-		ACSComponentImpl(name, containerServices),
+	Instrument(const ACE_CString &name, maci::ContainerServices * containerServices);
 
-		on(false)
-	{}
-
-	virtual ~Instrument() = default;
+	virtual ~Instrument() {};
 
 	virtual void cameraOn();
 
@@ -44,5 +40,8 @@ public:
 
 	virtual void aboutToAbort();
 
-	void operator=(const FridgeControl&);
+	void operator=(const Instrument& other)
+	{
+		on = other.on;	
+	}
 };
