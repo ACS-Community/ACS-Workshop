@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+"@(#) $Id: TelescopeControl.xsd,v 1.1.1.1 2008/11/24 00:37:29 almamgr Exp $"
+
+$Log: TelescopeControl.xsd,v $
+Revision 1.1.1.1  2008/11/24 00:37:29  almamgr
+Initial import
+
+Revision 1.1.1.1  2007/07/09 12:47:39  wg8
+Repository Setup
+
+-->
+<xs:schema targetNamespace="urn:schemas-cosylab-com:TelescopeControl:1.0"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="urn:schemas-cosylab-com:TelescopeControl:1.0"
+	xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+	xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:import namespace="urn:schemas-cosylab-com:CDB:1.0" schemaLocation="CDB.xsd"/>
+<xs:import namespace="urn:schemas-cosylab-com:BACI:1.0" schemaLocation="BACI.xsd"/>
+
+<xs:complexType name="TelescopeControl">
+	<xs:sequence>
+
+
+		<xs:element name="commandedAltitude">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:RWdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="commandedAltitude"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="commandedAzimuth">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:RWdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="commandedAzimuth"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="actualAltitude">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:ROdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="actualAltitude"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="actualAzimuth">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:ROdouble">
+						<xs:attribute name="description" type="xs:string" use="optional" default="actualAzimuth"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+		<xs:element name="status">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:restriction base="baci:RWpattern">
+						<xs:attribute name="description" type="xs:string" use="optional" default="status"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+ 
+
+	</xs:sequence>
+
+	<xs:attribute name="id" type="xs:int" use="optional" default="0"/>
+</xs:complexType>
+<xs:element name="TelescopeControl" type="TelescopeControl"/>
+</xs:schema>

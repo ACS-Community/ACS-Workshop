@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+       xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+       xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!--
+      <_ Name="DATABASE" 	    
+         Code="DataBaseImpl" 
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="SCHEDULER" 	    
+         Code="SchedulerImpl" 
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="TELESCOPE" 	    
+         Code="TelescopeImpl" 
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="INSTRUMENT" 	    
+         Code="InstrumentImpl" 
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="CAMERA" 	    
+         Code="CameraImpl" 
+         Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="MOUNT"
+         Code="MOUNT2"
+         Type="IDL:acsws/TelescopeControl/TelescopeControl:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+-->
+      <_ Name="CONSOLE1"
+         Code="?"
+         Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
+         Container="cToyContainer" ImplLang="py"/>
+      <_ Name="CONSOLE2"
+         Code="Console2_Test.Console2"
+         Type="IDL:acsws/CONSOLE_MODULE/DataBase:1.0"
+         Container="dToyContainer" ImplLang="py"/>
+      <_ Name="DATABASE1"
+         Code="DataBaseImpl"
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="dToyContainer" ImplLang="java"/>
+      <_ Name="DATABASE2"
+         Code="DataBaseImpl"
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="dToyContainer" ImplLang="java"/>
+      <_ Name="SCHEDULER1"
+         Code="SchedulerImpl"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="sToyContainer" ImplLang="java"/>
+      <_ Name="SCHEDULER2"
+         Code="SchedulerImpl"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="sToyContainer" ImplLang="java"/>
+      <_ Name="SCHEDULER3"
+         Code="SchedulerImpl"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="sToyContainer" ImplLang="java"/>
+      <_ Name="TELESCOPE1"
+         Code="TelescopeImpl"
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="tToyContainer" ImplLang="java"/>
+      <_ Name="TELESCOPE2"
+         Code="TelescopeImpl"
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="tToyContainer" ImplLang="java"/>
+      <_ Name="INSTRUMENT1"
+         Code="InstrumentImpl"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="iToyContainer" ImplLang="cpp"/>
+      <_ Name="INSTRUMENT2"
+         Code="InstrumentImpl"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="iToyContainer" ImplLang="cpp"/>
+      <_ Name="CAMERA"
+         Code="CameraImpl"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
+         Container="iToyContainer" ImplLang="cpp"/>
+      <_ Name="MOUNT"
+         Code="MOUNT2"
+         Type="IDL:acsws/TelescopeControl/TelescopeControl:1.0"
+         Container="tToyContainer" ImplLang="cpp"/>
+</Components>
+
