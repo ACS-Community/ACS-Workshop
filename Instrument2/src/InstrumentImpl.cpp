@@ -51,33 +51,37 @@ void Instrument::cameraOff()
 
 void Instrument::setRGB (const ::TYPES::RGB & rgbConfig)
 {
-	std::cout << "Instrument::setRGB(...);" << std::endl;
+	ACS_TRACE("Instrument::setRGB");
 }
 	
 void Instrument::setPixelBias(::CORBA::Long bias)
 {
-	std::cout << "Instrument::setPixelBias(" << bias << ");" << std::endl;
+	ACS_TRACE("Instrument::setPixelBias");
 }
 
 void Instrument::setResetLevel(::CORBA::Long resetLevel)
 {
-	std::cout << "Instrument::setResetLevel(" << resetLevel << ");" << std::endl;
+	ACS_TRACE("Instrument::setResetLevel");
 }
 
 void Instrument::initialize() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
 {
+	ACS_TRACE("Instrument::initialize");
 }
 
 void Instrument::execute() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
 {
+	ACS_TRACE("Instrument::execute");
 }
 
 void Instrument::cleanUp()
 {
+	ACS_TRACE("Instrument::cleanUp");
 }
 
 void Instrument::aboutToAbort()
 {
+	ACS_TRACE("Instrument::aboutToAbort");
 }
 
 
