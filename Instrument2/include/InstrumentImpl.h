@@ -18,7 +18,7 @@ private:
 public:
 	Instrument(const ACE_CString &name, maci::ContainerServices * containerServices);
 
-	virtual ~Instrument() = default;
+	virtual ~Instrument() {};
 
 	virtual void cameraOn();
 

@@ -40,6 +40,8 @@ void Instrument::cameraOff()
 	}
 
 	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "takeImage"));
+	
+	return NULL;
 }
 
 void Instrument::setRGB (const ::TYPES::RGB & rgbConfig)
