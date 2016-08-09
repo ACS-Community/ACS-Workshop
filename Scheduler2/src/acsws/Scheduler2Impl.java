@@ -6,7 +6,7 @@ import alma.acs.component.ComponentLifecycle;
 import alma.acs.container.ContainerServices;
 import acsws.SCHEDULER_MODULE.SchedulerOperations;
 
-public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
+public class Scheduler2Impl implements ComponentLifecycle, SchedulerOperations {
 
 private ContainerServices m_containerServices;
 private Logger m_logger;

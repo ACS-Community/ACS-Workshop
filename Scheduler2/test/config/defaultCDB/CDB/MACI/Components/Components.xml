@@ -134,7 +134,7 @@
                              Container="frodoContainer"
                              Default="true" ImplLang="java" />
       <_ Name="Scheduler2" 	    
-         Code="acsws.SchedulerHelper" 
+         Code="acsws.Scheduler2Helper" 
          Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
          Container="frodoContainer" ImplLang="java" />
       <_ Name="ERRORCOMP_JAVA" 
