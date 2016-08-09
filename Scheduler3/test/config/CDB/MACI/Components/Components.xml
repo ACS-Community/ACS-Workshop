@@ -141,9 +141,13 @@
          Code="alma.acsexmplErrorComponent.ErrorComponentImpl.ErrorComponentHelper" 
          Type="IDL:alma/acsexmplErrorComponent/ErrorComponent:1.0" 
          Container="frodoContainer"  ImplLang="java" />
-      <_ Name="CONSOLE2_TEST" 	    
-         Code="Console2_test.Console2" 
-         Type="IDL:/home/almaproc/ostm/ICD/idl/Console:1.0"
+      <_ Name="Scheduler3_JAVA" 
+         Code="acsws.SCHEDULER_MODULE.SchedulerImpl.SchedulerHelper" 
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0" 
+         Container="frodoContainer"  ImplLang="java" />
+      <_ Name="ERRORCOMP_PY" 	    
+         Code="acsexmplErrorComponentImpl.ErrorComponent" 
+         Type="IDL:alma/acsexmplErrorComponent/ErrorComponent:1.0"
          Container="aragornContainer" ImplLang="py" />
 </Components>
 
