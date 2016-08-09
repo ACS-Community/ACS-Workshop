@@ -2,6 +2,7 @@
 #include <InstrumentS.h>
 #include <iostream>
 #include <InstrumentImpl.h>
+#include <SYSTEMErr.h>
 
 using namespace baci;
 
@@ -19,60 +20,68 @@ Instrument::Instrument(const ACE_CString &name, maci::ContainerServices * contai
 
 void Instrument::cameraOn()
 {
+	ACS_TRACE("::Instrument::cameraOn");
+
 	on = true;
-	
-	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument on."));
 }
 
 void Instrument::cameraOff()
 {
-	on = false;
+	ACS_TRACE("::Instrument::cameraOff");
 
-	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument off."));
+	on = false;
 }
 
 ::TYPES::ImageType * Instrument::takeImage (::CORBA::Long exposureTime)
 {
-	if (on) {
-		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage(%li);", (long)exposureTime));	
-	} else {
-		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage failed! Camera is off."));
-	}
+	ACS_TRACE("::Instrument::takeImage");
 
-	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "takeImage"));
+	if (on) {
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "TakeImage with exposureTime = %li", (long)exposureTime));	
+
+		// chill, this is just a test.
+		return new ::TYPES::ImageType();
+	}
 	
-	return NULL;
+	SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::takeImage");
+	ex.log();
+
+	throw ex.getCameraIsOffEx();
 }
 
 void Instrument::setRGB (const ::TYPES::RGB & rgbConfig)
 {
-	std::cout << "Instrument::setRGB(...);" << std::endl;
+	ACS_TRACE("Instrument::setRGB");
 }
 	
 void Instrument::setPixelBias(::CORBA::Long bias)
 {
-	std::cout << "Instrument::setPixelBias(" << bias << ");" << std::endl;
+	ACS_TRACE("Instrument::setPixelBias");
 }
 
 void Instrument::setResetLevel(::CORBA::Long resetLevel)
 {
-	std::cout << "Instrument::setResetLevel(" << resetLevel << ");" << std::endl;
+	ACS_TRACE("Instrument::setResetLevel");
 }
 
 void Instrument::initialize() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
 {
+	ACS_TRACE("Instrument::initialize");
 }
 
 void Instrument::execute() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
 {
+	ACS_TRACE("Instrument::execute");
 }
 
 void Instrument::cleanUp()
 {
+	ACS_TRACE("Instrument::cleanUp");
 }
 
 void Instrument::aboutToAbort()
 {
+	ACS_TRACE("Instrument::aboutToAbort");
 }
 
 

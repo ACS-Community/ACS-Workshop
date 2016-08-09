@@ -1,5 +1,5 @@
-#ifndef TELESCOPE_h
-#define TELESCOPE_h
+#ifndef TELESCOPE2_h
+#define TELESCOPE2_h
 
 #ifndef __cplusplus
 #error This is a C++ include file and cannot be used from plain C

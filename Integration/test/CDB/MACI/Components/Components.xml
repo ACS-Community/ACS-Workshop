@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+       xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+       xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <_ Name="DATABASE" 	    
+         Code="DataBaseImpl" 
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="SCHEDULER" 	    
+         Code="SchedulerImpl" 
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="TELESCOPE" 	    
+         Code="TelescopeImpl" 
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="INSTRUMENT" 	    
+         Code="InstrumentImpl" 
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="CAMERA" 	    
+         Code="CameraImpl" 
+         Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+      <_ Name="MOUNT"
+         Code="MOUNT2"
+         Type="IDL:acsws/TelescopeControl/TelescopeControl:1.0"
+         Container="toyContainer" ImplLang="cpp" />
+<!--
+      <_ Name="DATABASE" 	    
+         Code="DataBaseImpl" 
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="dToyContainer" ImplLang="cpp" />
+      <_ Name="SCHEDULER" 	    
+         Code="SchedulerImpl" 
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="sToyContainer" ImplLang="cpp" />
+      <_ Name="TELESCOPE" 	    
+         Code="TelescopeImpl" 
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="tToyContainer" ImplLang="cpp" />
+      <_ Name="INSTRUMENT" 	    
+         Code="InstrumentImpl" 
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="iToyContainer" ImplLang="cpp" />
+      <_ Name="CAMERA" 	    
+         Code="CameraImpl" 
+         Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
+         Container="iToyContainer" ImplLang="cpp" />
+      <_ Name="MOUNT"
+         Code="MOUNT2"
+         Type="IDL:acsws/TelescopeControl/TelescopeControl:1.0"
+         Container="tToyContainer" ImplLang="cpp" />
+-->
+</Components>

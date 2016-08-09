@@ -1,3 +1,5 @@
+package acsws.Database2;
+
 import acsws.DATABASE_MODULE.DataBaseOperations;
 import acsws.SYSTEMErr.ImageAlreadyStoredEx;
 import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
