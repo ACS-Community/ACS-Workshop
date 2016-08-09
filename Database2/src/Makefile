@@ -139,8 +139,8 @@ USER_IDL =
 #
 # Jarfiles and their directories
 #
-JARFILES= 
-jjj_DIRS=
+JARFILES= Database2 
+Database2_DIRS= acsws
 jjj_EXTRAS=
 # For expressing dependencies between jarfiles (parallel builds)
 jjj_JLIBS= 
