@@ -139,8 +139,8 @@ USER_IDL =
 #
 # Jarfiles and their directories
 #
-JARFILES= 
-jjj_DIRS=
+JARFILES= Scheduler2Impl 
+Scheduler2Impl_DIRS= /home/almaproc/ostm/Scheduler2/src/alma
 jjj_EXTRAS=
 # For expressing dependencies between jarfiles (parallel builds)
 jjj_JLIBS= 
