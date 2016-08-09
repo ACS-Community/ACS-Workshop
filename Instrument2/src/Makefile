@@ -61,9 +61,9 @@ EXECUTABLES_L   =
 
 #
 # <brief description of xxxxx program>
-InstrumentImpl_OBJECTS   = 
+InstrumentImpl_OBJECTS   = InstrumentImpl
 InstrumentImpl_LDFLAGS   = 
-InstrumentImpl_LIBS      = 
+InstrumentImpl_LIBS      = InstrumentStubs acscomponent
 
 #
 # special compilation flags for single c sources
