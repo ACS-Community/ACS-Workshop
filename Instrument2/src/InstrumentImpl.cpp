@@ -34,9 +34,9 @@ void Instrument::cameraOff()
 ::TYPES::ImageType * Instrument::takeImage (::CORBA::Long exposureTime)
 {
 	if (on) {
-		std::cout << "Instrument::takeImage(" << exposureTime << ");" << std::endl;	
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage(%li);", (long)exposureTime));	
 	} else {
-		std::cout << "Instrument::takeImage failed! Camera is off." << std::endl;
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "Instrument::takeImage failed! Camera is off."));
 	}
 
 	ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "takeImage"));
