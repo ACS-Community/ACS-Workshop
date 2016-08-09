@@ -139,8 +139,8 @@ USER_IDL =
 #
 # Jarfiles and their directories
 #
-JARFILES= 
-jjj_DIRS=
+JARFILES= Scheduler3
+Scheduler3_DIRS= acsws/SCHEDULER_MODULE/SchedulerImpl
 jjj_EXTRAS=
 # For expressing dependencies between jarfiles (parallel builds)
 jjj_JLIBS= 
