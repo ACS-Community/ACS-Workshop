@@ -11,9 +11,9 @@ import alma.acs.container.ContainerServices;
 /**
  * A simple scheduler component.
  * 
- * @author Juan 
- * @author Pablo
- * @author
+ * @author Juan Carlos Olivares
+ * @author Pablo Valenzuela
+ * @author Exequiel Fuentes
  * 
  */
 public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
