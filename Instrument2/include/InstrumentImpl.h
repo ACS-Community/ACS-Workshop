@@ -6,6 +6,7 @@
 
 ///CORBA generated servant stub
 #include <InstrumentS.h>
+#include <CameraS.h>
 
 
 
@@ -14,6 +15,7 @@ class Instrument : public acscomponent::ACSComponentImpl,    //Standard componen
 {
 private:
 	bool on;
+	CAMERA_MODULE::Camera_var camera;
 
 public:
 	Instrument(const ACE_CString &name, maci::ContainerServices * containerServices);
