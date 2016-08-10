@@ -61,15 +61,14 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		return proposal.pid;
 	}
 
-	public int getProposalStatus(int pid) 
-			throws ProposalNotYetReadyEx {
+	public int getProposalStatus(int pid) throws ProposalDoesNotExistEx{
 		// TODO Auto-generated method stub
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
 				return pro.status;
 			}
 		}
-		return STATUS_NO_SUCH_PROPOSAL;
+		throw new ProposalDoesNotExistEx();
 	}
 
 	public void removeProposal(int pid) {
@@ -117,9 +116,17 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	}
 
 	public void setProposalStatus(int pid, int status)
-			throws InvalidProposalStatusTransitionEx {
+			throws InvalidProposalStatusTransitionEx, ProposalDoesNotExistEx {
 		
-		long statusActual = getProposalStatus(pid);
+		long statusActual = -1;
+		try {
+			statusActual = getProposalStatus(pid);
+		} catch (ProposalDoesNotExistEx e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			m_logger.info("ProposalDoesNotExistEx");
+			throw e1;
+		}
 		if (statusActual + 1 != status){
 			m_logger.info("InvalidProposalStatusTransitionEx");
 			InvalidProposalStatusTransitionEx e = new InvalidProposalStatusTransitionEx();
@@ -135,7 +142,7 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	}
 
 	public void storeImage(int pid, int tid, byte[] image)
-			throws ImageAlreadyStoredEx {
+			throws ImageAlreadyStoredEx, ProposalDoesNotExistEx{
 		// TODO Auto-generated method stub
 		Storage store = null;
 		try { 
@@ -143,14 +150,16 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		} catch ( AcsJContainerServicesEx e) {
 			m_logger.info("Excepcion de Java Container con Componente Storage");
 		}
+		
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
-				
+				//ImageAlreadyStoredEx
 			}
 		}
 		
-		
+				
 		m_logger.info("ImageAlreadyStoredEx");
+		throw new ImageAlreadyStoredEx();
 	}
 
 	public void clean() {
