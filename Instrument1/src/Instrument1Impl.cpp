@@ -4,7 +4,11 @@
 #endif
 
 #include <Instrument1.h>
- 
+#include <ACSErrTypeCommon.h>
+#include <loggingACEMACROS.h>
+#include "SYSTEMErr.h"
+#include "CameraC.h"
+
     /**
      * Constructor
      * @param poa Poa which will activate this and also all other components. Developers need
@@ -17,7 +21,11 @@
 	       const ACE_CString& name,
 	       maci::ContainerServices * containerServices):
     ACSComponentImpl(name, containerServices)
-{}
+{
+	//ACS_TRACE("::Instrument1::Instrument1");
+	//camara = CAMERA_MODULE::Camera::_nil();
+	//camara = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA")
+}
     
    /**
      * Destructor
@@ -28,19 +36,33 @@
     
 	void Instrument1::cameraOn()
 	{
-		std::cout << "cameraOn OK" << std::endl;
-		
+	std::cout << "cameraOn OK" << std::endl;
+	
+	//	throw ACSErrTypeCommon::CouldntAccessComponentExImpl
+	//			   __FILE__, __LINE__,
+	//			   "ClientErrorComponent::testTypeException");	
 	}
 
 	void Instrument1::cameraOff ()
 	{
-		std::cout << "cameraOff OK" << std::endl;	
+		std::cout << "cameraOff OK" << std::endl;
+		ACS_SHORT_LOG((LM_INFO, "camera is off"));
 	}
 
 	TYPES::ImageType* Instrument1::takeImage(CORBA::Long exposureTime)
-	{
+	{	
+		//const char* expTime = (std::string("1/")+std::string(exposureTime)).c_str();
+		//const char* iso = "1/10";
+		//const char* iso = "100";	
+		
+		TYPES::ImageType* Image = new TYPES::ImageType(10);
+		/*CAMERA_MODULE::Camera_var Camera_component;
+
+		Camera_component = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
+		
+		Image = Camera_component->takeImage("1/10","100");*/
 		std::cout << "takeImage OK" << std::endl;
-		return NULL;	
+		return Image;	
 	}
 
 	void Instrument1::setRGB (const TYPES::RGB & rgbConfig){}
