@@ -15,6 +15,7 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 	def __init__(self):
 		ACSComponent.__init__(self)
 		ContainerServices.__init__(self)
+		
 		pass
 
 	def initialize(self):
@@ -22,6 +23,9 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		Override this method inherited from ComponentLifecycle
 		'''
 		self.getLogger().logInfo("CONSOLE 2 INIT ACCESS")
+		self.db = ContainerServices.getComponent(self,"DATABASE")
+		self.scheduler = ContainerServices.getComponent(self,"SCHEDULER")
+		self.instrument = ContainerServices.getComponent(self, "INSTRUMENT")
 		'''
 		try:
 		    import acsexmplLamp
@@ -44,18 +48,30 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		pass
 		
 	def getMode(self, *args):
-		self.getLogger().logDebug("CONSOLE 2 GET_MODE ACCESS")		
-		return True
+		self.getLogger().logDebug("CONSOLE 2 GET_MODE ACCESS")
+		self.getLogger().logInfo(self.db.getProposals())
+		# TRUE = AUTOMATIC FALSE = NO AUTOMATIC
+		return False
 		
-
+	
+	#
 	def cameraOn(self, *args):
-		self.getLogger().logInfo("CONSOLE 2 CAMERA ON METHOD ACCESS")		
-		pass
+		
+		self.getLogger().logInfo("CONSOLE 2 CAMERA ON METHOD ACCESS")
+		if(self.getMode()):
+			self.getLogger().logError("AUTOMATIC MODE IS ON")
+		else:
+			self.getLogger().logInfo(self.instrument.cameraOn())
+			
 	
 	def cameraOff(self, *args):
-		self.getLogger().logInfo("CONSOLE 2 CAMERA OFF METHOD ACCESS")	
-		pass
+		self.getLogger().logInfo("CONSOLE 2 CAMERA OFF METHOD ACCESS")
+		if(self.getMode()):
+			self.getLogger().logError("AUTOMATIC MODE IS ON")
+		else:
+			self.getLogger().logInfo(self.instrument.cameraOff())
 
+	#MOUNT
 	def moveTelescope(self, *args):
 		self.getLogger().logInfo("CONSOLE 2 MOVE TELESCOPE ACCESS")	
 		pass
