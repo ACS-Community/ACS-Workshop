@@ -9,7 +9,7 @@
          Container="ws10ToyContainer" ImplLang="py"/>
       <_ Name="CONSOLE2"
          Code="Console2_test"
-         Type="IDL:acsws/CONSOLE_MODULE/DataBase:1.0"
+         Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
          Container="ws11ToyContainer" ImplLang="py"/>
       <_ Name="DATABASE1"
          Code="acsws.DATABASE_MODULE.DataBaseImpl.DataBaseComponentHelper"
@@ -34,11 +34,11 @@
       <_ Name="TELESCOPE1"
          Code="Telescope1Impl"
          Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
-         Container="ws01ToyContainer" ImplLang="java"/>
+         Container="ws01ToyContainer" ImplLang="cpp"/>
       <_ Name="TELESCOPE2"
          Code="Telescope2"
          Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
-         Container="ws02ToyContainer" ImplLang="java"/>
+         Container="ws02ToyContainer" ImplLang="cpp"/>
       <_ Name="INSTRUMENT1"
          Code="Instrument1"
          Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
@@ -60,4 +60,3 @@
          Type="IDL:acsws/STORAGE_MODULE/Storage:1.0"
          Container="mJavaToyContainer" ImplLang="java"/>
 </Components>
-
