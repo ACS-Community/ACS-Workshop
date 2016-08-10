@@ -6,5 +6,15 @@
      <_ Name="TELESCOPE"   Code="Telescope2"
                              Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
                              Container="bilboContainer" ImplLang="cpp" />
+      <_ Name="MOUNT"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0"
+         Container="aragornContainer" ImplLang="py" />
+
+      <_ Name="INSTRUMENT"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="aragornContainer" ImplLang="py" />
+
 </Components>
 

@@ -19,5 +19,9 @@
          Code="Acssim.Servants.Simulator"
          Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
          Container="pyContainer" ImplLang="py" />
+	<_ Name="TELESCOPE"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="pyContainer" ImplLang="py" />
 </Components>
 

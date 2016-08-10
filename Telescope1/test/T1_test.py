@@ -27,7 +27,6 @@ try:
         print "Image received"
     else:
         print "Test failed! No image received."    
-    
 
 
 except Exception, e:

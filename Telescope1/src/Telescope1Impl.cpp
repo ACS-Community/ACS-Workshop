@@ -14,7 +14,6 @@ Telescope1::Telescope1(const ACE_CString& name,
         //TODO:: Throw an exception 
         ACS_SHORT_LOG((LM_CRITICAL,"MOUNT component cannot be found, please reload the component."));
    }
-   cmount_p->zenith();
    cmount_p->calibrateEncoders();
 }
 
@@ -24,12 +23,29 @@ Telescope1::~Telescope1(){
 }
 
 ::TYPES::ImageType * 
-Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposureTime){
+Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposureTime) throw (SYSTEMErr::PositionOutOfLimitsEx, CORBA::SystemException){
 	ACS_SHORT_LOG((LM_INFO,"Telescope1::observe"));
         // Get the current position
         ::TYPES::Position frompos = getCurrentPosition();
         std::stringstream s;
         
+
+	if(coordinates.el > 75){
+		ACS_SHORT_LOG((LM_WARNING,"Not moving to prevent camera damage."));
+		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
+		throw error;
+	}
+	if(coordinates.el > 220 || coordinates.el < -220){
+		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent cable damage."));
+		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
+		throw error;	
+	}	
+	if(coordinates.el < 0){
+		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent brain damage."));
+		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
+		throw error;
+	}
+
         // Move the telescope
         s << "Moving telescope from "  << frompos.az << "," << frompos.el << " to "  << coordinates.az << "," << coordinates.el; 
         std::string ss;
@@ -40,7 +56,7 @@ Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposure
         // Wait the telescope arrive to...
         this->waitOnSource(coordinates);
         // Observe
-        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
+        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT2");
         s.str("");
         s << "Observing target for "  << exposureTime << " seconds"; 
         ss = s.str();
@@ -57,7 +73,7 @@ Telescope1::waitOnSource(const ::TYPES::Position & coord){
         time_t init=time(NULL);
         while (!on_source){
              cpos=this->getCurrentPosition();
-             if(cpos.el == coord.el && cpos.az == coord.az)
+             if(abs(cpos.el - coord.el) < 0.5 && abs(cpos.az - coord.az) < 0.5)
 		on_source=true;
              else{
                 usleep(SLEEP_TIME);
@@ -78,9 +94,27 @@ Telescope1::waitOnSource(const ::TYPES::Position & coord){
 }
 
 void 
-Telescope1::moveTo(const ::TYPES::Position & coordinates){
+Telescope1::moveTo(const ::TYPES::Position & coordinates) throw (SYSTEMErr::PositionOutOfLimitsEx, CORBA::SystemException){
         ACS_TRACE("::Telescope1::moveTo");
         std::stringstream s;
+
+	if(coordinates.el > 62){
+		ACS_SHORT_LOG((LM_WARNING,"Not moving to prevent camera damage."));
+		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
+		throw error;
+	}
+	if(coordinates.el > 220 || coordinates.el < -220){
+		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent cable damage."));
+		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
+		throw error;	
+	}	
+	if(coordinates.el < 0){
+		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent brain damage."));
+		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
+		throw error;
+	}	
+
+
         // Move the telescope
         s << "Telescope moving to "  << coordinates.az << "," << coordinates.el;
         std::string ss;

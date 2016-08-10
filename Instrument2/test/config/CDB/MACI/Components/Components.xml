@@ -5,9 +5,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
       <_ Name="CAMERA"
-         Code="Acssim.Servants.Simulator"
+         Code="CameraImpl"
          Type="IDL:acsws/CAMERA_MODULE/Camera:1.0"
-         Container="aragornContainer" ImplLang="py" />
+         Container="bilboContainer" ImplLang="cpp" />
 
 	<_ Name="INSTRUMENT_2" 	    
          Code="InstrumentImpl"
