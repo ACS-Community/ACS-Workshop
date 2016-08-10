@@ -52,6 +52,7 @@
 #include <InstrumentC.h>
 #include <unistd.h>
 #include <SYSTEMErr.h>
+#include <math.h>
 
 
 #define SLEEP_TIME 100000  // in usec

@@ -56,7 +56,7 @@ Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposure
         // Wait the telescope arrive to...
         this->waitOnSource(coordinates);
         // Observe
-        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
+        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT1");
         s.str("");
         s << "Observing target for "  << exposureTime << " seconds"; 
         ss = s.str();
@@ -73,7 +73,7 @@ Telescope1::waitOnSource(const ::TYPES::Position & coord){
         time_t init=time(NULL);
         while (!on_source){
              cpos=this->getCurrentPosition();
-             if(cpos.el == coord.el && cpos.az == coord.az)
+             if(abs(cpos.el - coord.el) < 0.5 && abs(cpos.az - coord.az) < 0.5)
 		on_source=true;
              else{
                 usleep(SLEEP_TIME);
@@ -98,7 +98,7 @@ Telescope1::moveTo(const ::TYPES::Position & coordinates) throw (SYSTEMErr::Posi
         ACS_TRACE("::Telescope1::moveTo");
         std::stringstream s;
 
-	if(coordinates.el > 75){
+	if(coordinates.el > 62){
 		ACS_SHORT_LOG((LM_WARNING,"Not moving to prevent camera damage."));
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
 		throw error;
