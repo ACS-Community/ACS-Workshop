@@ -58,7 +58,7 @@ module DATABASE_MODULE
 		 * @return status
 		 */
 		long getProposalStatus(in long pid)
-			raises(SYSTEMErr::ProposalDoesNotExist);
+			raises(SYSTEMErr::ProposalDoesNotExistEx);
 		
 		/** 
 		 * Remove proposal.
@@ -95,7 +95,7 @@ module DATABASE_MODULE
 		 * @return None
 		 */
 		void setProposalStatus(in long pid, in long status)
-			raises(SYSTEMErr::InvalidProposalStatusTransitionEx,SYSTEMErr::ProposalDoesNotExist);
+			raises(SYSTEMErr::InvalidProposalStatusTransitionEx,SYSTEMErr::ProposalDoesNotExistEx);
 
 		/**
 		 * Stores an image for a given proposal and target. Raises an exception
@@ -109,7 +109,7 @@ module DATABASE_MODULE
 		void storeImage(in long pid, 
 				in long tid,
 				in TYPES::ImageType image)
-			raises(SYSTEMErr::ImageAlreadyStoredEx, SYSTEMErr::ProposalDoesNotExist); // TODO raise also new exception "ProposalDoesNotExist"
+			raises(SYSTEMErr::ImageAlreadyStoredEx, SYSTEMErr::ProposalDoesNotExistEx); // TODO raise also new exception "ProposalDoesNotExist"
 		/**
 		 * Clean all the proposals
 		 */
