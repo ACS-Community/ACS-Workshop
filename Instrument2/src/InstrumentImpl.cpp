@@ -72,6 +72,7 @@ std::string shutterSpeedValues[52]= {
 
 std::string longExposureTransform(::CORBA::Long exposureTime)
 {
+	// Maps shutter speeds to microseconds equivalents
 	static ::CORBA::Long shutterSpeedMap[52] = {
 		30000000, 25000000, 20000000, 15000000, 13000000, 10000000,
 		8000000, 6000000, 5000000, 4000000, 3200000, 2500000,
@@ -145,16 +146,34 @@ void Instrument::cameraOff()
 void Instrument::setRGB (const ::TYPES::RGB & rgbConfig)
 {
 	ACS_TRACE("Instrument::setRGB");
+
+	if (!on) {
+		SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::setRGB");
+		ex.log();
+		throw ex.getCameraIsOffEx();
+	}
 }
 	
 void Instrument::setPixelBias(::CORBA::Long bias)
 {
 	ACS_TRACE("Instrument::setPixelBias");
+
+        if (!on) {
+                SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::setPixelBias");
+                ex.log();
+                throw ex.getCameraIsOffEx();
+        }
 }
 
 void Instrument::setResetLevel(::CORBA::Long resetLevel)
 {
 	ACS_TRACE("Instrument::setResetLevel");
+
+        if (!on) {
+                SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::setResetLevel");
+                ex.log();
+                throw ex.getCameraIsOffEx();
+        }
 }
 
 void Instrument::initialize() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
