@@ -9,6 +9,9 @@ import TYPES
 from Acspy.Servants.ContainerServices import ContainerServices
 from Acspy.Servants.ComponentLifecycle import ComponentLifecycle
 from Acspy.Servants.ACSComponent import ACSComponent
+import SYSTEMErr
+import SYSTEMErrImpl
+from SYSTEMErrImpl import SystemInAutoModeExImpl
 
 class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycle, ACSComponent):
 
@@ -16,7 +19,7 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 	def __init__(self):
 		ACSComponent.__init__(self)
 		ContainerServices.__init__(self)
-		self.apertureTime = "1/4"
+		self.apertureTime = 500000
 		self.elMax = 45.0
 		self.azMax = 250.0	
 		self.Mode = False  # TRUE = AUTOMATIC FALSE = NO AUTOMATIC
@@ -27,10 +30,10 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		Override this method inherited from ComponentLifecycle
 		'''
 		self.getLogger().logInfo("CONSOLE 2 INIT ACCESS")
-		self.db = ContainerServices.getComponent(self,"DATABASE")
-		self.scheduler = ContainerServices.getComponent(self,"SCHEDULER")
-		self.instrument = ContainerServices.getComponent(self, "INSTRUMENT")
-		self.telescope = ContainerServices.getComponent(self, "TELESCOPE")
+		self.db = self.getComponent("DATABASE")
+		self.scheduler = self.getComponent("SCHEDULER")
+		self.instrument = self.getComponent("INSTRUMENT")
+		self.telescope = self.getComponent( "TELESCOPE")
 
 	def cleanUp(self):
 		'''
@@ -42,7 +45,7 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 	def setMode(self, *args):
 		#self.getLogger().logDebug("CONSOLE 2 SET_MODE ACCESS")
 		self.Mode = args[0]
-		self.getLogger().logDebug(self.Mode)
+		self.getLogger().logDebug("MODE IS: "+str(self.Mode))
 		pass
 		
 	def getMode(self, *args):
@@ -57,7 +60,9 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		
 		#self.getLogger().logInfo("CONSOLE 2 CAMERA ON METHOD ACCESS")
 		if(self.getMode()):
-			self.getLogger().logError("AUTOMATIC MODE IS ON")
+			ex2 = SystemInAutoModeExImpl()
+                        ex2.log(self.getLogger())
+			raise ex2
 		else:
 			self.getLogger().logInfo(self.instrument.cameraOn())
 			
@@ -65,7 +70,10 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 	def cameraOff(self, *args):
 		#self.getLogger().logInfo("CONSOLE 2 CAMERA OFF METHOD ACCESS")
 		if(self.getMode()):
-			self.getLogger().logError("AUTOMATIC MODE IS ON")
+			ex2 = SystemInAutoModeExImpl()
+                        ex2.log(self.getLogger())
+			raise ex2
+			
 		else:
 			self.getLogger().logInfo(self.instrument.cameraOff())
 	
