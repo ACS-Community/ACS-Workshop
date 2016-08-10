@@ -4,12 +4,12 @@
        xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <_ Name="CONSOLE1"
-         Code="?"
+         Code="Console1_test"
          Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
          Container="pyToyContainer" ImplLang="py"/>
       <_ Name="CONSOLE2"
          Code="Console2_test"
-         Type="IDL:acsws/CONSOLE_MODULE/DataBase:1.0"
+         Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
          Container="pyToyContainer" ImplLang="py"/>
       <_ Name="DATABASE1"
          Code="acsws.DATABASE_MODULE.DataBaseImpl.DataBaseComponentHelper"
@@ -28,17 +28,17 @@
          Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
          Container="javaToyContainer" ImplLang="java"/>
       <_ Name="SCHEDULER3"
-         Code="acsws.SCHEDULER_MODULE.SchedulerHelper"
+         Code="acsws.SCHEDULER_MODULE.SchedulerImpl.SchedulerHelper"
          Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
          Container="javaToyContainer" ImplLang="java"/>
       <_ Name="TELESCOPE1"
          Code="Telescope1Impl"
          Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
-         Container="cppToyContainer" ImplLang="java"/>
+         Container="cppToyContainer" ImplLang="cpp"/>
       <_ Name="TELESCOPE2"
          Code="Telescope2"
          Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
-         Container="cppToyContainer" ImplLang="java"/>
+         Container="cppToyContainer" ImplLang="cpp"/>
       <_ Name="INSTRUMENT1"
          Code="Instrument1"
          Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"

@@ -102,7 +102,7 @@ TCL_SCRIPTS_L   =
 PY_SCRIPTS         =
 PY_SCRIPTS_L       =
 
-PY_MODULES         =
+PY_MODULES         = Console1_test
 PY_MODULES_L       =
 
 PY_PACKAGES        =
