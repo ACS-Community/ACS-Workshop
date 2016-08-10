@@ -29,12 +29,13 @@ private Telescope telescopeComponente;
 private Proposal[] proposals;
 private boolean run;
 private Thread thread;
-Proposal thisProposal;
+private Proposal thisProposal;
 
 public void initialize (ContainerServices containerServices) {
 	m_containerServices = containerServices;
 	m_logger = m_containerServices.getLogger();
 	m_logger.info("initialize() called...");
+	thisProposal = null;
 	
 	try {
 		org.omg.CORBA.Object databaseObj = m_containerServices.getDefaultComponent("IDL:acsws/DATABASE_MODULE/DataBase:1.0");
@@ -86,13 +87,17 @@ public void start() {
 public void stop() {
 	m_logger.info("Scheduler stopped");
 	if (thread != null) {
-		run =false;
+		run = false;
 	}
+	this.thread = null;
 }
 
 public int proposalUnderExecution() throws NoProposalExecutingEx{
 	m_logger.info("Excecuting proposal");
 	if (!run) {
+		throw new NoProposalExecutingEx();
+	}
+	if (thisProposal==null){
 		throw new NoProposalExecutingEx();
 	}
 	return thisProposal.pid;
