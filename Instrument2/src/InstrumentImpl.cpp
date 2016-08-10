@@ -129,6 +129,10 @@ void Instrument::cameraOff()
 	if (on) {
 		std::string tr = longExposureTransform(exposureTime);	
 		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "TakeImage with exposureTime = %s", tr.c_str()));	
+
+		ACS::RWstring_var shutterSpeed = camera->shutterSpeed();
+		shutterSpeed->set_sync(tr.c_str());
+
 		return camera->takeImage(tr.c_str(), "400");
 	}
 	
@@ -167,11 +171,16 @@ void Instrument::execute() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl
 	if (CORBA::is_nil(camera.in())) {
 		throw acsErrTypeLifeCycle::LifeCycleExImpl(__FILE__, __LINE__, "::Building::execute");
 	}
+
+	ACS::RWstring_var isoSpeed = camera->isoSpeed();
+        isoSpeed->set_sync("400");
 }
 
 void Instrument::cleanUp()
 {
 	ACS_TRACE("Instrument::cleanUp");
+
+	getContainerServices()->releaseComponent(camera->name());
 }
 
 void Instrument::aboutToAbort()

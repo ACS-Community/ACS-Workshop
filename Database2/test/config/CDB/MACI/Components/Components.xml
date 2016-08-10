@@ -7,5 +7,13 @@
          Code="acsws.Database2.DatabaseComponentHelper" 
          Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0" 
          Container="frodoContainer"  ImplLang="java" />
+      <_ Name="SCHEDULER"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="pyContainer" ImplLang="py" />
+      <_ Name="STORAGE"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/STORAGE_MODULE/Storage:1.0"
+         Container="pyContainer" ImplLang="py" />
 </Components>
 
