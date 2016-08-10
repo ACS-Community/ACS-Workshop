@@ -4,8 +4,13 @@
        xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
+  <_ Name="DATABASE"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="pyContainer" ImplLang="py" />
+
   <_ Name="SCHEDULER1" 
-         Code="acsws.SchedulerHelper" 
+         Code="acsws.Scheduler1Helper" 
          Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0" 
          Container="frodoContainer"
          Default="true" ImplLang="java" />
