@@ -8,7 +8,8 @@
 #include <InstrumentS.h>
 #include <CameraS.h>
 
-
+#include <baciSmartPropertyPointer.h>
+#include <baciRWstring.h>
 
 class Instrument : public acscomponent::ACSComponentImpl,    //Standard component superclass
 		     public virtual POA_INSTRUMENT_MODULE::Instrument    //CORBA servant stub

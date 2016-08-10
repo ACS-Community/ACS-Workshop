@@ -72,6 +72,7 @@ std::string shutterSpeedValues[52]= {
 
 std::string longExposureTransform(::CORBA::Long exposureTime)
 {
+	// Maps shutter speeds to microseconds equivalents
 	static ::CORBA::Long shutterSpeedMap[52] = {
 		30000000, 25000000, 20000000, 15000000, 13000000, 10000000,
 		8000000, 6000000, 5000000, 4000000, 3200000, 2500000,
@@ -96,6 +97,7 @@ std::string longExposureTransform(::CORBA::Long exposureTime)
 		}
 	}
 
+	ACS_SHORT_LOG((LM_WARNING, "Exposure time below bound. Fixed to %li.", (long)shutterSpeedMap[51]));
 	return shutterSpeedValues[51];	
 }
 
@@ -128,6 +130,10 @@ void Instrument::cameraOff()
 	if (on) {
 		std::string tr = longExposureTransform(exposureTime);	
 		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "TakeImage with exposureTime = %s", tr.c_str()));	
+
+		ACS::RWstring_var shutterSpeed = camera->shutterSpeed();
+		shutterSpeed->set_sync(tr.c_str());
+
 		return camera->takeImage(tr.c_str(), "400");
 	}
 	
@@ -140,16 +146,34 @@ void Instrument::cameraOff()
 void Instrument::setRGB (const ::TYPES::RGB & rgbConfig)
 {
 	ACS_TRACE("Instrument::setRGB");
+
+	if (!on) {
+		SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::setRGB");
+		ex.log();
+		throw ex.getCameraIsOffEx();
+	}
 }
 	
 void Instrument::setPixelBias(::CORBA::Long bias)
 {
 	ACS_TRACE("Instrument::setPixelBias");
+
+        if (!on) {
+                SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::setPixelBias");
+                ex.log();
+                throw ex.getCameraIsOffEx();
+        }
 }
 
 void Instrument::setResetLevel(::CORBA::Long resetLevel)
 {
 	ACS_TRACE("Instrument::setResetLevel");
+
+        if (!on) {
+                SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::setResetLevel");
+                ex.log();
+                throw ex.getCameraIsOffEx();
+        }
 }
 
 void Instrument::initialize() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl)
@@ -166,11 +190,16 @@ void Instrument::execute() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl
 	if (CORBA::is_nil(camera.in())) {
 		throw acsErrTypeLifeCycle::LifeCycleExImpl(__FILE__, __LINE__, "::Building::execute");
 	}
+
+	ACS::RWstring_var isoSpeed = camera->isoSpeed();
+        isoSpeed->set_sync("400");
 }
 
 void Instrument::cleanUp()
 {
 	ACS_TRACE("Instrument::cleanUp");
+
+	getContainerServices()->releaseComponent(camera->name());
 }
 
 void Instrument::aboutToAbort()
