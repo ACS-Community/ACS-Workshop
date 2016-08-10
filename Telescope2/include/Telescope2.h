@@ -9,8 +9,8 @@
 #include <TelescopeControlC.h>
 #include <InstrumentC.h>
 #include <acscomponentImpl.h>
-#include <ACSErrTypeCommon.h>
 #include <TypesC.h>
+#include <SYSTEMErr.h>
 
 class TelescopeImpl : public virtual acscomponent::ACSComponentImpl,
 			public virtual POA_TELESCOPE_MODULE::Telescope

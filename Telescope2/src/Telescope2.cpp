@@ -1,6 +1,5 @@
 #include <Telescope2.h>
 
-
 TelescopeImpl::TelescopeImpl(const ACE_CString& name,
                                             maci::ContainerServices* containerServices):
 	ACSComponentImpl(name, containerServices)
@@ -12,14 +11,6 @@ TelescopeImpl::~TelescopeImpl()
 }
 
 void TelescopeImpl::initialize(void){
-	mount = TELESCOPE_MODULE::TelescopeControl::_nil();
-        mount =  getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
-
-
-        instrument = INSTRUMENT_MODULE::Instrument::_nil();
-        instrument = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
-
-
 }
 
 void TelescopeImpl::execute(void){
@@ -37,8 +28,16 @@ void TelescopeImpl::aboutToAbort(void){
 TYPES::ImageType* TelescopeImpl::observe(const ::TYPES::Position & coordinates,
       ::CORBA::Long exposureTime)
 {
-	
-	
+
+        instrument = INSTRUMENT_MODULE::Instrument::_nil();
+        instrument = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
+
+
+	if(CORBA::is_nil(instrument.in())){
+		throw acsErrTypeLifeCycle::LifeCycleExImpl(__FILE__, __LINE__, "::TelescopeImpl::observe");
+	}
+	//Calibrating Mount	
+	mount->calibrateEncoders();	
 	//Moving telescope
 	moveTo(coordinates);	
 
@@ -53,18 +52,42 @@ TYPES::ImageType* TelescopeImpl::observe(const ::TYPES::Position & coordinates,
 
 void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 {
-	//Check Position limits
+	
+        mount = TELESCOPE_MODULE::TelescopeControl::_nil();
+        mount =  getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
+
+	double max_el = 90;
+	double max_az = 90;
 	
 	//Call Mount setTo
 	CORBA::Double el = coordinates.el;
 	CORBA::Double az = coordinates.az; 
 
+
+	//Check Position limits
+	if(el > max_el || az > max_az){
+		SYSTEMErr::PositionOutOfLimitsExImpl ex(__FILE__, __LINE__ , "TelescopeImpl::moveTo");
+		ex.log();
+		throw ex.getPositionOutOfLimitsEx();
+	}
+
+        ACS_SHORT_LOG((LM_INFO,"Moving Mount to el %f az %f", (double) el, (double) az));
+
+        if(CORBA::is_nil(mount.in())){
+		throw acsErrTypeLifeCycle::LifeCycleExImpl(__FILE__, __LINE__, "::TelescopeImpl::observe");
+	}	
 	mount->setTo(el,az);
 
-	ACS_SHORT_LOG((LM_INFO,"Moving Mount to el %f az %f", (double) el, (double) az));
 }
 
 TYPES::Position TelescopeImpl::getCurrentPosition(){
+        mount = TELESCOPE_MODULE::TelescopeControl::_nil();
+        mount =  getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
+
+        if(CORBA::is_nil(mount.in())){
+                throw acsErrTypeLifeCycle::LifeCycleExImpl(__FILE__, __LINE__, "::TelescopeImpl::observe");
+        }
+	
 	ACS::ROdouble_ptr el = mount->actualAltitude();
 	ACS::ROdouble_ptr az = mount->actualAzimuth();
 
