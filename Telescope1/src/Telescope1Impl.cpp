@@ -56,7 +56,7 @@ Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposure
         // Wait the telescope arrive to...
         this->waitOnSource(coordinates);
         // Observe
-        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT1");
+        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT2");
         s.str("");
         s << "Observing target for "  << exposureTime << " seconds"; 
         ss = s.str();
