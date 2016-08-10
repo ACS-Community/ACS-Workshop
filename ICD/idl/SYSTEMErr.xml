@@ -33,4 +33,7 @@
         <ErrorCode name="CannotOpenDevice" 
                    shortDescription="Can't open device" 
                    description="Can't open THE device."/>
+        <ErrorCode name="ProposalDoesNotExist" 
+                   shortDescription="Proposal does not exist" 
+                   description="Trying to retrieve an inexisting proposal."/>
 </Type>
