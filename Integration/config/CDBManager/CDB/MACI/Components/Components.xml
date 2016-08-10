@@ -4,7 +4,7 @@
        xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <_ Name="CONSOLE1"
-         Code="?"
+         Code="Console1_test"
          Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
          Container="pyToyContainer" ImplLang="py"/>
       <_ Name="CONSOLE2"
@@ -28,7 +28,7 @@
          Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
          Container="javaToyContainer" ImplLang="java"/>
       <_ Name="SCHEDULER3"
-         Code="acsws.SCHEDULER_MODULE.SchedulerHelper"
+         Code="acsws.SCHEDULER_MODULE.SchedulerImpl.SchedulerHelper"
          Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
          Container="javaToyContainer" ImplLang="java"/>
       <_ Name="TELESCOPE1"
