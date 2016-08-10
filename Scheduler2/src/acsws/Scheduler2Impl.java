@@ -10,6 +10,7 @@ import acsws.SYSTEMErr.ImageAlreadyStoredEx;
 import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.NoProposalExecutingEx;
 import acsws.SYSTEMErr.PositionOutOfLimitsEx;
+import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.TYPES.Proposal;
 import acsws.DATABASE_MODULE.DataBase;
 import acsws.DATABASE_MODULE.DataBaseHelper;
@@ -36,14 +37,14 @@ public void initialize (ContainerServices containerServices) {
 	m_logger.info("initialize() called...");
 	
 	try {
-		//org.omg.CORBA.Object databaseObj = m_containerServices.getDefaultComponent("IDL:acsws/DATABASE_MODULE/DataBase:1.0");
-		org.omg.CORBA.Object databaseObj = m_containerServices.getComponent("DATABASE");
+		org.omg.CORBA.Object databaseObj = m_containerServices.getDefaultComponent("IDL:acsws/DATABASE_MODULE/DataBase:1.0");
+		//org.omg.CORBA.Object databaseObj = m_containerServices.getComponent("DATABASE");
 		databaseComponente = DataBaseHelper.narrow(databaseObj);
-		//org.omg.CORBA.Object instrumentObj = m_containerServices.getDefaultComponent("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
-		org.omg.CORBA.Object instrumentObj = m_containerServices.getComponent("INSTRUMENT");
+		org.omg.CORBA.Object instrumentObj = m_containerServices.getDefaultComponent("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
+		//org.omg.CORBA.Object instrumentObj = m_containerServices.getComponent("INSTRUMENT");
 		instrumentComponente = InstrumentHelper.narrow(instrumentObj);
-		//org.omg.CORBA.Object telescopeObj = m_containerServices.getDefaultComponent("IDL:acsws/TELESCOPE_MODULE/Telescope:1.0");
-		org.omg.CORBA.Object telescopeObj = m_containerServices.getComponent("TELESCOPE");
+		org.omg.CORBA.Object telescopeObj = m_containerServices.getDefaultComponent("IDL:acsws/TELESCOPE_MODULE/Telescope:1.0");
+		//org.omg.CORBA.Object telescopeObj = m_containerServices.getComponent("TELESCOPE");
 		telescopeComponente = TelescopeHelper.narrow(telescopeObj);
 	} catch (AcsJContainerServicesEx e) {
 		// TODO Auto-generated catch block
@@ -126,6 +127,9 @@ public void run() {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			run = false;
+		} catch (ProposalDoesNotExistEx e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		m_logger.info("Proposal finished");
 		if(!run)
