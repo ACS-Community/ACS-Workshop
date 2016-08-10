@@ -8,6 +8,7 @@
 #include <acscomponentImpl.h>
 #include <InstrumentS.h>
 #include <TypesC.h>
+#include <SYSTEMErr.h>
  
 class Instrument1: public virtual acscomponent::ACSComponentImpl,     //Component superclass
 		  public POA_INSTRUMENT_MODULE::Instrument    //CORBA servant stub
@@ -33,17 +34,20 @@ class Instrument1: public virtual acscomponent::ACSComponentImpl,     //Componen
     /* --------------------- [ CORBA interface ] ----------------------*/    
     
 	virtual void cameraOn (void);
-
+		
 	virtual void cameraOff (void);
 
-	virtual TYPES::ImageType * takeImage (CORBA::Long exposureTime);
+	virtual TYPES::ImageType* takeImage (CORBA::Long exposureTime);
+		//raises(SYSTEMErr::CameraIsOffEx);
 
 	virtual void setRGB (const TYPES::RGB & rgbConfig);
+		//raises(SYSTEMErr::CameraIsOffEx);		
 
 	virtual void setPixelBias (CORBA::Long bias);
+		//raises(SYSTEMErr::CameraIsOffEx);
 
 	virtual void setResetLevel (CORBA::Long resetLevel);
-
+		//raises(SYSTEMErr::CameraIsOffEx);
 };
 /*\@}*/
 /*\@}*/
