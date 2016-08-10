@@ -1,0 +1,7 @@
+<SimulatedComponent xmlns="urn:schemas-cosylab-com:SimulatedComponent:1.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <_corbaMethod Name="takeImage"
+           Timeout="0">
+return b'jkldffd;lkdf'
+  </_corbaMethod>
+</SimulatedComponent>

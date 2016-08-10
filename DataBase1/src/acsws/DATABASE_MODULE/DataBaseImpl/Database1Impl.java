@@ -2,6 +2,8 @@ package acsws.DATABASE_MODULE.DataBaseImpl;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
 
 import com.google.inject.util.Types;
 
@@ -27,9 +29,9 @@ public class Database1Impl implements DataBaseOperations, ComponentLifecycle, St
 	int ind = STATUS_INITIAL_PROPOSAL;
 	public ArrayList propArray = new ArrayList();
 	
-	public Database1Impl() {
+	//public Database1Impl() {
 		
-	}
+	//}
 	
 	public void initialize(ContainerServices containerServices) {
 		m_containerServices = containerServices;
@@ -44,8 +46,30 @@ public class Database1Impl implements DataBaseOperations, ComponentLifecycle, St
 		ind++;
 		return ind;
 	}
-	public long getProposalStatus(long pid){
-		return 2;
+	
+	public void execute() throws ComponentLifecycleException {
+
+		
+		
+	}
+	public void cleanUp() throws AcsJComponentCleanUpEx {
+		// TODO Auto-generated method stub
+		
+	}
+	public void aboutToAbort() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	public int getProposalStatus(int pid){
+		System.out.println("\nHi\n");
+		JOptionPane.showMessageDialog(null, "hello " + pid);
+		m_logger.info("OK_____________"+ m_logger.getName());
+		m_logger.warning("This is a warning");
+
+		return pid;
 	}
 	public String name() {
 		// TODO Auto-generated method stub
@@ -54,10 +78,6 @@ public class Database1Impl implements DataBaseOperations, ComponentLifecycle, St
 	public ComponentStates componentState() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	public int getProposalStatus(int pid) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	public void removeProposal(int pid) {
 		// TODO Auto-generated method stub
@@ -83,18 +103,6 @@ public class Database1Impl implements DataBaseOperations, ComponentLifecycle, St
 		
 	}
 	public void clean() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void execute() throws ComponentLifecycleException {
-		// TODO Auto-generated method stub
-		
-	}
-	public void cleanUp() throws AcsJComponentCleanUpEx {
-		// TODO Auto-generated method stub
-		
-	}
-	public void aboutToAbort() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -63,7 +63,7 @@ EXECUTABLES_L   =
 # <brief description of xxxxx program>
 InstrumentImpl_OBJECTS   = InstrumentImpl
 InstrumentImpl_LDFLAGS   = 
-InstrumentImpl_LIBS      = InstrumentStubs acscomponent SYSTEMErr
+InstrumentImpl_LIBS      = InstrumentStubs acscomponent SYSTEMErr CameraStubs baci
 
 #
 # special compilation flags for single c sources

@@ -85,6 +85,6 @@ class Telescope1: public virtual acscomponent::ACSComponentImpl,     //Component
     
     virtual ::TYPES::Position getCurrentPosition(void);
 
-}  
+};  
 
 #endif /*!_TELESCOPE1_H*/
