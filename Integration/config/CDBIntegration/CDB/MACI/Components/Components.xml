@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+       xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+       xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <_ Name="CONSOLE1"
+         Code="?"
+         Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
+         Container="ws10ToyContainer" ImplLang="py"/>
+      <_ Name="CONSOLE2"
+         Code="Console2_test"
+         Type="IDL:acsws/CONSOLE_MODULE/DataBase:1.0"
+         Container="ws11ToyContainer" ImplLang="py"/>
+      <_ Name="DATABASE1"
+         Code="acsws.DATABASE_MODULE.DataBaseImpl.DataBaseComponentHelper"
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="ws08ToyContainer" ImplLang="java"/>
+      <_ Name="DATABASE2"
+         Code="acsws.Database2.DatabaseComponentHelper"
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="ws09ToyContainer" ImplLang="java"/>
+      <_ Name="SCHEDULER1"
+         Code="acsws.Scheduler1Helper"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="ws05ToyContainer" ImplLang="java"/>
+      <_ Name="SCHEDULER2"
+         Code="acsws.Scheduler2Helper"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="ws06ToyContainer" ImplLang="java"/>
+      <_ Name="SCHEDULER3"
+         Code="acsws.SCHEDULER_MODULE.SchedulerHelper"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="ws07ToyContainer" ImplLang="java"/>
+      <_ Name="TELESCOPE1"
+         Code="Telescope1Impl"
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="ws01ToyContainer" ImplLang="java"/>
+      <_ Name="TELESCOPE2"
+         Code="Telescope2"
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="ws02ToyContainer" ImplLang="java"/>
+      <_ Name="INSTRUMENT1"
+         Code="Instrument1"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="ws03ToyContainer" ImplLang="cpp"/>
+      <_ Name="INSTRUMENT2"
+         Code="InstrumentImpl"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="ws04ToyContainer" ImplLang="cpp"/>
+      <_ Name="CAMERA"
+         Code="CameraImpl"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
+         Container="mCppToyContainer" ImplLang="cpp"/>
+      <_ Name="MOUNT"
+         Code="MOUNT2"
+         Type="IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0"
+         Container="mCppToyContainer" ImplLang="cpp"/>
+      <_ Name="STORAGE"
+         Code="acsws.uos.database.StorageHelper"
+         Type="IDL:acsws/STORAGE_MODULE/Storage:1.0"
+         Container="mJavaToyContainer" ImplLang="java"/>
+</Components>
+

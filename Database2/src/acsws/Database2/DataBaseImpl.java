@@ -38,14 +38,18 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	
 	public int storeProposal(Target[] targets) {
 		// TODO Auto-generated method stub
-		System.out.print("Hello World");
+		Proposal proposal = new Proposal();
+		proposal.targets = targets;
+//		proposal.pid = 
+		long cnt_target = targets.length;
 		return 0;
 	}
 
 	public int getProposalStatus(int pid) {
 		// TODO Auto-generated method stub
-		System.out.print("Hello World");
 		return 0;
+//		return Proposal.status;
+	
 	}
 
 	public void removeProposal(int pid) {
@@ -56,7 +60,11 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	public byte[][] getProposalObservations(int pid)
 			throws ProposalNotYetReadyEx {
 		// TODO Auto-generated method stub
-		System.out.print("Hello World");
+//		try {
+//			getProposalStatus(pid);
+//		} catch () {
+//			
+//		}
 		return null;
 	}
 
@@ -68,6 +76,15 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 	public void setProposalStatus(int pid, int status)
 			throws InvalidProposalStatusTransitionEx {
+		
+		long statusActual = getProposalStatus(pid);
+		if (statusActual + 1 != status){
+			InvalidProposalStatusTransitionEx e = new InvalidProposalStatusTransitionEx();
+			throw e;
+		}
+		
+		
+
 		// TODO Auto-generated method stub
 		System.out.print("Hello World");
 	}

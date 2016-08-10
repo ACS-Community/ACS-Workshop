@@ -5,6 +5,7 @@ import CONSOLE_MODULE__POA
 import sys
 import os
 from sys import stdout
+import TYPES
 from Acspy.Servants.ContainerServices import ContainerServices
 from Acspy.Servants.ComponentLifecycle import ComponentLifecycle
 from Acspy.Servants.ACSComponent import ACSComponent
@@ -20,7 +21,7 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		'''
 		Override this method inherited from ComponentLifecycle
 		'''
-		self.getLogger().logInfo("called...")
+		self.getLogger().logInfo("CONSOLE 2 INIT ACCESS")
 		'''
 		try:
 		    import acsexmplLamp
@@ -35,47 +36,49 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		'''
 		Override this method inherited from ComponentLifecycle
 		'''
-		self.getLogger().logInfo("called...") 
+		self.getLogger().logInfo("CONSOLE 2 CLEANUP ACCESS")
 		#self.releaseComponent("LAMP1")
 
-	def sayHello(self):
-		'''
-		Python implementation of IDL method.
-		string sayHello();
-		'''
-		self.getLogger().logInfo("called...") 
-		return "hello from Console2"
-
 	def setMode(self, *args):
+		self.getLogger().logDebug("CONSOLE 2 SET_MODE ACCESS")
 		pass
 		
 	def getMode(self, *args):
-		self.getLogger().logInfo("GET MODE ACCESS") 
+		self.getLogger().logDebug("CONSOLE 2 GET_MODE ACCESS")		
 		return True
 		
 
 	def cameraOn(self, *args):
+		self.getLogger().logInfo("CONSOLE 2 CAMERA ON METHOD ACCESS")		
 		pass
 	
 	def cameraOff(self, *args):
+		self.getLogger().logInfo("CONSOLE 2 CAMERA OFF METHOD ACCESS")	
 		pass
 
 	def moveTelescope(self, *args):
+		self.getLogger().logInfo("CONSOLE 2 MOVE TELESCOPE ACCESS")	
 		pass
 
 	def getTelescopePosition(self, *args):
-		pass
+		a=TYPES.Position(0.0,0.0)	
+		self.getLogger().logInfo("CONSOLE 2 GET TELESCOPE POSITION ACCESS")			
+		return a
 
 	def getCameraImage(self, *args):
-		pass
+		self.getLogger().logCritical("CONSOLE 2 GET CAMERA IMAGE ACCESS")	
+		return b'sjkhddkjhfsalk'
 
 	def setRGB(self, *args):
+		self.getLogger().logInfo("CONSOLE 2 SET RGB ACCESS")	
 		pass
 
 	def setPixelBias(self, *args):
+		self.getLogger().logError("CONSOLE 2 SET PIXEL BIAS ACCESS")	
 		pass
 
 	def setResetLevel(self, *args):
+		self.getLogger().logInfo("CONSOLE 2 RESET LEVEL ACCESS")	
 		pass
 
 if __name__ == "__main__":
