@@ -38,14 +38,18 @@ public void initialize (ContainerServices containerServices) {
 	thisProposal = null;
 	
 	try {
+		
 		org.omg.CORBA.Object databaseObj = m_containerServices.getDefaultComponent("IDL:acsws/DATABASE_MODULE/DataBase:1.0");
-		//org.omg.CORBA.Object databaseObj = m_containerServices.getComponent("DATABASE");
-		databaseComponente = DataBaseHelper.narrow(databaseObj);
 		org.omg.CORBA.Object instrumentObj = m_containerServices.getDefaultComponent("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
-		//org.omg.CORBA.Object instrumentObj = m_containerServices.getComponent("INSTRUMENT");
-		instrumentComponente = InstrumentHelper.narrow(instrumentObj);
 		org.omg.CORBA.Object telescopeObj = m_containerServices.getDefaultComponent("IDL:acsws/TELESCOPE_MODULE/Telescope:1.0");
-		//org.omg.CORBA.Object telescopeObj = m_containerServices.getComponent("TELESCOPE");
+		
+		/*
+		org.omg.CORBA.Object databaseObj = m_containerServices.getComponent("DATABASE");
+		org.omg.CORBA.Object instrumentObj = m_containerServices.getComponent("INSTRUMENT");
+		org.omg.CORBA.Object telescopeObj = m_containerServices.getComponent("TELESCOPE");
+		*/
+		databaseComponente = DataBaseHelper.narrow(databaseObj);
+		instrumentComponente = InstrumentHelper.narrow(instrumentObj);
 		telescopeComponente = TelescopeHelper.narrow(telescopeObj);
 	} catch (AcsJContainerServicesEx e) {
 		// TODO Auto-generated catch block
@@ -89,7 +93,6 @@ public void stop() {
 	if (thread != null) {
 		run = false;
 	}
-	this.thread = null;
 }
 
 public int proposalUnderExecution() throws NoProposalExecutingEx{
@@ -141,6 +144,7 @@ public void run() {
 			break;
 	}
 	m_logger.info("Scheduler finished");
+	thread = null;
 }
 
 }
