@@ -63,7 +63,7 @@ EXECUTABLES_L   =
 # <brief description of xxxxx program>
 Telescope2_OBJECTS   = Telescope2	
 Telescope2_LDFLAGS   =
-Telescope2_LIBS      = TelescopeStubs acscomponent ACSErrTypeDevIO
+Telescope2_LIBS      = TelescopeStubs TelescopeControlStubs InstrumentStubs maciErrType ACSErrTypeCORBA acscomponent ACSErrTypeDevIO
 
 #
 # special compilation flags for single c sources
