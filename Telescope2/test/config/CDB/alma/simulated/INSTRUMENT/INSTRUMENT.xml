@@ -2,10 +2,6 @@
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <_corbaMethod Name="takeImage"
            Timeout="0">
-import os
-file = open(os.environ['INTROOT'] + '/image.jpg')
-str = file.read()
-file.close()
-return bytes(str)
+return b'jkldffd;lkdf'
   </_corbaMethod>
 </SimulatedComponent>
