@@ -12,3 +12,6 @@ lib/
 object/
 .classpath
 .project
+acswsStartDatabase
+SYSTEMErr.idl
+build.log
