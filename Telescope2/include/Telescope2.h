@@ -6,10 +6,11 @@
 #endif
 
 #include <TelescopeS.h>
+#include <TelescopeControlC.h>
+#include <InstrumentC.h>
 #include <acscomponentImpl.h>
-#include <ACSErrTypeCommon.h>
 #include <TypesC.h>
-
+#include <SYSTEMErr.h>
 
 class TelescopeImpl : public virtual acscomponent::ACSComponentImpl,
 			public virtual POA_TELESCOPE_MODULE::Telescope
@@ -37,6 +38,10 @@ class TelescopeImpl : public virtual acscomponent::ACSComponentImpl,
 		virtual void moveTo( const ::TYPES::Position & coordinates);
 
 		virtual TYPES::Position getCurrentPosition();
+
+	private:	
+		TELESCOPE_MODULE::TelescopeControl_var mount;
+		INSTRUMENT_MODULE::Instrument_var instrument;
 
 };
 
