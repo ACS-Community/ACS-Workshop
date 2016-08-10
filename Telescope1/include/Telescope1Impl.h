@@ -51,9 +51,11 @@
 #include <TelescopeControlC.h>
 #include <InstrumentC.h>
 #include <unistd.h>
+#include <SYSTEMErr.h>
+
 
 #define SLEEP_TIME 100000  // in usec
-#define TIME_OUT 10  // in sec
+#define TIME_OUT 120 // in sec
 
 
 /**
@@ -84,10 +86,10 @@ class Telescope1: public virtual acscomponent::ACSComponentImpl,     //Component
      */
     virtual ~Telescope1();
     
-    virtual ::TYPES::ImageType * observe(const ::TYPES::Position & coordinates,::CORBA::Long exposureTime);  
+    virtual ::TYPES::ImageType * observe(const ::TYPES::Position & coordinates,::CORBA::Long exposureTime) throw (SYSTEMErr::PositionOutOfLimitsEx, CORBA::SystemException) ;  
 
    
-    virtual void moveTo(const ::TYPES::Position & coordinates);
+    virtual void moveTo(const ::TYPES::Position & coordinates) throw (SYSTEMErr::PositionOutOfLimitsEx, CORBA::SystemException) ;
 
     
     virtual ::TYPES::Position getCurrentPosition(void);
