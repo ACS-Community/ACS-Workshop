@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+"@(#) $Id: MOUNT2_COMP.xml,v 1.1.1.1 2008/11/24 00:37:29 almamgr Exp $"
+
+$Log: MOUNT2_COMP.xml,v $
+Revision 1.1.1.1  2008/11/24 00:37:29  almamgr
+Initial import
+
+Revision 1.1  2007/07/09 20:36:58  wg2
+ - Added succesfully the CDB
+
+Revision 1.1.1.1  2007/07/09 12:47:39  wg8
+Repository Setup
+
+-->
+<TelescopeControl
+	xmlns="urn:schemas-cosylab-com:TelescopeControl:1.0"
+	xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+	xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<commandedAltitude default_timer_trig="2.0"/>
+	<commandedAzimuth default_timer_trig="2.0"/>
+	<actualAltitude default_timer_trig="2.0"/>
+	<actualAzimuth default_timer_trig="2.0"/>
+	<status default_timer_trig="2.0"/>
+
+</TelescopeControl>

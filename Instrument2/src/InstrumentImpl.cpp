@@ -96,6 +96,7 @@ std::string longExposureTransform(::CORBA::Long exposureTime)
 		}
 	}
 
+	ACS_SHORT_LOG((LM_WARNING, "Exposure time below bound. Fixed to %li.", (long)shutterSpeedMap[51]));
 	return shutterSpeedValues[51];	
 }
 
