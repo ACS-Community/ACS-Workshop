@@ -126,11 +126,9 @@ void Instrument::cameraOff()
 	ACS_TRACE("::Instrument::takeImage");
 
 	if (on) {
-		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "TakeImage with exposureTime = %li", (long)exposureTime));	
-		return camera->takeImage(longExposureTransform(exposureTime).c_str(), "400");
-
-		// chill, this is just a test.
-		//return new ::TYPES::ImageType();
+		std::string tr = longExposureTransform(exposureTime);	
+		ACS_SHORT_LOG((LOCAL_LOGGING_LEVEL, "TakeImage with exposureTime = %s", tr.c_str()));	
+		return camera->takeImage(tr.c_str(), "400");
 	}
 	
 	SYSTEMErr::CameraIsOffExImpl ex(__FILE__, __LINE__, "Instrument::takeImage");
