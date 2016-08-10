@@ -7,5 +7,17 @@
          Code="Console2_test" 
          Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
          Container="aragornContainer" ImplLang="py" />
+      <_ Name="DATABASE"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="pyContainer" ImplLang="py" />
+      <_ Name="SCHEDULER"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="pyContainer" ImplLang="py" />
+	<_ Name="INSTRUMENT"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="pyContainer" ImplLang="py" />
 </Components>
 
