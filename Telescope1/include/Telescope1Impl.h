@@ -48,6 +48,13 @@
  *  by CORBA.
  */
 #include <TelescopeS.h>
+#include <TelescopeControlC.h>
+#include <InstrumentC.h>
+#include <unistd.h>
+
+#define SLEEP_TIME 100000  // in usec
+#define TIME_OUT 10  // in sec
+
 
 /**
  * This class shows how to make an ACS Hello World component.
@@ -84,7 +91,10 @@ class Telescope1: public virtual acscomponent::ACSComponentImpl,     //Component
 
     
     virtual ::TYPES::Position getCurrentPosition(void);
-
+ 
+  private:
+     void waitOnSource(const ::TYPES::Position & coord);
+     TELESCOPE_MODULE::TelescopeControl_var cmount_p;
 };  
 
 #endif /*!_TELESCOPE1_H*/
