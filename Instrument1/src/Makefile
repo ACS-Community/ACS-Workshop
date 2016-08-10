@@ -84,7 +84,7 @@ LIBRARIES_L     =
 # <brief description of lllll library>
 lllll_OBJECTS   =
 Instrument1_OBJECTS   = Instrument1Impl
-Instrument1_LIBS   = InstrumentStubs TypesStubs acscomponent
+Instrument1_LIBS   = InstrumentStubs TypesStubs acscomponent SYSTEMErr
 
 #
 # Scripts (public and local)

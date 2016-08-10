@@ -12,10 +12,14 @@ from Acspy.Servants.ACSComponent import ACSComponent
 
 class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycle, ACSComponent):
 
+
 	def __init__(self):
 		ACSComponent.__init__(self)
 		ContainerServices.__init__(self)
-		
+		self.apertureTime = "1/4"
+		self.elMax = 45.0
+		self.azMax = 250.0	
+		self.Mode = False  # TRUE = AUTOMATIC FALSE = NO AUTOMATIC
 		pass
 
 	def initialize(self):
@@ -26,38 +30,32 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		self.db = ContainerServices.getComponent(self,"DATABASE")
 		self.scheduler = ContainerServices.getComponent(self,"SCHEDULER")
 		self.instrument = ContainerServices.getComponent(self, "INSTRUMENT")
-		'''
-		try:
-		    import acsexmplLamp
-		    lamp = self.getComponent("LAMP1")
-		    self.brightness = lamp._get_brightness()
-		except Exception, e:
-		    print "LAMP1 unavailable"
-		    print e		
-		'''
+		self.telescope = ContainerServices.getComponent(self, "TELESCOPE")
 
 	def cleanUp(self):
 		'''
 		Override this method inherited from ComponentLifecycle
 		'''
-		self.getLogger().logInfo("CONSOLE 2 CLEANUP ACCESS")
+		#self.getLogger().logInfo("CONSOLE 2 CLEANUP ACCESS")
 		#self.releaseComponent("LAMP1")
 
 	def setMode(self, *args):
-		self.getLogger().logDebug("CONSOLE 2 SET_MODE ACCESS")
+		#self.getLogger().logDebug("CONSOLE 2 SET_MODE ACCESS")
+		self.Mode = args[0]
+		self.getLogger().logDebug(self.Mode)
 		pass
 		
 	def getMode(self, *args):
-		self.getLogger().logDebug("CONSOLE 2 GET_MODE ACCESS")
-		self.getLogger().logInfo(self.db.getProposals())
-		# TRUE = AUTOMATIC FALSE = NO AUTOMATIC
-		return False
+		#self.getLogger().logDebug("CONSOLE 2 GET_MODE ACCESS")
+		#self.getLogger().logInfo(self.db.getProposals())
+		
+		return self.Mode
 		
 	
-	#
+	#INSTRUMENT
 	def cameraOn(self, *args):
 		
-		self.getLogger().logInfo("CONSOLE 2 CAMERA ON METHOD ACCESS")
+		#self.getLogger().logInfo("CONSOLE 2 CAMERA ON METHOD ACCESS")
 		if(self.getMode()):
 			self.getLogger().logError("AUTOMATIC MODE IS ON")
 		else:
@@ -65,40 +63,53 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 			
 	
 	def cameraOff(self, *args):
-		self.getLogger().logInfo("CONSOLE 2 CAMERA OFF METHOD ACCESS")
+		#self.getLogger().logInfo("CONSOLE 2 CAMERA OFF METHOD ACCESS")
 		if(self.getMode()):
 			self.getLogger().logError("AUTOMATIC MODE IS ON")
 		else:
 			self.getLogger().logInfo(self.instrument.cameraOff())
-
-	#MOUNT
-	def moveTelescope(self, *args):
-		self.getLogger().logInfo("CONSOLE 2 MOVE TELESCOPE ACCESS")	
-		pass
-
-	def getTelescopePosition(self, *args):
-		a=TYPES.Position(0.0,0.0)	
-		self.getLogger().logInfo("CONSOLE 2 GET TELESCOPE POSITION ACCESS")			
-		return a
-
-	def getCameraImage(self, *args):
-		self.getLogger().logCritical("CONSOLE 2 GET CAMERA IMAGE ACCESS")	
-		return b'sjkhddkjhfsalk'
-
-	def setRGB(self, *args):
-		self.getLogger().logInfo("CONSOLE 2 SET RGB ACCESS")	
-		pass
-
+	
 	def setPixelBias(self, *args):
-		self.getLogger().logError("CONSOLE 2 SET PIXEL BIAS ACCESS")	
-		pass
+		#self.getLogger().logError("CONSOLE 2 SET PIXEL BIAS ACCESS")	
+		if(self.getMode()):
+			self.getLogger().logError("AUTOMATIC MODE IS ON")
+		else:
+			self.getLogger().logInfo(self.instrument.setPixelBias(args[0]))
 
 	def setResetLevel(self, *args):
-		self.getLogger().logInfo("CONSOLE 2 RESET LEVEL ACCESS")	
+		#self.getLogger().logInfo("CONSOLE 2 RESET LEVEL ACCESS")	
+		if(self.getMode()):
+			self.getLogger().logError("AUTOMATIC MODE IS ON")
+		else:
+			self.getLogger().logInfo(self.instrument.setResetLevel(args[0]))
+
+	def getCameraImage(self, *args):
+		#self.getLogger().logCritical("CONSOLE 2 GET CAMERA IMAGE ACCESS")	
+		if(self.getMode()):
+			self.getLogger().logError("AUTOMATIC MODE IS ON")
+			return b'error'
+		else:			
+			return self.instrument.takeImage(self.apertureTime)
+
+
+	#TELESCOPE
+	def moveTelescope(self, *args):
+		#self.getLogger().logInfo("CONSOLE 2 MOVE TELESCOPE ACCESS")
+		
+		if(self.getMode()):
+			self.getLogger().logError("AUTOMATIC MODE IS ON")
+			
+		else:			
+			if(args[0].az > self.azMax or args[0].el > self.elMax):
+				self.getLogger().logError("INVALID NUMBER")
+			else:
+				self.getLogger().logInfo(self.telescope.moveTo(TYPES.Position(args[0].az, args[0].el)))			 
+
+
+	def getTelescopePosition(self, *args):
+		return self.telescope.getCurrentPosition()
+
+	def setRGB(self, *args):
+		#self.getLogger().logInfo("CONSOLE 2 SET RGB ACCESS")	
 		pass
 
-if __name__ == "__main__":
-	con2=Console2()
-	con2.initialize()
-	con2.sayHello()
-	con2.cleanUp
