@@ -44,6 +44,6 @@
       <_ Name="STORAGE"
          Code="acsws.uos.database.StorageHelper"
          Type="IDL:acsws/STORAGE_MODULE/Storage:1.0"
-         Container="mJavaToyContainer" ImplLang="java"/>
+         Container="javaContainer" ImplLang="java"/>
 
 </Components>

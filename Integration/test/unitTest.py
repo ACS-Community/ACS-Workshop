@@ -3,7 +3,7 @@ import unittest, logging
 from TYPES import *
 from SCHEDULER_MODULE import *
 from Acspy.Clients.SimpleClient import PySimpleClient
-from SYSTEMErr import NoProposalExecutingEx
+from SYSTEMErr import *
 import time
 
 class IntegrationTest(unittest.TestCase):
@@ -28,14 +28,14 @@ class IntegrationTest(unittest.TestCase):
         self.console = self.client.getComponent('CONSOLE1')
 
     def releaseResources(self):
-        self.client.releaseComponent(self.mount.name())
-        self.client.releaseComponent(self.camera.name())
-        self.client.releaseComponent(self.storage.name())
-        self.client.releaseComponent(self.database.name())
-        self.client.releaseComponent(self.telescope.name())
-        self.client.releaseComponent(self.instrument.name())
-        self.client.releaseComponent(self.scheduler.name())
-        self.client.releaseComponent(self.console.name())
+        self.client.releaseComponent(self.mount.name)
+        self.client.releaseComponent(self.camera.name)
+        self.client.releaseComponent(self.storage.name)
+        self.client.releaseComponent(self.database.name)
+        self.client.releaseComponent(self.telescope.name)
+        self.client.releaseComponent(self.instrument.name)
+        self.client.releaseComponent(self.scheduler.name)
+        self.client.releaseComponent(self.console.name)
 
     def getTargets(self):
         targets = TargetList()
@@ -211,29 +211,25 @@ class IntegrationTest(unittest.TestCase):
     #moveTo(coords) #Moves the telescope. Raises PositionOutOfLimitsEx.
     #getCurrentPosition() #Retrieves current position, returns coords.
     def testTelescope(self):
-        self.assertEquals(self.getCurrentPosition().az,0) #Not sure of initial values?
-        self.assertEquals(self.getCurrentPosition().el,0) #Not sure of initial values?
-        pos = Position()
-        pos.az = 100
-        pos.el = 60
-        self.moveTo(pos)
+        self.assertEquals(self.telescope.getCurrentPosition().az,0) #Not sure of initial values?
+        self.assertEquals(self.telescope.getCurrentPosition().el,0) #Not sure of initial values?
+        pos = Position(100,60)
+        self.telescope.moveTo(pos)
         time.sleep(10)
-        self.assertEquals(self.getCurrentPosition().az,100)
-        self.assertEquals(self.getCurrentPosition().el,60)
+        self.assertEquals(self.telescope.getCurrentPosition().az,100)
+        self.assertEquals(self.telescope.getCurrentPosition().el,60)
         img = observe(pos, 3)
         self.assertIsNotNone(imgs)
-        pos.az = 100
-        pos.el = 100
-        self.assertRaises(PositionOutOfLimitsEx, moveTo, pos)
-        self.assertRaises(PositionOutOfLimitsEx, observe, pos, 3)
-        self.assertEquals(self.getCurrentPosition().az,100)
-        self.assertEquals(self.getCurrentPosition().el,60)
-        pos.az = 400
-        pos.el = 60
-        self.assertRaises(PositionOutOfLimitsEx, moveTo, pos)
-        self.assertRaises(PositionOutOfLimitsEx, observe, pos, 3)
-        self.assertEquals(self.getCurrentPosition().az,100)
-        self.assertEquals(self.getCurrentPosition().el,60)
+        pos = Position(100,100)
+        self.assertRaises(PositionOutOfLimitsEx, telescope.moveTo, pos)
+        self.assertRaises(PositionOutOfLimitsEx, telescope.observe, pos, 3)
+        self.assertEquals(self.telescope.getCurrentPosition().az,100)
+        self.assertEquals(self.telescope.getCurrentPosition().el,60)
+        pos = Position(400,60)
+        self.assertRaises(PositionOutOfLimitsEx, telescope.moveTo, pos)
+        self.assertRaises(PositionOutOfLimitsEx, telescope.observe, pos, 3)
+        self.assertEquals(self.telescope.getCurrentPosition().az,100)
+        self.assertEquals(self.telescope.getCurrentPosition().el,60)
 
     #start() #The scheduler will start looping trying to observe. Raises SchedulerAlreadyRunningEx.
     #stop() #The scheduler will stop looping (as soon as the observation in action finishes). Raises SchedulerAlreadyStoppedEx.
@@ -270,24 +266,17 @@ class IntegrationTest(unittest.TestCase):
     #setResetLevel(reset) #Sets Reset Level. Raises CameraIsOffEx.
     def testInstrument(self):
         self.assertRaises(CameraIsOffEx, self.instrument.takeImage, 1)
-        self.assertRaises(CameraIsOffEx, self.instrument.setRGB, RGB())
         self.assertRaises(CameraIsOffEx, self.instrument.setPixelBias, 0)
         self.assertRaises(CameraIsOffEx, self.instrument.setResetLevel, 0)
         self.instrument.cameraOn()
-        rgb = RGB()
-        rgb.red = 10
-        rgb.blue = 10
-        rgb.green = 10
-        self.setRGB(rgb)
-        self.setPixelBias(10)
-        self.setResetLevel(0)
+        self.instrument.setPixelBias(10)
+        self.instrument.setResetLevel(0)
         self.instrument.cameraOff()
         self.assertRaises(CameraIsOffEx, self.instrument.takeImage, 1)
-        self.assertRaises(CameraIsOffEx, self.instrument.setRGB, RGB())
         self.assertRaises(CameraIsOffEx, self.instrument.setPixelBias, 0)
         self.assertRaises(CameraIsOffEx, self.instrument.setResetLevel, 0)
         self.instrument.cameraOn()
-        img = takeImage(3)
+        img = instrument.takeImage(3)
         self.instrument.cameraOff()
 
 
