@@ -17,6 +17,7 @@ import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.ProposalNotYetReadyEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.SYSTEMErr.wrappers.AcsJProposalDoesNotExistEx;
+import acsws.SYSTEMErr.wrappers.AcsJProposalNotYetReadyEx;
 import acsws.TYPES.ImageListHelper;
 import acsws.TYPES.Proposal;
 import acsws.TYPES.Target;
@@ -116,7 +117,9 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		// TODO Auto-generated method stub
 		Storage store = null;
 		long statusActual = -1;
-		byte[][] imageList = new byte[0][0];
+		byte[][] imageList = null ;
+		int target_cnt = 0;
+		
 		try { 
 			store = StorageHelper.narrow( m_containerServices.getComponent("STORAGE") );
 		} catch ( AcsJContainerServicesEx e) {
@@ -131,7 +134,11 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			m_logger.info("ProposalDoesNotExistEx");
-			return imageList;
+			AcsJProposalNotYetReadyEx e2 = new AcsJProposalNotYetReadyEx(e1);
+			throw e2.toProposalNotYetReadyEx();
+			
+			
+			//throw new ProposalNotYetReadyEx();
 		}
 		
 		// Si la proposal no ha sido completada
@@ -140,6 +147,13 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			ProposalNotYetReadyEx e = new ProposalNotYetReadyEx();
 			throw e;
 		}
+		
+		for (String key_pid : map.keySet()){
+			if(key_pid.startsWith(Integer.toString(pid) + ":") ) {
+				target_cnt++;
+			}
+		}		
+		imageList = new byte[target_cnt][];
 		
 		imageList = store.getObservation(pid);
 		return imageList;
@@ -189,7 +203,7 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		int image_cnt = 0, bool_cnt = 0;
 		boolean Exists = false;
 		List<String> pids_list = new ArrayList<String>();
-		List<byte[]> imageList = new ArrayList<byte[]>();
+		byte[][] imageList = null ;
 		try { 
 			store = StorageHelper.narrow( m_containerServices.getComponent("STORAGE") );
 		} catch ( AcsJContainerServicesEx e) {
@@ -224,12 +238,14 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 				}
 				
 				if(image_cnt == bool_cnt){
-					pro.status = 2;
-					for( String image_index : pids_list){
-						imageList.add(map.get(image_index));
+					pro.status = 2;	
+					imageList = new byte[image_cnt][];
+					for( int l = 0; l < pids_list.size() ; l++){
+						
+						imageList[l] = map.get( pids_list.get(l) );
 					}
 					
-					store.storeObservation(pro, (byte[][]) imageList.toArray());
+					store.storeObservation(pro,  imageList);
 					// Eliminar imagenes 
 					for( String image_delete : pids_list){
 						map.replace(image_delete, null);
