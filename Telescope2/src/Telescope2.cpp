@@ -1,6 +1,7 @@
 #include <Telescope2.h>
 #include <cmath>
-#include <unistd.h>
+#include <stdlib.h>     //for using the function sleep
+
 
 TelescopeImpl::TelescopeImpl(const ACE_CString& name,
                                             maci::ContainerServices* containerServices):
@@ -14,11 +15,11 @@ TelescopeImpl::~TelescopeImpl()
 
 void TelescopeImpl::initialize(void){
         mount = TELESCOPE_MODULE::TelescopeControl::_nil();
-        mount =  getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
+        mount =  getContainerServices()->getDefaultComponent<TELESCOPE_MODULE::TelescopeControl>("IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0");
 
 
         instrument = INSTRUMENT_MODULE::Instrument::_nil();
-        instrument = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT2");
+        instrument = getContainerServices()->getDefaultComponent<INSTRUMENT_MODULE::Instrument>("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
 
 }
 
@@ -87,7 +88,7 @@ void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
                 if(std::abs(actual_p.el - el) <= epsilon && std::abs(actual_p.az - az) <= epsilon){
                         break;
                 }
-                usleep(100000000);
+		sleep(1);         //make the programme waiting for 5 secondes
 
         }
 
