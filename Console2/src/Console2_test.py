@@ -12,6 +12,7 @@ from Acspy.Servants.ACSComponent import ACSComponent
 import SYSTEMErr
 import SYSTEMErrImpl
 from SYSTEMErrImpl import SystemInAutoModeExImpl
+from SYSTEMErrImpl import PositionOutOfLimitsExImpl
 
 class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycle, ACSComponent):
 
@@ -44,9 +45,16 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		#self.releaseComponent("LAMP1")
 
 	def setMode(self, *args):
+		
 		#self.getLogger().logDebug("CONSOLE 2 SET_MODE ACCESS")
 		self.Mode = args[0]
-		self.getLogger().logDebug("MODE IS: "+str(self.Mode))
+		if (self.Mode):
+			self.scheduler.start()
+			self.getLogger().logDebug("Atomatic Mode")
+    		else:
+			self.scheduler.stop()
+			self.getLogger().logDebug("Manual Mode")
+
 		pass
 		
 	def getMode(self, *args):
@@ -82,6 +90,9 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		#self.getLogger().logError("CONSOLE 2 SET PIXEL BIAS ACCESS")	
 		if(self.getMode()):
 			self.getLogger().logError("AUTOMATIC MODE IS ON")
+			ex2 = SystemInAutoModeExImpl()
+                        ex2.log(self.getLogger())
+			raise ex2
 		else:
 			self.getLogger().logInfo(self.instrument.setPixelBias(args[0]))
 
@@ -89,6 +100,9 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		#self.getLogger().logInfo("CONSOLE 2 RESET LEVEL ACCESS")	
 		if(self.getMode()):
 			self.getLogger().logError("AUTOMATIC MODE IS ON")
+			ex2 = SystemInAutoModeExImpl()
+                        ex2.log(self.getLogger())
+			raise ex2
 		else:
 			self.getLogger().logInfo(self.instrument.setResetLevel(args[0]))
 
@@ -96,6 +110,9 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		#self.getLogger().logCritical("CONSOLE 2 GET CAMERA IMAGE ACCESS")	
 		if(self.getMode()):
 			self.getLogger().logError("AUTOMATIC MODE IS ON")
+			ex2 = SystemInAutoModeExImpl()
+                        ex2.log(self.getLogger())
+			raise ex2
 			return b'error'
 		else:			
 			#return TYPES.ImageType(self.instrument.takeImage(self.apertureTime))
@@ -112,6 +129,10 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		else:			
 			if(args[0].az > self.azMax or args[0].el > self.elMax):
 				self.getLogger().logError("INVALID NUMBER")
+				ex2 = PositionOutOfLimitsExImpl()
+                        	ex2.log(self.getLogger())
+				raise ex2
+				
 			else:
 				self.telescope.moveTo(TYPES.Position(args[0].az, args[0].el))	 
 

@@ -1,4 +1,7 @@
 #include <Telescope2.h>
+#include <cmath>
+#include <stdlib.h>     //for using the function sleep
+
 
 TelescopeImpl::TelescopeImpl(const ACE_CString& name,
                                             maci::ContainerServices* containerServices):
@@ -11,6 +14,13 @@ TelescopeImpl::~TelescopeImpl()
 }
 
 void TelescopeImpl::initialize(void){
+        mount = TELESCOPE_MODULE::TelescopeControl::_nil();
+        mount =  getContainerServices()->getDefaultComponent<TELESCOPE_MODULE::TelescopeControl>("IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0");
+
+
+        instrument = INSTRUMENT_MODULE::Instrument::_nil();
+        instrument = getContainerServices()->getDefaultComponent<INSTRUMENT_MODULE::Instrument>("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
+
 }
 
 void TelescopeImpl::execute(void){
@@ -28,10 +38,6 @@ void TelescopeImpl::aboutToAbort(void){
 TYPES::ImageType* TelescopeImpl::observe(const ::TYPES::Position & coordinates,
       ::CORBA::Long exposureTime)
 {
-
-        instrument = INSTRUMENT_MODULE::Instrument::_nil();
-        instrument = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
-
 
 	if(CORBA::is_nil(instrument.in())){
 		throw acsErrTypeLifeCycle::LifeCycleExImpl(__FILE__, __LINE__, "::TelescopeImpl::observe");
@@ -53,23 +59,22 @@ TYPES::ImageType* TelescopeImpl::observe(const ::TYPES::Position & coordinates,
 void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 {
 	
-        mount = TELESCOPE_MODULE::TelescopeControl::_nil();
-        mount =  getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
-
-	double max_el = 90;
+	double max_el = 62;
 	double max_az = 90;
-	
+
+	double epsilon = 0.5;	
 	//Call Mount setTo
 	CORBA::Double el = coordinates.el;
 	CORBA::Double az = coordinates.az; 
 
 
 	//Check Position limits
-	if(el > max_el || az > max_az){
+	if((el > max_el || el < 0 ) || std::abs(az) > max_az){
 		SYSTEMErr::PositionOutOfLimitsExImpl ex(__FILE__, __LINE__ , "TelescopeImpl::moveTo");
 		ex.log();
 		throw ex.getPositionOutOfLimitsEx();
 	}
+
 
         ACS_SHORT_LOG((LM_INFO,"Moving Mount to el %f az %f", (double) el, (double) az));
 
@@ -78,11 +83,18 @@ void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 	}	
 	mount->setTo(el,az);
 
+        while(true){
+                TYPES::Position actual_p = getCurrentPosition();
+                if(std::abs(actual_p.el - el) <= epsilon && std::abs(actual_p.az - az) <= epsilon){
+                        break;
+                }
+		sleep(1);         //make the programme waiting for 5 secondes
+
+        }
+
 }
 
 TYPES::Position TelescopeImpl::getCurrentPosition(){
-        mount = TELESCOPE_MODULE::TelescopeControl::_nil();
-        mount =  getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
 
         if(CORBA::is_nil(mount.in())){
                 throw acsErrTypeLifeCycle::LifeCycleExImpl(__FILE__, __LINE__, "::TelescopeImpl::observe");

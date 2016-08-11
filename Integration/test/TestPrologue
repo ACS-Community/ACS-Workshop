@@ -5,11 +5,12 @@ rm -rf tmp
 mkdir tmp
 
 #Start the ORB services and manager.
-acsutilTATPrologue -noloadifr
+acsutilTATPrologue
+
+#Start the Storage HSQLDB
+nohup acswsStartDatabase &
 
 #start container
-acsutilAwaitContainerStart -cpp toyContainer
-acsutilAwaitContainerStart -cpp dToyContainer
-acsutilAwaitContainerStart -cpp iToyContainer
-acsutilAwaitContainerStart -cpp sToyContainer
-acsutilAwaitContainerStart -cpp tToyContainer
+acsutilAwaitContainerStart -py pyContainer
+acsutilAwaitContainerStart -cpp cppContainer
+acsutilAwaitContainerStart -java javaContainer

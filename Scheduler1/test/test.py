@@ -8,6 +8,7 @@
 
 import Acspy.Clients.SimpleClient
 import unittest
+import time
 
 class TestScheduler(unittest.TestCase):
   COMPONENT_NAME = "SCHEDULER1"
@@ -20,20 +21,43 @@ class TestScheduler(unittest.TestCase):
     self.client.releaseComponent(self.COMPONENT_NAME)
     self.client.disconnect()
 
+  # Should call start method without issues
   def test_startOK(self):
-    print "Testing start method"
     self.component.start()
   
-  def test_stopFail(self):
-    print "Testing stop method"
-    # It should fail because start method have no been invoked yet.
-    #with self.assertRaises(Exception):
+  # Should raise an exception if try to call start twice
+  def test_start_twice(self):
+    with self.assertRaises(Exception):
+      self.component.start()
+      self.component.start()
+  
+  # Should call stop method without issues
+  def test_stopOK(self):
     self.component.stop()
   
-  def test_proposal_under_execution(self):
-    print "Testing stop method"
-    proposal = self.component.proposalUnderExecution()
-    self.assertEqual(proposal, 0)
+  # Should raise an exception if try to call stop twice
+  def test_stop_twice(self):
+    with self.assertRaises(Exception):
+      self.component.stop()
+      self.component.stop()
+  
+  # Should raise an exception when call proposalUnderExecution without 
+  # proposal under execution
+  def test_proposalUnderExecution_no_proposal(self):
+    with self.assertRaises(Exception):
+      proposal = self.component.proposalUnderExecution()
+      #self.assertEqual(proposal, -1)
+  
+  # Should call start method and call stop method
+  def test_start_stop(self):
+    self.component.start()
+    # Just in case thread are so fast
+    try:
+      time.sleep(0.2)
+      print self.component.proposalUnderExecution()
+    except:
+      pass
+    self.component.stop()
 
 if __name__ == '__main__':
     unittest.main()

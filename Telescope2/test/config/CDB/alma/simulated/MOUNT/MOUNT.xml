@@ -1,0 +1,21 @@
+<SimulatedComponent xmlns="urn:schemas-cosylab-com:SimulatedComponent:1.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <_corbaMethod name="initialize" Timeout="0">
+global actualAltitude
+global actualAzimuth
+print "HELLO"
+	</_corbaMethod>
+
+	<_corbaAttribute Name="actualAltitude" Timeout="0">
+return actualAltitude 
+	</_corbaAttribute>
+	<_corbaAttribute Name="actualAzimuth" Timeout="0">
+return actualAzimuth
+	</_corbaAttribute>
+	<_corbaMethod Name="setTo"
+        	   Timeout="0">
+actualAltitude = altitude
+actualAzimuth = azimuth
+	</_corbaMethod>
+
+</SimulatedComponent>

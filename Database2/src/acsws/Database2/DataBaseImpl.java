@@ -1,7 +1,11 @@
 package acsws.Database2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.hibernate.type.ImageType;
 
 import acsws.DATABASE_MODULE.DataBase;
 import acsws.DATABASE_MODULE.DataBaseHelper;
@@ -12,6 +16,7 @@ import acsws.SYSTEMErr.ImageAlreadyStoredEx;
 import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.ProposalNotYetReadyEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
+import acsws.SYSTEMErr.wrappers.AcsJProposalDoesNotExistEx;
 import acsws.TYPES.ImageListHelper;
 import acsws.TYPES.Proposal;
 import acsws.TYPES.Target;
@@ -32,14 +37,17 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	private AcsLogger m_logger;
 	private ContainerServices m_containerServices;
 	private Proposal proposal;
-	private static int pid_cnt ;
 	int STATUS_INITIAL_PROPOSAL = 0;
 	int STATUS_NO_SUCH_PROPOSAL = -999;
 	List<Proposal> proposalList = new ArrayList<Proposal>();
+	byte[][] imageList; 
+	int[][][] map;
+	int image_cnt = 0;
+	
 	
 	public String name() {
 		// TODO Auto-generated method stub
-		return "Database";
+		return "DATABASE_MODULE_JAVA";
 	}
 
 	public ComponentStates componentState() {
@@ -52,22 +60,41 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	
 	public int storeProposal(Target[] targets) {
 		// TODO Auto-generated method stub
+		Storage store = null;
+		try { 
+			store = StorageHelper.narrow( m_containerServices.getComponent("STORAGE") );
+		} catch ( AcsJContainerServicesEx e) {
+			m_logger.info("Excepcion de Java Container con Componente Storage");
+			e.log(this.m_logger);
+			return 0;
+		}
+		
 		proposal = new Proposal();
 		proposal.targets = targets;
-		proposal.pid = pid_cnt + 1; 
+		proposal.pid = store.getNextValidId(); 
 		proposal.status = STATUS_INITIAL_PROPOSAL;
 		proposalList.add(proposal);
-		
+		imageList = new byte[targets.length][];
+		map = new int[targets.length][targets.length][targets.length];
+		m_logger.info("The proposal was created");
 		return proposal.pid;
 	}
 
 	public int getProposalStatus(int pid) throws ProposalDoesNotExistEx{
 		// TODO Auto-generated method stub
+
+		if (proposalList.isEmpty()){
+		   m_logger.info("The proposal list is empty");
+		   AcsJProposalDoesNotExistEx impl = new AcsJProposalDoesNotExistEx();
+		   throw impl.toProposalDoesNotExistEx();
+		}
+		
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
 				return pro.status;
 			}
 		}
+		m_logger.info("The proposal does not exists");
 		throw new ProposalDoesNotExistEx();
 	}
 
@@ -86,21 +113,33 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			throws ProposalNotYetReadyEx {
 		// TODO Auto-generated method stub
 		Storage store = null;
+		long statusActual = -1;
 		byte[][] imageList = new byte[0][0];
 		try { 
 			store = StorageHelper.narrow( m_containerServices.getComponent("STORAGE") );
 		} catch ( AcsJContainerServicesEx e) {
 			m_logger.info("Excepcion de Java Container con Componente Storage");
+			e.log(this.m_logger);
 			return imageList;
 		}
 		
-		imageList = store.getObservation(pid);
+		try {
+			statusActual = getProposalStatus(pid);
+		} catch (ProposalDoesNotExistEx e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			m_logger.info("ProposalDoesNotExistEx");
+			return imageList;
+		}
 		
-		if (imageList.length == 0){
+		// Si la proposal no ha sido completada
+		if (statusActual != 2){
 			m_logger.info("ProposalNotYetReadyEx");
 			ProposalNotYetReadyEx e = new ProposalNotYetReadyEx();
 			throw e;
 		}
+		
+		imageList = store.getObservation(pid);
 		return imageList;
 	}
 
@@ -117,7 +156,6 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 	public void setProposalStatus(int pid, int status)
 			throws InvalidProposalStatusTransitionEx, ProposalDoesNotExistEx {
-		
 		long statusActual = -1;
 		try {
 			statusActual = getProposalStatus(pid);
@@ -125,7 +163,8 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			m_logger.info("ProposalDoesNotExistEx");
-			throw e1;
+			AcsJProposalDoesNotExistEx e2 = new AcsJProposalDoesNotExistEx(e1);
+			throw e2.toProposalDoesNotExistEx();
 		}
 		if (statusActual + 1 != status){
 			m_logger.info("InvalidProposalStatusTransitionEx");
@@ -151,16 +190,49 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			m_logger.info("Excepcion de Java Container con Componente Storage");
 		}
 		
-		for (Proposal pro : proposalList ) {
-			if (pro.pid == pid){
-				//ImageAlreadyStoredEx
-			}
+		if (proposalList.isEmpty()){
+			   m_logger.info("The proposal list is empty");
+			   AcsJProposalDoesNotExistEx impl = new AcsJProposalDoesNotExistEx();
+			   throw impl.toProposalDoesNotExistEx();
 		}
 		
-				
-		m_logger.info("ImageAlreadyStoredEx");
-		throw new ImageAlreadyStoredEx();
+		for (Proposal pro : proposalList ) {
+			if (pro.pid == pid){
+				if (pro.status == 1){
+					for (Target targetList : pro.targets ) {
+						if(targetList.tid == tid){
+							// Revisar si tid ya tiene imagen
+							for (int j = 0; j < pro.targets.length ; j++ ){
+								if (map[pid-1][tid-1][j] == 0 ) {
+									// Store locally or in memory
+									imageList[image_cnt] = new byte[image.length];
+									image_cnt++;
+									map[pid][tid][j] = 1;
+									
+									// Si la cantidad de imagenes == a la de targets
+									if(image_cnt == pro.targets.length){
+										pro.status = 2;
+										store.storeObservation(pro, imageList);
+										// Eliminar imagenes 
+										imageList = null;
+									}
+									break;
+								}
+							}
+							m_logger.info("ImageAlreadyStoredEx");
+							throw new ImageAlreadyStoredEx();							
+						}
+					}
+				}
+				m_logger.info(" Invalid Status for tid ");
+				break;
+			}
+		}
+		m_logger.info("ProposalDoesNotExistEx");
+		throw new ProposalDoesNotExistEx();
 	}
+		
+			
 
 	public void clean() {
 		// TODO Auto-generated method stub
@@ -182,7 +254,6 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	public void execute() throws ComponentLifecycleException {
 		// TODO Auto-generated method stub
 		m_logger.info("Executing DB");
-		pid_cnt = 0;
 	}
 
 	public void cleanUp() throws AcsJComponentCleanUpEx {
