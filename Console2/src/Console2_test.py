@@ -23,6 +23,7 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		self.elMax = 45.0
 		self.azMax = 250.0	
 		self.Mode = False  # TRUE = AUTOMATIC FALSE = NO AUTOMATIC
+
 		pass
 
 	def initialize(self):
@@ -97,6 +98,7 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 			self.getLogger().logError("AUTOMATIC MODE IS ON")
 			return b'error'
 		else:			
+			#return TYPES.ImageType(self.instrument.takeImage(self.apertureTime))
 			return self.instrument.takeImage(self.apertureTime)
 
 
@@ -111,7 +113,7 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 			if(args[0].az > self.azMax or args[0].el > self.elMax):
 				self.getLogger().logError("INVALID NUMBER")
 			else:
-				self.getLogger().logInfo(self.telescope.moveTo(TYPES.Position(args[0].az, args[0].el)))			 
+				self.telescope.moveTo(TYPES.Position(args[0].az, args[0].el))	 
 
 
 	def getTelescopePosition(self, *args):
