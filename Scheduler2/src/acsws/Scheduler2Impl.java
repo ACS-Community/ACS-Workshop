@@ -153,6 +153,12 @@ public void run() {
 				//stream.write(image);
 				//stream.close();
 				databaseComponente.storeImage(thisProposal.pid, thisProposal.targets[j].tid, image);
+				if(!run){
+					instrumentComponente.cameraOff();
+					databaseComponente.setProposalStatus(thisProposal.pid, 0);
+					thisProposal=null;
+					break;
+				}
 			}
 			instrumentComponente.cameraOff();
 			databaseComponente.setProposalStatus(thisProposal.pid, 2);
@@ -185,10 +191,7 @@ public void run() {
 		m_logger.info("Proposal finished");
 		}
 		
-		if(!run){
-			thisProposal=null;
-			break;
-		}
+		
 			
 	}
 	thisProposal=null;
