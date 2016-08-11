@@ -6,23 +6,26 @@ from Acspy.Clients.SimpleClient import PySimpleClient
 from SYSTEMErr import NoProposalExecutingEx
 import time
 
-class SchedulerTest(unittest.TestCase):
+class IntegrationTest(unittest.TestCase):
     def setUp(self):
         self.client = PySimpleClient()
+	time.sleep(5)
         self.retrieveResources()
 
     def tearDown(self):
         self.releaseResources()
 
     def retrieveResources(self):
+	# EXTERNAL COMPONENTS
         self.mount = self.client.getComponent('MOUNT')
         self.camera = self.client.getComponent('CAMERA')
         self.storage = self.client.getComponent('STORAGE')
-        self.database = self.client.getComponent('DATABASE')
-        self.telescope = self.client.getComponent('TELESCOPE')
-        self.instrument = self.client.getComponent('INSTRUMENT')
-        self.scheduler = self.client.getComponent('SCHEDULER')
-        self.console = self.client.getComponent('CONSOLE')
+	# IMPLEMENTED COMPONENTS
+        self.instrument = self.client.getComponent('INSTRUMENT1')
+        self.telescope = self.client.getComponent('TELESCOPE1')
+        self.scheduler = self.client.getComponent('SCHEDULER1')
+        self.database = self.client.getComponent('DATABASESIM')
+        self.console = self.client.getComponent('CONSOLE1')
 
     def releaseResources(self):
         self.client.releaseComponent(self.mount.name())
@@ -157,11 +160,12 @@ class SchedulerTest(unittest.TestCase):
         self.assertAlmostEquals(self.mount.actualAltitude(), 0, delta=1)
         self.assertAlmostEquals(self.mount.actualAzimuth(), 0, delta=1)
 
-    testCamera(self):
-        pass
 
-    testStorage(self):
-        pass
+#    def testCamera(self):
+#        pass
+
+#    def testStorage(self):
+#        pass
 
     #storeProposal(TargetList) #Stores proposal, returns pid.
     #getProposalStatus(pid) #Retrieves proposal status, returns status.
@@ -246,7 +250,7 @@ class SchedulerTest(unittest.TestCase):
         time.sleep(2)
 	self.assertEqual(self.scheduler.proposalUnderExecution(),pid)
         obsFinished = False
-        while !obsFinished:
+        while not obsFinished:
             try:
                pid = self.scheduler.proposalUnderExecution()
                obsFinished = True
@@ -286,8 +290,9 @@ class SchedulerTest(unittest.TestCase):
         img = takeImage(3)
         self.instrument.cameraOff()
 
-    testConsole(self):
-        pass
+
+#    def testConsole(self):
+#        pass
 
 if __name__ == "__main__":
     unittest.main()
