@@ -60,13 +60,15 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	
 	public int storeProposal(Target[] targets) {
 		// TODO Auto-generated method stub
+		pid_cnt++;
 		proposal = new Proposal();
 		proposal.targets = targets;
-		proposal.pid = pid_cnt + 1; 
+		proposal.pid = pid_cnt; 
 		proposal.status = STATUS_INITIAL_PROPOSAL;
 		proposalList.add(proposal);
 		imageList = new byte[targets.length][];
 		map = new int[targets.length][targets.length][targets.length];
+		
 		return proposal.pid;
 	}
 
