@@ -47,7 +47,7 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	
 	public String name() {
 		// TODO Auto-generated method stub
-		return "Database";
+		return "DATABASE_MODULE_JAVA";
 	}
 
 	public ComponentStates componentState() {
@@ -74,11 +74,16 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 	public int getProposalStatus(int pid) throws ProposalDoesNotExistEx{
 		// TODO Auto-generated method stub
+		if (proposalList == null){
+		   m_logger.info("The proposal list is empty");
+		   throw new ProposalDoesNotExistEx();
+		}
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
 				return pro.status;
 			}
 		}
+		m_logger.info("The proposal does not exists");
 		throw new ProposalDoesNotExistEx();
 	}
 
@@ -128,7 +133,6 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 	public void setProposalStatus(int pid, int status)
 			throws InvalidProposalStatusTransitionEx, ProposalDoesNotExistEx {
-		
 		long statusActual = -1;
 		try {
 			statusActual = getProposalStatus(pid);
