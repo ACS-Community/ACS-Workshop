@@ -1,5 +1,8 @@
 package acsws;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.logging.Logger;
 import alma.ACS.ComponentStates;
 import alma.JavaContainerError.wrappers.AcsJContainerServicesEx;
@@ -51,6 +54,9 @@ public void initialize (ContainerServices containerServices) {
 		databaseComponente = DataBaseHelper.narrow(databaseObj);
 		instrumentComponente = InstrumentHelper.narrow(instrumentObj);
 		telescopeComponente = TelescopeHelper.narrow(telescopeObj);
+
+
+
 	} catch (AcsJContainerServicesEx e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -97,32 +103,55 @@ public void stop() {
 
 public int proposalUnderExecution() throws NoProposalExecutingEx{
 	m_logger.info("Excecuting proposal");
-	if (!run) {
-		throw new NoProposalExecutingEx();
-	}
 	if (thisProposal==null){
 		throw new NoProposalExecutingEx();
 	}
+	
+	if (!run) {
+		throw new NoProposalExecutingEx();
+	}
+	
 	return thisProposal.pid;
 }
 
 public void run() {
+
+	try {
+		if (databaseComponente == null) {
+			throw new AcsJContainerServicesEx();
+		}
+		if (instrumentComponente == null) {
+			throw new AcsJContainerServicesEx();
+		}
+		if (telescopeComponente == null) {
+			throw new AcsJContainerServicesEx();
+		}
+	} catch (AcsJContainerServicesEx e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return;
+	}
+
 	byte[] image;
 	m_logger.info("Scheduler running");
 	proposals = databaseComponente.getProposals();
-	
 	for(int i=0; i<proposals.length; i++){
 		m_logger.info("Running proposal");
 		thisProposal = proposals[i];
-		try {
+		if (thisProposal.status==0){
+			try {
+		
 			databaseComponente.setProposalStatus(thisProposal.pid, 1);
 			instrumentComponente.cameraOn();
 			for(int j=0; j< thisProposal.targets.length; j++){
 				image = telescopeComponente.observe(thisProposal.targets[j].coordinates, thisProposal.targets[j].expTime);
+				//FileOutputStream stream = new FileOutputStream("/home/almaproc/Desktop/image" + i + j + ".jpg");
+				//stream.write(image);
+				//stream.close();
 				databaseComponente.storeImage(thisProposal.pid, thisProposal.targets[j].tid, image);
 			}
 			instrumentComponente.cameraOff();
-			
+			databaseComponente.setProposalStatus(thisProposal.pid, 2);
 		} catch (InvalidProposalStatusTransitionEx e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -138,8 +167,19 @@ public void run() {
 		} catch (ProposalDoesNotExistEx e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+			run = false;
+		}/* catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			run = false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			run = false;
+		}*/
+			
 		m_logger.info("Proposal finished");
+		}
 		if(!run)
 			break;
 	}

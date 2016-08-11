@@ -1,7 +1,11 @@
 package acsws.Database2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.hibernate.type.ImageType;
 
 import acsws.DATABASE_MODULE.DataBase;
 import acsws.DATABASE_MODULE.DataBaseHelper;
@@ -36,10 +40,14 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	int STATUS_INITIAL_PROPOSAL = 0;
 	int STATUS_NO_SUCH_PROPOSAL = -999;
 	List<Proposal> proposalList = new ArrayList<Proposal>();
+	byte[][] imageList; 
+	int[][][] map;
+	int image_cnt = 0;
+	
 	
 	public String name() {
 		// TODO Auto-generated method stub
-		return "Database";
+		return "DATABASE_MODULE_JAVA";
 	}
 
 	public ComponentStates componentState() {
@@ -52,22 +60,30 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	
 	public int storeProposal(Target[] targets) {
 		// TODO Auto-generated method stub
+		pid_cnt++;
 		proposal = new Proposal();
 		proposal.targets = targets;
-		proposal.pid = pid_cnt + 1; 
+		proposal.pid = pid_cnt; 
 		proposal.status = STATUS_INITIAL_PROPOSAL;
 		proposalList.add(proposal);
+		imageList = new byte[targets.length][];
+		map = new int[targets.length][targets.length][targets.length];
 		
 		return proposal.pid;
 	}
 
 	public int getProposalStatus(int pid) throws ProposalDoesNotExistEx{
 		// TODO Auto-generated method stub
+		if (proposalList == null){
+		   m_logger.info("The proposal list is empty");
+		   throw new ProposalDoesNotExistEx();
+		}
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
 				return pro.status;
 			}
 		}
+		m_logger.info("The proposal does not exists");
 		throw new ProposalDoesNotExistEx();
 	}
 
@@ -117,7 +133,6 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 	public void setProposalStatus(int pid, int status)
 			throws InvalidProposalStatusTransitionEx, ProposalDoesNotExistEx {
-		
 		long statusActual = -1;
 		try {
 			statusActual = getProposalStatus(pid);
@@ -153,14 +168,33 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
-				//ImageAlreadyStoredEx
+				if (pro.status == 1){
+					for (Target targetList : pro.targets ) {
+						if(targetList.tid == tid){
+							// Revisar si tid ya tiene imagen
+							for (int j = 0; j < pro.targets.length ; j++ ){
+								if (map[pid][tid][j] == 0 ) {
+									// Store locally or in memory
+									imageList[image_cnt] = new byte[image.length];
+									image_cnt++;
+									map[pid][tid][j] = 1;
+									break;
+								}
+							}
+							m_logger.info("ImageAlreadyStoredEx");
+							throw new ImageAlreadyStoredEx();							
+						}
+					}
+				}
+					
+					//m_logger.warning("");
 			}
+			m_logger.info("ProposalDoesNotExistEx");
+			throw new ProposalDoesNotExistEx();
 		}
-		
-				
-		m_logger.info("ImageAlreadyStoredEx");
-		throw new ImageAlreadyStoredEx();
 	}
+		
+			
 
 	public void clean() {
 		// TODO Auto-generated method stub

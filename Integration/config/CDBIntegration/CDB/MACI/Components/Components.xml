@@ -49,7 +49,7 @@
          Container="ws04ToyContainer" ImplLang="cpp"/>
       <_ Name="CAMERA"
          Code="CameraImpl"
-         Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
+         Type="IDL:acsws/CAMERA_MODULE/Camera:1.0"
          Container="mCppToyContainer" ImplLang="cpp"/>
       <_ Name="MOUNT"
          Code="MOUNT2"
