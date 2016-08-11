@@ -6,6 +6,7 @@ print "Moving TELESCOPE"
   </_corbaMethod>
   <_corbaMethod Name="getCurrentPosition"
            Timeout="0">
-print "Getting current position of TELESCOPE"
+import TYPES
+return TYPES.Position(3.0,6.0)
   </_corbaMethod>
 </SimulatedComponent>

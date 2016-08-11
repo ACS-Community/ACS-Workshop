@@ -80,11 +80,11 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 
 
 	def moveTelescope(self, coordinates): # verificar formato de parametro "coordinates"
-		self.az = coordinates[0]
-		self.el = coordinates[1]
+		self.az = coordinates.az
+		self.el = coordinates.el
 		if self.mode == False:
 			telescope = self.getComponent("TELESCOPE")
-			if(az > 45.0 or el > 360):
+			if(self.az < 45.0 and self.el < 360):
 				telescope.moveTo(coordinates)
 				self.logger.log(logging.INFO, "Moving telescope to : " + str(coordinates))
 			else:

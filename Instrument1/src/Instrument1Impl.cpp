@@ -23,7 +23,7 @@
 	status = 0; //CAMERA Logically OFF
 	try
 	{
-		Camera = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
+		Camera = getContainerServices()->getDefaultComponent<CAMERA_MODULE::Camera>("IDL:acsws/CAMERA_MODULE/Camera:1.0");
 	}
 	catch(int e)
 	{
