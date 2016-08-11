@@ -1,26 +1,24 @@
 package acsws;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.logging.Logger;
-import alma.ACS.ComponentStates;
-import alma.JavaContainerError.wrappers.AcsJContainerServicesEx;
-import alma.acs.component.ComponentLifecycle;
-import alma.acs.container.ContainerServices;
+import acsws.DATABASE_MODULE.DataBase;
+import acsws.DATABASE_MODULE.DataBaseHelper;
+import acsws.INSTRUMENT_MODULE.Instrument;
+import acsws.INSTRUMENT_MODULE.InstrumentHelper;
 import acsws.SCHEDULER_MODULE.SchedulerOperations;
 import acsws.SYSTEMErr.ImageAlreadyStoredEx;
 import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.NoProposalExecutingEx;
 import acsws.SYSTEMErr.PositionOutOfLimitsEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
-import acsws.TYPES.Proposal;
-import acsws.DATABASE_MODULE.DataBase;
-import acsws.DATABASE_MODULE.DataBaseHelper;
-import acsws.INSTRUMENT_MODULE.Instrument;
-import acsws.INSTRUMENT_MODULE.InstrumentHelper;
+import acsws.SYSTEMErr.SchedulerAlreadyRunningEx;
 import acsws.TELESCOPE_MODULE.Telescope;
 import acsws.TELESCOPE_MODULE.TelescopeHelper;
+import acsws.TYPES.Proposal;
+import alma.ACS.ComponentStates;
+import alma.JavaContainerError.wrappers.AcsJContainerServicesEx;
+import alma.acs.component.ComponentLifecycle;
+import alma.acs.container.ContainerServices;
 
 public class Scheduler2Impl implements ComponentLifecycle, SchedulerOperations, Runnable {
 
@@ -85,12 +83,15 @@ public String name() {
 	return m_containerServices.getName();
 }
 
-public void start() {
+public void start() throws SchedulerAlreadyRunningEx {
 	m_logger.info("Scheduler started");
 	if (thread == null) {
 		run = true;
 		thread = new Thread (this, "Scheduler");
 		thread.start();
+	} else {
+		m_logger.severe("Scheduler already running.");
+		throw new SchedulerAlreadyRunningEx();
 	}
 }
 
@@ -102,15 +103,12 @@ public void stop() {
 }
 
 public int proposalUnderExecution() throws NoProposalExecutingEx{
+	
+	if (thisProposal==null || !run) {
+		m_logger.severe("No proposal executing.");
+		throw new NoProposalExecutingEx();
+	}
 	m_logger.info("Excecuting proposal");
-	if (thisProposal==null){
-		throw new NoProposalExecutingEx();
-	}
-	
-	if (!run) {
-		throw new NoProposalExecutingEx();
-	}
-	
 	return thisProposal.pid;
 }
 
@@ -180,9 +178,14 @@ public void run() {
 			
 		m_logger.info("Proposal finished");
 		}
-		if(!run)
+		
+		if(!run){
+			thisProposal=null;
 			break;
+		}
+			
 	}
+	thisProposal=null;
 	m_logger.info("Scheduler finished");
 	thread = null;
 }
