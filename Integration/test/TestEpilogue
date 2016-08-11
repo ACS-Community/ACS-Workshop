@@ -1,3 +1,4 @@
+#! /bin/bash
 kill $(ps auxf | grep java | grep org.hsqldb.Server | awk '{print $2}')
 
 acsutilTATEpilogue
