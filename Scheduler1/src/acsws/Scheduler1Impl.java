@@ -6,25 +6,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
+import acsws.DATABASE_MODULE.DataBase;
+import acsws.DATABASE_MODULE.DataBaseHelper;
+import acsws.INSTRUMENT_MODULE.Instrument;
+import acsws.INSTRUMENT_MODULE.InstrumentHelper;
 import acsws.SCHEDULER_MODULE.SchedulerOperations;
 import acsws.SYSTEMErr.ImageAlreadyStoredEx;
 import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
-import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.SYSTEMErr.NoProposalExecutingEx;
 import acsws.SYSTEMErr.PositionOutOfLimitsEx;
+import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.SYSTEMErr.SchedulerAlreadyRunningEx;
 import acsws.SYSTEMErr.SchedulerAlreadyStoppedEx;
-
-import acsws.DATABASE_MODULE.DataBase;
-import acsws.DATABASE_MODULE.DataBaseHelper;
-
-import acsws.INSTRUMENT_MODULE.Instrument;
-import acsws.INSTRUMENT_MODULE.InstrumentHelper;
-
 import acsws.TELESCOPE_MODULE.Telescope;
 import acsws.TELESCOPE_MODULE.TelescopeHelper;
-
-import acsws.TYPES.*;
+import acsws.TYPES.Position;
+import acsws.TYPES.Proposal;
+import acsws.TYPES.Target;
 
 import alma.ACS.ComponentStates;
 import alma.JavaContainerError.wrappers.AcsJContainerServicesEx;
@@ -55,8 +53,9 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 	private final AtomicBoolean isStarted = new AtomicBoolean(false);
 	private final AtomicBoolean isStopped = new AtomicBoolean(false);
 	
-	// Store the Proposal under execution ID
-	private final AtomicInteger proposalUnderExID = new AtomicInteger(-1);
+	// Store the Proposal under execution ID. -1 means no proposal under execution.
+	private static final int NO_PROPOSAL_UNDER_EX = -1;
+	private final AtomicInteger proposalUnderExID = new AtomicInteger(NO_PROPOSAL_UNDER_EX);
 	
 	/////////////////////////////////////////////////////////////
 	// Implementation of ComponentLifecycle
@@ -69,10 +68,18 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		m_logger.info("initialize() called...");
 	}
     
+	/*
+	 * (non-Javadoc)
+	 * @see alma.acs.component.ComponentLifecycle#execute()
+	 */
 	public void execute() {
 		m_logger.info("execute() called...");
 	}
     
+	/*
+	 * (non-Javadoc)
+	 * @see alma.acs.component.ComponentLifecycle#cleanUp()
+	 */
 	public void cleanUp() {
 		m_logger.info("cleanUp() called..., nothing to clean up.");
 		
@@ -86,6 +93,10 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		}
 	}
     
+	/*
+	 * (non-Javadoc)
+	 * @see alma.acs.component.ComponentLifecycle#aboutToAbort()
+	 */
 	public void aboutToAbort() {
 		cleanUp();
 		m_logger.info("managed to abort...");
@@ -100,6 +111,10 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		return m_containerServices.getComponentStateManager().getCurrentState();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see alma.ACS.ACSComponentOperations#name()
+	 */
 	public String name() {
 		return m_containerServices.getName();
 	}
@@ -117,7 +132,6 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
      * @return None
      */
 	public synchronized void start() throws SchedulerAlreadyRunningEx {
-		System.out.println("Scheduler1 inside start method");
 		m_logger.info("Scheduler1 inside start method");
 		
 		if(isStarted.get() == false) {
@@ -140,13 +154,13 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 						
 						Proposal[] proposalArr = databaseComp.getProposals();
 						if(proposalArr == null) {
-							throw new NullPointerException("Error: getProposals method returned null response");
+							throw new NullPointerException("Error: getProposals method returned a null response");
 						}
 						m_logger.info("Proposals length: " + proposalArr.length);
 						
 						for(int i=0; i<proposalArr.length; i++) {
 							// Initialize proposal under execution id
-							proposalUnderExID.set(-1);
+							proposalUnderExID.set(NO_PROPOSAL_UNDER_EX);
 							
 							if(isStopped.get() == false) {
 								m_logger.info("Proposal PID: " + proposalArr[i].pid);
@@ -176,7 +190,7 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 												m_logger.info("Target coordinates (EL): " + target.coordinates.el);
 												m_logger.info("Target expTime: " + target.expTime);
 												
-												// Call observe method from TELESCOPE Component
+												// Call observe methodself.component.proposalUnderExecution from TELESCOPE Component
 												m_logger.info("Calling observe method from TELESCOPE Component...");
 												byte[] image = telescopeComp.observe((Position)target.coordinates, (int)target.expTime);
 												
@@ -204,7 +218,7 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 										databaseComp.setProposalStatus(proposalArr[i].pid, 2);
 										
 										// Initialize proposal under execution id
-										proposalUnderExID.set(-1);
+										proposalUnderExID.set(NO_PROPOSAL_UNDER_EX);
 									} catch (InvalidProposalStatusTransitionEx e) {
 										m_logger.severe("Error trying to set proposal status, invalid proposal status " + e.getMessage());
 										m_logger.severe(getStackTraceFromException(e));
@@ -254,7 +268,6 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
      * @return None
      */
 	public synchronized void stop() throws SchedulerAlreadyStoppedEx {
-		System.out.println("Scheduler1 inside stop method");
 		m_logger.info("Scheduler1 inside stop method");
 		
 		if(isStopped.get() == false) {
@@ -274,10 +287,9 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
      * @return Proposal ID
      */
 	public synchronized int proposalUnderExecution() throws NoProposalExecutingEx {
-		System.out.println("Scheduler1 inside proposalUnderExecution method");
 		m_logger.info("Scheduler1 inside proposalUnderExecution method");
 		
-		if(proposalUnderExID.get() != -1) {
+		if(proposalUnderExID.get() != NO_PROPOSAL_UNDER_EX) {
 			m_logger.info("Proposal under execution: " + proposalUnderExID.get());
 			return proposalUnderExID.get();
 		} else {
@@ -287,9 +299,9 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 	}
 	
 	/**
-	 * A useful method for getting a string representation for the stacktrace
+	 * A useful method for getting a string representation for stack trace.
 	 * 
-	 * @return A String representation of the stacktrace
+	 * @return A String representation of the stack trace.
 	 */
 	private String getStackTraceFromException(Exception e) {
 		StringWriter sw = new StringWriter();

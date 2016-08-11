@@ -29,9 +29,9 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
    private Telescope telescope;
    private Instrument instrument;
    private Logger m_logger;
-   private String databaseName="DATABASE";
-   private String instrumentName="INSTRUMENT";
-   private String telescopeName="TELESCOPE";
+   private String IDLdatabaseName="IDL:acsws/DATABASE_MODULE/DataBase:1.0";
+   private String IDLinstrumentName="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0";
+   private String IDLtelescopeName="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0";
    private boolean running = false;
    private Thread sLoop;
    private int proposalUnderExec; 
@@ -45,19 +45,24 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
      
     try {
 
-      org.omg.CORBA.Object db = m_containerServices.getComponent(databaseName);
+      org.omg.CORBA.Object db = m_containerServices.getDefaultComponent(IDLdatabaseName);
       database = DataBaseHelper.narrow(db);
 
     
-      org.omg.CORBA.Object ins = m_containerServices.getComponent(instrumentName);
+      org.omg.CORBA.Object ins = m_containerServices.getDefaultComponent(IDLinstrumentName);
       instrument = InstrumentHelper.narrow(ins);
 
 
-      org.omg.CORBA.Object telesc = m_containerServices.getComponent(telescopeName);
+      org.omg.CORBA.Object telesc = m_containerServices.getDefaultComponent(IDLtelescopeName);
       telescope = TelescopeHelper.narrow(telesc);
     }
     catch (AcsJContainerServicesEx ex) {
-      m_logger.warning(ex.toString());
+
+     AcsJContainerServicesEx ex3 = new AcsJContainerServicesEx(ex);
+     m_logger.warning(ex3.toString());
+	
+
+
     }
 
 
@@ -71,9 +76,9 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
    }
    public void cleanUp() {
      m_logger.info("cleanUp() called..., nothing to clean up.");
-     m_containerServices.releaseComponent(databaseName);
-     m_containerServices.releaseComponent(instrumentName);
-     m_containerServices.releaseComponent(telescopeName);
+     m_containerServices.releaseComponent(IDLdatabaseName);
+     m_containerServices.releaseComponent(IDLinstrumentName);
+     m_containerServices.releaseComponent(IDLtelescopeName);
    }
    public void aboutToAbort() {
      cleanUp();
@@ -148,13 +153,17 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
 					
 					}
 				} catch (InvalidProposalStatusTransitionEx ex) {
-					m_logger.warning(ex.toString());
+                                        AcsJInvalidProposalStatusTransitionEx ex2 = new AcsJInvalidProposalStatusTransitionEx(ex);
+					ex2.log(m_logger);
 				} catch(ProposalDoesNotExistEx ex){
-					m_logger.warning(ex.toString());
+					AcsJProposalDoesNotExistEx ex2 = new AcsJProposalDoesNotExistEx(ex);
+					ex2.log(m_logger);
 				} catch (PositionOutOfLimitsEx ex) {
-					m_logger.warning(ex.toString());
+					AcsJPositionOutOfLimitsEx ex2 = new AcsJPositionOutOfLimitsEx(ex);
+					ex2.log(m_logger);
 				} catch (ImageAlreadyStoredEx ex) {
-					m_logger.warning(ex.toString());
+					AcsJImageAlreadyStoredEx ex2 = new AcsJImageAlreadyStoredEx(ex);
+					ex2.log(m_logger);
 				}
 
 				running = false;
