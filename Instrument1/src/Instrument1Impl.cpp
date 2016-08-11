@@ -4,10 +4,7 @@
 #endif
 
 #include <Instrument1.h>
-#include <ACSErrTypeCommon.h>
-#include <loggingACEMACROS.h>
-#include "SYSTEMErr.h"
-#include "CameraC.h"
+
 
     /**
      * Constructor
@@ -20,11 +17,19 @@
     Instrument1::Instrument1(
 	       const ACE_CString& name,
 	       maci::ContainerServices * containerServices):
-    ACSComponentImpl(name, containerServices)
+    		ACSComponentImpl(name, containerServices),
+		Camera(CAMERA_MODULE::Camera::_nil())
 {
-	//ACS_TRACE("::Instrument1::Instrument1");
-	//camara = CAMERA_MODULE::Camera::_nil();
-	//camara = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA")
+	status = 0; //CAMERA Logically OFF
+	try
+	{
+		Camera = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
+	}
+	catch(int e)
+	{
+		ACS_SHORT_LOG((LM_INFO, "Unable to get CAMERA component"));
+	}
+
 }
     
    /**
@@ -36,41 +41,101 @@
     
 	void Instrument1::cameraOn()
 	{
-	std::cout << "cameraOn OK" << std::endl;
-	
-	//	throw ACSErrTypeCommon::CouldntAccessComponentExImpl
-	//			   __FILE__, __LINE__,
-	//			   "ClientErrorComponent::testTypeException");	
+		if(status == 0)
+		{
+			status = 1;
+			ACS_SHORT_LOG((LM_INFO, "Camera is ON"));
+		}
+		else
+		{
+			ACS_SHORT_LOG((LM_INFO, "Camera already ON"));
+		}
+
 	}
 
 	void Instrument1::cameraOff ()
 	{
-		std::cout << "cameraOff OK" << std::endl;
-		ACS_SHORT_LOG((LM_INFO, "camera is off"));
+		if(status == 1)
+		{
+			status = 0;
+			ACS_SHORT_LOG((LM_INFO, "Camera is OFF"));
+		}
+		else
+		{
+			ACS_SHORT_LOG((LM_INFO, "Camera already OFF"));
+		}
 	}
 
 	TYPES::ImageType* Instrument1::takeImage(CORBA::Long exposureTime)
 	{	
-		//const char* expTime = (std::string("1/")+std::string(exposureTime)).c_str();
-		//const char* iso = "1/10";
-		//const char* iso = "100";	
+		std::ostringstream oss;
+		oss << exposureTime;
+		const char* expTime = oss.str().c_str();
 		
-		TYPES::ImageType* Image = new TYPES::ImageType(10);
-		/*CAMERA_MODULE::Camera_var Camera_component;
+		const char* iso = "400";		
 
-		Camera_component = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
+		TYPES::ImageType* Image = new TYPES::ImageType;
 		
-		Image = Camera_component->takeImage("1/10","100");*/
-		std::cout << "takeImage OK" << std::endl;
+		if (status == 1)
+		{
+			try
+			{
+				Image = Camera->takeImage(expTime,iso);	
+				ACS_SHORT_LOG((LM_INFO, "TakeImage is Ready"));
+			}
+		
+			catch(int e)
+			{
+				ACS_SHORT_LOG((LM_INFO, "Problem detected for takeImage"));
+			}
+		}
+		else
+		{
+			SYSTEMErr::CameraIsOffExImpl ex (__FILE__, __LINE__, "Instrument1::takeImage");
+			throw ex.getCameraIsOffEx();
+		}
+		
 		return Image;	
 	}
 
-	void Instrument1::setRGB (const TYPES::RGB & rgbConfig){}
+	void Instrument1::setRGB (const TYPES::RGB & rgbConfig)
+	{
+		if(status == 0)
+		{
+			SYSTEMErr::CameraIsOffExImpl ex (__FILE__, __LINE__, "Instrument1::setRGB");
+			throw ex.getCameraIsOffEx();
+		}
+		else
+		{
+			ACS_SHORT_LOG((LM_INFO, "setRGB is Ready"));
+		}
+	}
 
-	void Instrument1::setPixelBias (CORBA::Long bias){}
+	void Instrument1::setPixelBias (CORBA::Long bias)
+	{
+		if(status == 0)
+		{
+			SYSTEMErr::CameraIsOffExImpl ex (__FILE__, __LINE__, "Instrument1::setPixelBias");
+			throw ex.getCameraIsOffEx();
+		}
+		else
+		{
+			ACS_SHORT_LOG((LM_INFO, "setPixelBias is Ready"));
+		}
+	}
 
-	void Instrument1::setResetLevel (CORBA::Long resetLevel){}
-
+	void Instrument1::setResetLevel (CORBA::Long resetLevel)
+	{
+		if(status == 0)
+		{
+			SYSTEMErr::CameraIsOffExImpl ex (__FILE__, __LINE__, "Instrument1::setResetLevel");
+			throw ex.getCameraIsOffEx();
+		}
+		else
+		{
+			ACS_SHORT_LOG((LM_INFO, "setResetLevel is Ready"));
+		}
+	}
 	
 /*--------------- [ MACI DLL support functions] -------------------*/
 #include <maciACSComponentDefines.h>
