@@ -8,7 +8,8 @@ Telescope1::Telescope1(const ACE_CString& name,
 {
    ACS_TRACE("::Telescope1::Telescope1");
    cmount_p = TELESCOPE_MODULE::TelescopeControl::_nil();
-   cmount_p = getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
+   //cmount_p = getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
+   cmount_p = getContainerServices()->getDefaultComponent<TELESCOPE_MODULE::TelescopeControl>("IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0");
    
    if (CORBA::is_nil(cmount_p.in())){
         //TODO:: Throw an exception 
@@ -51,7 +52,8 @@ Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposure
         // Wait the telescope arrive to...
         this->waitOnSource(coordinates);
         // Observe
-        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
+        //INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
+        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getDefaultComponent<INSTRUMENT_MODULE::Instrument>("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
         s.str("");
         s << "Observing target for "  << exposureTime << " seconds"; 
         ss = s.str();
