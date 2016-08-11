@@ -55,8 +55,17 @@ Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposure
         s.str("");
         s << "Observing target for "  << exposureTime << " seconds"; 
         ss = s.str();
-        ACS_SHORT_LOG((LM_NOTICE,ss.c_str()))
-        ::TYPES::ImageType *my_image=inst_p->takeImage(exposureTime);
+        ACS_SHORT_LOG((LM_NOTICE,ss.c_str()));
+	::TYPES::ImageType *my_image=NULL;
+        try{
+        	my_image=inst_p->takeImage(exposureTime);
+        }
+        catch (::SYSTEMErr::CameraIsOffEx ex){
+                SYSTEMErr::CameraIsOffExImpl cex(ex);
+                cex.log();
+                ACS_SHORT_LOG((LM_ERROR,"Aborting... an returning empty image"));
+        	my_image=new ::TYPES::ImageType();
+	}
 	return my_image;
 }
 
