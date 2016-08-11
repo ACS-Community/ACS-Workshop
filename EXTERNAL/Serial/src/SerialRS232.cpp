@@ -153,7 +153,7 @@ void SerialRS232::write_RS232(const char * s) throw (SerialRS232Exception &)
 
 	if (write(m_port, m_buf, strlen(s)) != (int)(strlen(s)))
 		throw SerialRS232Exception("[SerialRS232::write_RS232] Error writing");
-	usleep(10000);
+	usleep(100000);
 }
 
 void SerialRS232::flush_RS232() throw (SerialRS232Exception &)
