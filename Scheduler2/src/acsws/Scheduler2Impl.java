@@ -54,6 +54,9 @@ public void initialize (ContainerServices containerServices) {
 		databaseComponente = DataBaseHelper.narrow(databaseObj);
 		instrumentComponente = InstrumentHelper.narrow(instrumentObj);
 		telescopeComponente = TelescopeHelper.narrow(telescopeObj);
+
+
+
 	} catch (AcsJContainerServicesEx e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -112,6 +115,23 @@ public int proposalUnderExecution() throws NoProposalExecutingEx{
 }
 
 public void run() {
+
+	try {
+		if (databaseComponente == null) {
+			throw new AcsJContainerServicesEx();
+		}
+		if (instrumentComponente == null) {
+			throw new AcsJContainerServicesEx();
+		}
+		if (telescopeComponente == null) {
+			throw new AcsJContainerServicesEx();
+		}
+	} catch (AcsJContainerServicesEx e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return;
+	}
+
 	byte[] image;
 	m_logger.info("Scheduler running");
 	proposals = databaseComponente.getProposals();

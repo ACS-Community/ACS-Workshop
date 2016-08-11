@@ -1,9 +1,13 @@
 package acsws;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 import acsws.SCHEDULER_MODULE.SchedulerOperations;
+import acsws.SYSTEMErr.ImageAlreadyStoredEx;
 import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.SYSTEMErr.NoProposalExecutingEx;
@@ -51,6 +55,9 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 	private final AtomicBoolean isStarted = new AtomicBoolean(false);
 	private final AtomicBoolean isStopped = new AtomicBoolean(false);
 	
+	// Store the Proposal under execution ID
+	private final AtomicInteger proposalUnderExID = new AtomicInteger(-1);
+	
 	/////////////////////////////////////////////////////////////
 	// Implementation of ComponentLifecycle
 	/////////////////////////////////////////////////////////////
@@ -75,8 +82,7 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 				schedulerThread.join();
 			}
 		} catch (InterruptedException e) {
-			m_logger.severe("Error trying to interrupt scheduler thread " + e.getMessage());
-			e.printStackTrace();
+			m_logger.severe("Error trying to interrupt scheduler thread " + e);
 		}
 	}
     
@@ -117,13 +123,12 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		if(isStarted.get() == false) {
 			Thread.UncaughtExceptionHandler threadExceptionHandler = new Thread.UncaughtExceptionHandler() {
 			    public void uncaughtException(Thread th, Throwable e) {
-			        m_logger.severe("Uncaught exception: " + e.getMessage());
-			        e.printStackTrace();
+			        m_logger.severe("Uncaught exception: " + e);
 			    }
 			};
 			
-			//schedulerThread = new Thread(new Runnable() {
-				//public void run() {
+			schedulerThread = new Thread(new Runnable() {
+				public void run() {
 					try {
 						// Set flags for processing proposals
 						isStarted.set(true);
@@ -135,26 +140,29 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 						
 						Proposal[] proposalArr = databaseComp.getProposals();
 						if(proposalArr == null) {
-							throw new NullPointerException("getProposals method returned null response");
+							throw new NullPointerException("Error: getProposals method returned null response");
 						}
 						m_logger.info("Proposals length: " + proposalArr.length);
 						
-						// TODO Doing all status to 0 (remover esta cochinada!!)
 						for(int i=0; i<proposalArr.length; i++) {
-							proposalArr[i].status = 0;
-						}
-						
-						for(int i=0; i<proposalArr.length; i++) {
+							// Initialize proposal under execution id
+							proposalUnderExID.set(-1);
+							
 							if(isStopped.get() == false) {
 								m_logger.info("Proposal PID: " + proposalArr[i].pid);
 								m_logger.info("Proposal status: " + proposalArr[i].status);
 								
 								if(proposalArr[i].status == 0) {
 									try {
+										// Storing current proposal under execution id
+										proposalUnderExID.set(proposalArr[i].pid);
+										
 										// Setting proposal to running
+										m_logger.info("Setting proposal to running...");
 										databaseComp.setProposalStatus(proposalArr[i].pid, 1);
 										
 										// Turn on Camera
+										m_logger.info("Turning on camera...");
 										intrumentComp.cameraOn();
 										
 										// Now observe
@@ -168,19 +176,41 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 												m_logger.info("Target coordinates (EL): " + target.coordinates.el);
 												m_logger.info("Target expTime: " + target.expTime);
 												
+												// Call observe method from TELESCOPE Component
+												m_logger.info("Calling observe method from TELESCOPE Component...");
 												byte[] image = telescopeComp.observe((Position)target.coordinates, (int)target.expTime);
 												
-											} catch (PositionOutOfLimitsEx e) {
-												m_logger.severe("Error trying to observe, position out of limit " + e.getMessage());
-												e.printStackTrace();
+												// Store the image
+												m_logger.info("Calling storeImage method from DATABASE Component...");
+												databaseComp.storeImage(proposalArr[i].pid, target.tid, image);
+											} catch (PositionOutOfLimitsEx pole) {
+												m_logger.severe("Error trying to observe, position out of limit " + pole.getMessage());
+												m_logger.severe(getStackTraceFromException(pole));
+											} catch (ImageAlreadyStoredEx iase) {
+												m_logger.severe("Error trying to store image, image already stored " + iase.getMessage());
+												m_logger.severe(getStackTraceFromException(iase));
+											} catch(ProposalDoesNotExistEx pdee) {
+												m_logger.severe("Error trying to store image, proposal doesn't exist " + pdee.getMessage());
+												m_logger.severe(getStackTraceFromException(pdee));
 											}
 										}
+										
+										// Turn off Camera
+										m_logger.info("Turning off camera...");
+										intrumentComp.cameraOff();
+										
+										// Setting proposal to ready
+										m_logger.info("Setting proposal to ready...");
+										databaseComp.setProposalStatus(proposalArr[i].pid, 2);
+										
+										// Initialize proposal under execution id
+										proposalUnderExID.set(-1);
 									} catch (InvalidProposalStatusTransitionEx e) {
 										m_logger.severe("Error trying to set proposal status, invalid proposal status " + e.getMessage());
-										e.printStackTrace();
+										m_logger.severe(getStackTraceFromException(e));
 									} catch (ProposalDoesNotExistEx e) {
 										m_logger.severe("Error trying to set proposal status, proposal doesn't exist " + e.getMessage());
-										e.printStackTrace();
+										m_logger.severe(getStackTraceFromException(e));
 									}
 								}
 							} else {
@@ -189,22 +219,26 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 								break;
 							}
 						}
+						
+						// Set flags for processing proposals
+						isStarted.set(false);
+						isStopped.set(true);
 					} catch (AcsJContainerServicesEx ae) {
-						m_logger.severe("Error in start method while getting proposals " + ae.getMessage());
-						ae.printStackTrace();
+						m_logger.severe("Error in start method while getting proposals " + ae);
+						m_logger.severe(getStackTraceFromException(ae));
 					} catch (Exception e) {
-						m_logger.severe("A exception happening while trying to start proposals " + e.getMessage());
-						e.printStackTrace();
+						m_logger.severe("A exception happening while trying to start proposals " + e);
+						m_logger.severe(getStackTraceFromException(e));
 					}
-				//}
-			//});
+				}
+			});
 			
-			//m_logger.info("Starting scheduler thread...");
-			//schedulerThread.setUncaughtExceptionHandler(threadExceptionHandler);
-			//schedulerThread.start();
+			m_logger.info("Starting scheduler thread...");
+			schedulerThread.setUncaughtExceptionHandler(threadExceptionHandler);
+			schedulerThread.start();
 		} else {
-			m_logger.severe("Start method was already called");
-			throw new SchedulerAlreadyRunningEx("Start method was already called", null);
+			m_logger.severe("Error: Start method was already called");
+			throw new SchedulerAlreadyRunningEx();
 		}
 	}
 	
@@ -227,8 +261,8 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 			// Set flags for stopping proposals
 			isStopped.set(true);
 		} else {
-			m_logger.severe("Stop method was already called");
-			throw new SchedulerAlreadyStoppedEx("Stop method was already called", null);
+			m_logger.severe("Error: Stop method was already called");
+			throw new SchedulerAlreadyStoppedEx();
 		}
 	}
 	
@@ -243,6 +277,23 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		System.out.println("Scheduler1 inside proposalUnderExecution method");
 		m_logger.info("Scheduler1 inside proposalUnderExecution method");
 		
-		return 0;
+		if(proposalUnderExID.get() != -1) {
+			m_logger.info("Proposal under execution: " + proposalUnderExID.get());
+			return proposalUnderExID.get();
+		} else {
+			m_logger.severe("Error: No proposal under execution");
+			throw new NoProposalExecutingEx();
+		}
+	}
+	
+	/**
+	 * A useful method for getting a string representation for the stacktrace
+	 * 
+	 * @return A String representation of the stacktrace
+	 */
+	private String getStackTraceFromException(Exception e) {
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		return sw.toString();
 	}
 }

@@ -31,9 +31,9 @@ class TestScheduler(unittest.TestCase):
     self.component.stop()
   
   def test_proposal_under_execution(self):
-    print "Testing stop method"
+    print "Testing proposalUnderExecution method"
     proposal = self.component.proposalUnderExecution()
-    self.assertEqual(proposal, 0)
+    self.assertEqual(proposal, -1)
 
 if __name__ == '__main__':
     unittest.main()
