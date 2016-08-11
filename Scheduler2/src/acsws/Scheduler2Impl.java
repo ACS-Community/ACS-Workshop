@@ -178,9 +178,14 @@ public void run() {
 			
 		m_logger.info("Proposal finished");
 		}
-		if(!run)
+		
+		if(!run){
+			thisProposal=null;
 			break;
+		}
+			
 	}
+	thisProposal=null;
 	m_logger.info("Scheduler finished");
 	thread = null;
 }
