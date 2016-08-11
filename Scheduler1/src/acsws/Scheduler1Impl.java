@@ -18,6 +18,9 @@ import acsws.SYSTEMErr.PositionOutOfLimitsEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.SYSTEMErr.SchedulerAlreadyRunningEx;
 import acsws.SYSTEMErr.SchedulerAlreadyStoppedEx;
+import acsws.SYSTEMErr.wrappers.AcsJNoProposalExecutingEx;
+import acsws.SYSTEMErr.wrappers.AcsJSchedulerAlreadyRunningEx;
+import acsws.SYSTEMErr.wrappers.AcsJSchedulerAlreadyStoppedEx;
 import acsws.TELESCOPE_MODULE.Telescope;
 import acsws.TELESCOPE_MODULE.TelescopeHelper;
 import acsws.TYPES.Position;
@@ -41,15 +44,19 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 	private ContainerServices m_containerServices;
 	private Logger m_logger;
 	
+	// Constants for component names, these names have to match with the CDB definition
+	private static final String DATABASE_COMPONENT_NAME = "IDL:acsws/DATABASE_MODULE/DataBase:1.0";
+	private static final String INSTRUMENT_COMPONENT_NAME = "IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0";
+	private static final String TELESCOPE_COMPONENT_NAME = "IDL:acsws/TELESCOPE_MODULE/Telescope:1.0";
+	
+	private DataBase databaseComp = null;
+	private Instrument intrumentComp = null;
+	private Telescope telescopeComp = null;
+	
 	// A thread to avoid hang Corba with many proposals
 	private Thread schedulerThread = null;
 	
-	// Constants for component names, these names have to match with the CDB definition
-	private static final String DATABASE_COMPONENT_NAME = "DATABASE";
-	private static final String INSTRUMENT_COMPONENT_NAME = "INSTRUMENT";
-	private static final String TELESCOPE_COMPONENT_NAME = "TELESCOPE";
-	
-	// Flags for checking if start ot stop methods were called
+	// Flags for checking if start or stop methods were called
 	private final AtomicBoolean isStarted = new AtomicBoolean(false);
 	private final AtomicBoolean isStopped = new AtomicBoolean(false);
 	
@@ -66,6 +73,15 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		m_logger = m_containerServices.getLogger();
 		
 		m_logger.info("initialize() called...");
+		
+		try {
+			databaseComp = DataBaseHelper.narrow(m_containerServices.getDefaultComponent(DATABASE_COMPONENT_NAME));
+			intrumentComp = InstrumentHelper.narrow(m_containerServices.getDefaultComponent(INSTRUMENT_COMPONENT_NAME));
+			telescopeComp = TelescopeHelper.narrow(m_containerServices.getDefaultComponent(TELESCOPE_COMPONENT_NAME));
+		} catch (AcsJContainerServicesEx e) {
+			m_logger.severe("Error trying to get components " + e);
+			m_logger.severe(getStackTraceFromException(e));
+		}
 	}
     
 	/*
@@ -81,7 +97,7 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 	 * @see alma.acs.component.ComponentLifecycle#cleanUp()
 	 */
 	public void cleanUp() {
-		m_logger.info("cleanUp() called..., nothing to clean up.");
+		m_logger.info("cleanUp() called...");
 		
 		// While until the custom thread stop the execution
 		try {
@@ -91,6 +107,10 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		} catch (InterruptedException e) {
 			m_logger.severe("Error trying to interrupt scheduler thread " + e);
 		}
+		
+		m_containerServices.releaseComponent(databaseComp.name());
+		m_containerServices.releaseComponent(intrumentComp.name());
+		m_containerServices.releaseComponent(telescopeComp.name());
 	}
     
 	/*
@@ -148,16 +168,13 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 						isStarted.set(true);
 						isStopped.set(false);
 						
-						DataBase databaseComp = DataBaseHelper.narrow(m_containerServices.getComponent(DATABASE_COMPONENT_NAME));
-						Instrument intrumentComp = InstrumentHelper.narrow(m_containerServices.getComponent(INSTRUMENT_COMPONENT_NAME));
-						Telescope telescopeComp = TelescopeHelper.narrow(m_containerServices.getComponent(TELESCOPE_COMPONENT_NAME));
-						
 						Proposal[] proposalArr = databaseComp.getProposals();
 						if(proposalArr == null) {
 							throw new NullPointerException("Error: getProposals method returned a null response");
 						}
 						m_logger.info("Proposals length: " + proposalArr.length);
 						
+						//for(Proposal proposal: proposalArr) {//no valid for current java version
 						for(int i=0; i<proposalArr.length; i++) {
 							// Initialize proposal under execution id
 							proposalUnderExID.set(NO_PROPOSAL_UNDER_EX);
@@ -237,9 +254,6 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 						// Set flags for processing proposals
 						isStarted.set(false);
 						isStopped.set(true);
-					} catch (AcsJContainerServicesEx ae) {
-						m_logger.severe("Error in start method while getting proposals " + ae);
-						m_logger.severe(getStackTraceFromException(ae));
 					} catch (Exception e) {
 						m_logger.severe("A exception happening while trying to start proposals " + e);
 						m_logger.severe(getStackTraceFromException(e));
@@ -252,7 +266,9 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 			schedulerThread.start();
 		} else {
 			m_logger.severe("Error: Start method was already called");
-			throw new SchedulerAlreadyRunningEx();
+			AcsJSchedulerAlreadyRunningEx ex = new AcsJSchedulerAlreadyRunningEx();
+			ex.log(m_logger);
+			throw ex.toSchedulerAlreadyRunningEx();
 		}
 	}
 	
@@ -275,7 +291,9 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 			isStopped.set(true);
 		} else {
 			m_logger.severe("Error: Stop method was already called");
-			throw new SchedulerAlreadyStoppedEx();
+			AcsJSchedulerAlreadyStoppedEx ex = new AcsJSchedulerAlreadyStoppedEx();
+			ex.log(m_logger);
+			throw ex.toSchedulerAlreadyStoppedEx();
 		}
 	}
 	
@@ -294,7 +312,9 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 			return proposalUnderExID.get();
 		} else {
 			m_logger.severe("Error: No proposal under execution");
-			throw new NoProposalExecutingEx();
+			AcsJNoProposalExecutingEx ex = new AcsJNoProposalExecutingEx();
+			ex.log(m_logger);
+			throw ex.toNoProposalExecutingEx();
 		}
 	}
 	

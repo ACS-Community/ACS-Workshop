@@ -3,54 +3,47 @@
        xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
        xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <_ Name="DATABASE" 	    
-         Code="DataBaseImpl" 
+<!-- First alloment of programmed components -->
+      <_ Name="CONSOLE1"
+         Code="Console1_test"
+         Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
+         Container="pyContainer"
+	 Default="true"
+         ImplLang="py"/>
+      <_ Name="DATABASESIM"
+         Code="Acssim.Servants.Simulator"
          Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
-         Container="toyContainer" ImplLang="cpp" />
-      <_ Name="SCHEDULER" 	    
-         Code="SchedulerImpl" 
+	 Default="true"
+         Container="pyContainer" ImplLang="py" />
+      <_ Name="SCHEDULER1" 	    
+         Code="acsws.Scheduler1Helper" 
          Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
-         Container="toyContainer" ImplLang="cpp" />
-      <_ Name="TELESCOPE" 	    
-         Code="TelescopeImpl" 
+	 Default="true"
+         Container="javaContainer" ImplLang="java" />
+      <_ Name="TELESCOPE1" 	    
+         Code="Telescope1Impl" 
          Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
-         Container="toyContainer" ImplLang="cpp" />
-      <_ Name="INSTRUMENT" 	    
-         Code="InstrumentImpl" 
+	 Default="true"
+         Container="cppContainer" ImplLang="cpp" />
+      <_ Name="INSTRUMENT1" 	    
+         Code="Instrument1" 
          Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
-         Container="toyContainer" ImplLang="cpp" />
-      <_ Name="CAMERA" 	    
-         Code="CameraImpl" 
-         Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
-         Container="toyContainer" ImplLang="cpp" />
+	 Default="true"
+         Container="cppContainer" ImplLang="cpp" />
+<!-- EXTERNAL -->
+      <_ Name="CAMERA"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/CAMERA_MODULE/Camera:1.0"
+	 Default="true"
+         Container="pyContainer" ImplLang="py" />
       <_ Name="MOUNT"
-         Code="MOUNT2"
-         Type="IDL:acsws/TelescopeControl/TelescopeControl:1.0"
-         Container="toyContainer" ImplLang="cpp" />
-<!--
-      <_ Name="DATABASE" 	    
-         Code="DataBaseImpl" 
-         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
-         Container="dToyContainer" ImplLang="cpp" />
-      <_ Name="SCHEDULER" 	    
-         Code="SchedulerImpl" 
-         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
-         Container="sToyContainer" ImplLang="cpp" />
-      <_ Name="TELESCOPE" 	    
-         Code="TelescopeImpl" 
-         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
-         Container="tToyContainer" ImplLang="cpp" />
-      <_ Name="INSTRUMENT" 	    
-         Code="InstrumentImpl" 
-         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
-         Container="iToyContainer" ImplLang="cpp" />
-      <_ Name="CAMERA" 	    
-         Code="CameraImpl" 
-         Type="IDL:acsws/INSTRUMENT_MODULE/Camera:1.0"
-         Container="iToyContainer" ImplLang="cpp" />
-      <_ Name="MOUNT"
-         Code="MOUNT2"
-         Type="IDL:acsws/TelescopeControl/TelescopeControl:1.0"
-         Container="tToyContainer" ImplLang="cpp" />
--->
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0"
+	 Default="true"
+         Container="pyContainer" ImplLang="py" />
+      <_ Name="STORAGE"
+         Code="acsws.uos.database.StorageHelper"
+         Type="IDL:acsws/STORAGE_MODULE/Storage:1.0"
+         Container="mJavaToyContainer" ImplLang="java"/>
+
 </Components>
