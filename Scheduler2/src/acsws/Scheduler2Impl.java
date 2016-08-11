@@ -148,7 +148,7 @@ public void run() {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			run = false;
-		} catch (FileNotFoundException e) {
+		}/* catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			run = false;
@@ -156,7 +156,7 @@ public void run() {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			run = false;
-		}
+		}*/
 			
 		m_logger.info("Proposal finished");
 		}
