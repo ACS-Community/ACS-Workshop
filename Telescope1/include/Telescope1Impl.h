@@ -57,7 +57,7 @@
 
 #define SLEEP_TIME 100000  // in usec
 #define TIME_OUT 120 // in sec
-
+#define ON_SOURCE_TIME 500000 //in usec
 
 /**
  * This class shows how to make an ACS Hello World component.
