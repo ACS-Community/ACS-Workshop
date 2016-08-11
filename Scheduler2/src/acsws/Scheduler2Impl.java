@@ -90,6 +90,7 @@ public void start() throws SchedulerAlreadyRunningEx {
 		thread = new Thread (this, "Scheduler");
 		thread.start();
 	} else {
+		m_logger.severe("Scheduler already running.");
 		throw new SchedulerAlreadyRunningEx();
 	}
 }
@@ -102,15 +103,12 @@ public void stop() {
 }
 
 public int proposalUnderExecution() throws NoProposalExecutingEx{
+	
+	if (thisProposal==null || !run) {
+		m_logger.severe("No proposal executing.");
+		throw new NoProposalExecutingEx();
+	}
 	m_logger.info("Excecuting proposal");
-	if (thisProposal==null){
-		throw new NoProposalExecutingEx();
-	}
-	
-	if (!run) {
-		throw new NoProposalExecutingEx();
-	}
-	
 	return thisProposal.pid;
 }
 
