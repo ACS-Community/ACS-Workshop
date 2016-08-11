@@ -9,7 +9,13 @@
 #include <InstrumentS.h>
 #include <TypesC.h>
 #include <SYSTEMErr.h>
+#include <CameraC.h>
+#include <ACSErrTypeCommon.h>
+#include <loggingACEMACROS.h>
+#include <stdlib.h>
+#include <sstream>
  
+
 class Instrument1: public virtual acscomponent::ACSComponentImpl,     //Component superclass
 		  public POA_INSTRUMENT_MODULE::Instrument    //CORBA servant stub
 {    
@@ -48,6 +54,9 @@ class Instrument1: public virtual acscomponent::ACSComponentImpl,     //Componen
 
 	virtual void setResetLevel (CORBA::Long resetLevel);
 		//raises(SYSTEMErr::CameraIsOffEx);
+private:
+	CAMERA_MODULE::Camera_var Camera;
+	int status;
 };
 /*\@}*/
 /*\@}*/

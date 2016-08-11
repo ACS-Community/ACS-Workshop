@@ -8,7 +8,8 @@ Telescope1::Telescope1(const ACE_CString& name,
 {
    ACS_TRACE("::Telescope1::Telescope1");
    cmount_p = TELESCOPE_MODULE::TelescopeControl::_nil();
-   cmount_p = getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
+   //cmount_p = getContainerServices()->getComponent<TELESCOPE_MODULE::TelescopeControl>("MOUNT");
+   cmount_p = getContainerServices()->getDefaultComponent<TELESCOPE_MODULE::TelescopeControl>("IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0");
    
    if (CORBA::is_nil(cmount_p.in())){
         //TODO:: Throw an exception 
@@ -35,11 +36,6 @@ Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposure
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
 		throw error;
 	}
-	if(coordinates.el > 220 || coordinates.el < -220){
-		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent cable damage."));
-		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
-		throw error;	
-	}	
 	if(coordinates.el < 0){
 		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent brain damage."));
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
@@ -56,12 +52,22 @@ Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposure
         // Wait the telescope arrive to...
         this->waitOnSource(coordinates);
         // Observe
-        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT2");
+        //INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getComponent<INSTRUMENT_MODULE::Instrument>("INSTRUMENT");
+        INSTRUMENT_MODULE::Instrument_var inst_p = getContainerServices()->getDefaultComponent<INSTRUMENT_MODULE::Instrument>("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
         s.str("");
         s << "Observing target for "  << exposureTime << " seconds"; 
         ss = s.str();
-        ACS_SHORT_LOG((LM_NOTICE,ss.c_str()))
-        ::TYPES::ImageType *my_image=inst_p->takeImage(exposureTime);
+        ACS_SHORT_LOG((LM_NOTICE,ss.c_str()));
+	::TYPES::ImageType *my_image=NULL;
+        try{
+        	my_image=inst_p->takeImage(exposureTime);
+        }
+        catch (::SYSTEMErr::CameraIsOffEx ex){
+                SYSTEMErr::CameraIsOffExImpl cex(ex);
+                cex.log();
+                ACS_SHORT_LOG((LM_ERROR,"Aborting... an returning empty image"));
+        	my_image=new ::TYPES::ImageType();
+	}
 	return my_image;
 }
 
@@ -73,8 +79,9 @@ Telescope1::waitOnSource(const ::TYPES::Position & coord){
         time_t init=time(NULL);
         while (!on_source){
              cpos=this->getCurrentPosition();
-             if(abs(cpos.el - coord.el) < 0.5 && abs(cpos.az - coord.az) < 0.5)
+             if(abs(cpos.el - coord.el) < 0.2 && abs(cpos.az - coord.az) < 0.2){
 		on_source=true;
+	   }
              else{
                 usleep(SLEEP_TIME);
                 std::stringstream s;
@@ -91,6 +98,7 @@ Telescope1::waitOnSource(const ::TYPES::Position & coord){
 	     }
                 
 	}
+	usleep(ON_SOURCE_TIME);
 }
 
 void 
@@ -103,11 +111,6 @@ Telescope1::moveTo(const ::TYPES::Position & coordinates) throw (SYSTEMErr::Posi
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
 		throw error;
 	}
-	if(coordinates.el > 220 || coordinates.el < -220){
-		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent cable damage."));
-		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
-		throw error;	
-	}	
 	if(coordinates.el < 0){
 		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent brain damage."));
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
@@ -126,6 +129,8 @@ Telescope1::moveTo(const ::TYPES::Position & coordinates) throw (SYSTEMErr::Posi
 
 ::TYPES::Position 
 Telescope1::getCurrentPosition(void){
+	std::stringstream s;
+
         ACS_TRACE("::Telescope1::getCurrentPosition");
         ACSErr::Completion *comp = new ACSErr::Completion();
         ::TYPES::Position retval;
@@ -133,6 +138,11 @@ Telescope1::getCurrentPosition(void){
         ::ACS::ROdouble_ptr a_azi_p=cmount_p->actualAzimuth();
         retval.el = a_alt_p->get_sync(comp);
         retval.az = a_azi_p->get_sync(comp);
+
+        s << "Telescope position succesfully retrieved: "  << retval.az << "," << retval.el;
+        std::string ss;
+        ss = s.str();
+	ACS_SHORT_LOG((LM_INFO, ss.c_str()));
         return retval;
 }
 
