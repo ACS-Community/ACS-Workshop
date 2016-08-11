@@ -126,10 +126,13 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
 		sLoop = new Thread(){
 			public void run(){
 
-				Proposal[] proposals = database.getProposals();
+			
 				byte[] image; 
 
 				try {
+			
+				Proposal[] proposals = database.getProposals();
+
 
 					for (Proposal p: proposals){
 					
