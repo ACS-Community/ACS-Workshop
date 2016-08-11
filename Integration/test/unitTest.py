@@ -5,6 +5,7 @@ from SCHEDULER_MODULE import *
 from Acspy.Clients.SimpleClient import PySimpleClient
 from SYSTEMErr import *
 import time
+import xmlrunner
 
 class IntegrationTest(unittest.TestCase):
     def setUp(self):
@@ -283,5 +284,6 @@ class IntegrationTest(unittest.TestCase):
 #    def testConsole(self):
 #        pass
 
-if __name__ == "__main__":
-    unittest.main()
+if __name__ == '__main__':
+    import xmlrunner
+    unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports'))
