@@ -57,7 +57,12 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
       telescope = TelescopeHelper.narrow(telesc);
     }
     catch (AcsJContainerServicesEx ex) {
-      m_logger.warning(ex.toString());
+
+     AcsJContainerServicesEx ex3 = new AcsJContainerServicesEx(ex);
+     m_logger.warning(ex3.toString());
+	
+
+
     }
 
 
@@ -148,13 +153,17 @@ public class SchedulerImpl implements ComponentLifecycle, SchedulerOperations {
 					
 					}
 				} catch (InvalidProposalStatusTransitionEx ex) {
-					m_logger.warning(ex.toString());
+                                        AcsJInvalidProposalStatusTransitionEx ex2 = new AcsJInvalidProposalStatusTransitionEx(ex);
+					ex2.log(m_logger);
 				} catch(ProposalDoesNotExistEx ex){
-					m_logger.warning(ex.toString());
+					AcsJProposalDoesNotExistEx ex2 = new AcsJProposalDoesNotExistEx(ex);
+					ex2.log(m_logger);
 				} catch (PositionOutOfLimitsEx ex) {
-					m_logger.warning(ex.toString());
+					AcsJPositionOutOfLimitsEx ex2 = new AcsJPositionOutOfLimitsEx(ex);
+					ex2.log(m_logger);
 				} catch (ImageAlreadyStoredEx ex) {
-					m_logger.warning(ex.toString());
+					AcsJImageAlreadyStoredEx ex2 = new AcsJImageAlreadyStoredEx(ex);
+					ex2.log(m_logger);
 				}
 
 				running = false;
