@@ -1,0 +1,59 @@
+<SimulatedComponent xmlns="urn:schemas-cosylab-com:SimulatedComponent:1.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <_corbaMethod Name="initialize"
+           Timeout="0">
+global cameraStatus
+cameraStatus=False
+  </_corbaMethod>
+  <_corbaMethod Name="cameraOn"
+           Timeout="0">
+global cameraStatus
+print cameraStatus
+cameraStatus=True
+print "The CAMERA is now ON"
+  </_corbaMethod>
+  <_corbaMethod Name="cameraOff"
+           Timeout="0">
+global cameraStatus
+print cameraStatus
+cameraStatus=False
+print "The CAMERA is now OFF"
+  </_corbaMethod>
+  <_corbaMethod Name="takeImage"
+           Timeout="0">
+from SYSTEMErrImpl import CameraIsOffExImpl
+print "Taking an image with the CAMERA"
+global cameraStatus
+print cameraStatus
+if not cameraStatus:
+    raise CameraIsOffExImpl()
+return b'gfdreresfdstrtesdsfeqqqaafe'
+  </_corbaMethod>
+  <_corbaMethod Name="setRGB"
+           Timeout="0">
+print "Setting RGB on the CAMERA"
+from SYSTEMErrImpl import CameraIsOffExImpl
+global cameraStatus
+print cameraStatus
+if not cameraStatus:
+    raise CameraIsOffExImpl()
+  </_corbaMethod>
+  <_corbaMethod Name="setPixelBias"
+           Timeout="0">
+print "Setting PixelBias on the CAMERA"
+from SYSTEMErrImpl import CameraIsOffExImpl
+global cameraStatus
+print cameraStatus
+if not cameraStatus:
+    raise CameraIsOffExImpl()
+  </_corbaMethod>
+  <_corbaMethod Name="setResetLevel"
+           Timeout="0">
+print "Setting Level on the CAMERA"
+from SYSTEMErrImpl import CameraIsOffExImpl
+global cameraStatus
+print cameraStatus
+if not cameraStatus:
+    raise CameraIsOffExImpl()
+  </_corbaMethod>
+</SimulatedComponent>

@@ -45,9 +45,16 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		#self.releaseComponent("LAMP1")
 
 	def setMode(self, *args):
+		
 		#self.getLogger().logDebug("CONSOLE 2 SET_MODE ACCESS")
 		self.Mode = args[0]
-		self.getLogger().logDebug("MODE IS: "+str(self.Mode))
+		if (self.Mode):
+			self.scheduler.start()
+			self.getLogger().logDebug("Atomatic Mode")
+    		else:
+			self.scheduler.stop()
+			self.getLogger().logDebug("Manual Mode")
+
 		pass
 		
 	def getMode(self, *args):
