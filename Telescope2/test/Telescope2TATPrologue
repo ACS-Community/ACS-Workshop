@@ -1,0 +1,3 @@
+#! /bin/bash
+OLD_CDB=$ACS_CDB
+ACS_CDB=../tes

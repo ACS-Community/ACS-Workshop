@@ -12,7 +12,7 @@ from Acspy.Servants.ACSComponent import ACSComponent
 import SYSTEMErr
 import SYSTEMErrImpl
 from SYSTEMErrImpl import SystemInAutoModeExImpl
-from SYSTEMErrImpl import PositionOutOfLimits
+from SYSTEMErrImpl import PositionOutOfLimitsExImpl
 
 class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLifecycle, ACSComponent):
 
@@ -122,7 +122,7 @@ class Console2_test(CONSOLE_MODULE__POA.Console, ContainerServices, ComponentLif
 		else:			
 			if(args[0].az > self.azMax or args[0].el > self.elMax):
 				self.getLogger().logError("INVALID NUMBER")
-				ex2 = PositionOutOfLimits()
+				ex2 = PositionOutOfLimitsExImpl()
                         	ex2.log(self.getLogger())
 				raise ex2
 				
