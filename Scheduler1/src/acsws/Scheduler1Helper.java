@@ -15,20 +15,36 @@ import  acsws.SCHEDULER_MODULE.SchedulerPOATie;
   * Name="SCHEDULER1" Code="acsws.SchedulerHelper" 
   * Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0" Container="frodoContainer"
   * Default="true" ImplLang="java"
+  * 
+  * @author Exequiel Fuentes
+  * @author Juan Carlos Olivares
+  * @author Pablo Valenzuela
   */
 public class Scheduler1Helper extends ComponentHelper {
 	public Scheduler1Helper(Logger containerLogger) {
 		super(containerLogger);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see alma.acs.container.ComponentHelper#_createComponentImpl()
+	 */
 	protected ComponentLifecycle _createComponentImpl() {
 		return new Scheduler1Impl();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see alma.acs.container.ComponentHelper#_getPOATieClass()
+	 */
 	protected Class _getPOATieClass() {
 		return SchedulerPOATie.class;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see alma.acs.container.ComponentHelper#_getOperationsInterface()
+	 */
 	protected Class _getOperationsInterface() {
 		return SchedulerOperations.class;
 	}

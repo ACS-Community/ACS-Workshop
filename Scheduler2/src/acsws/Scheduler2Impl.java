@@ -12,6 +12,7 @@ import acsws.SYSTEMErr.NoProposalExecutingEx;
 import acsws.SYSTEMErr.PositionOutOfLimitsEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.SYSTEMErr.SchedulerAlreadyRunningEx;
+import acsws.SYSTEMErr.SchedulerAlreadyStoppedEx;
 import acsws.TELESCOPE_MODULE.Telescope;
 import acsws.TELESCOPE_MODULE.TelescopeHelper;
 import acsws.TYPES.Proposal;
@@ -90,27 +91,30 @@ public void start() throws SchedulerAlreadyRunningEx {
 		thread = new Thread (this, "Scheduler");
 		thread.start();
 	} else {
+		m_logger.severe("Scheduler already running.");
 		throw new SchedulerAlreadyRunningEx();
 	}
 }
 
-public void stop() {
-	m_logger.info("Scheduler stopped");
+public void stop() throws SchedulerAlreadyStoppedEx {
+	
 	if (thread != null) {
+		m_logger.info("Scheduler stopped");
 		run = false;
+	} else {
+		m_logger.severe("Scheduler already stopped.");
+		throw new SchedulerAlreadyStoppedEx();
 	}
+	
 }
 
 public int proposalUnderExecution() throws NoProposalExecutingEx{
+	
+	if (thisProposal==null || !run) {
+		m_logger.severe("No proposal executing.");
+		throw new NoProposalExecutingEx();
+	}
 	m_logger.info("Excecuting proposal");
-	if (thisProposal==null){
-		throw new NoProposalExecutingEx();
-	}
-	
-	if (!run) {
-		throw new NoProposalExecutingEx();
-	}
-	
 	return thisProposal.pid;
 }
 
@@ -149,6 +153,12 @@ public void run() {
 				//stream.write(image);
 				//stream.close();
 				databaseComponente.storeImage(thisProposal.pid, thisProposal.targets[j].tid, image);
+				if(!run){
+					instrumentComponente.cameraOff();
+					databaseComponente.setProposalStatus(thisProposal.pid, 0);
+					thisProposal=null;
+					break;
+				}
 			}
 			instrumentComponente.cameraOff();
 			databaseComponente.setProposalStatus(thisProposal.pid, 2);
@@ -180,9 +190,11 @@ public void run() {
 			
 		m_logger.info("Proposal finished");
 		}
-		if(!run)
-			break;
+		
+		
+			
 	}
+	thisProposal=null;
 	m_logger.info("Scheduler finished");
 	thread = null;
 }
