@@ -1,7 +1,11 @@
 package acsws.Database2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.hibernate.type.ImageType;
 
 import acsws.DATABASE_MODULE.DataBase;
 import acsws.DATABASE_MODULE.DataBaseHelper;
@@ -36,6 +40,10 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	int STATUS_INITIAL_PROPOSAL = 0;
 	int STATUS_NO_SUCH_PROPOSAL = -999;
 	List<Proposal> proposalList = new ArrayList<Proposal>();
+	byte[][] imageList; 
+	int[][][] map;
+	int image_cnt = 0;
+	
 	
 	public String name() {
 		// TODO Auto-generated method stub
@@ -57,7 +65,8 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		proposal.pid = pid_cnt + 1; 
 		proposal.status = STATUS_INITIAL_PROPOSAL;
 		proposalList.add(proposal);
-		
+		imageList = new byte[targets.length][];
+		map = new int[targets.length][targets.length][targets.length];
 		return proposal.pid;
 	}
 
@@ -153,14 +162,33 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
-				//ImageAlreadyStoredEx
+				if (pro.status == 1){
+					for (Target targetList : pro.targets ) {
+						if(targetList.tid == tid){
+							// Revisar si tid ya tiene imagen
+							for (int j = 0; j < pro.targets.length ; j++ ){
+								if (map[pid][tid][j] == 0 ) {
+									// Store locally or in memory
+									imageList[image_cnt] = new byte[image.length];
+									image_cnt++;
+									map[pid][tid][j] = 1;
+									break;
+								}
+							}
+							m_logger.info("ImageAlreadyStoredEx");
+							throw new ImageAlreadyStoredEx();							
+						}
+					}
+				}
+					
+					//m_logger.warning("");
 			}
+			m_logger.info("ProposalDoesNotExistEx");
+			throw new ProposalDoesNotExistEx();
 		}
-		
-				
-		m_logger.info("ImageAlreadyStoredEx");
-		throw new ImageAlreadyStoredEx();
 	}
+		
+			
 
 	public void clean() {
 		// TODO Auto-generated method stub
