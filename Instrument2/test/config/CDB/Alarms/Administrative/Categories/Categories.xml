@@ -1,0 +1,8 @@
+<categories>
+	<category is-default="true" path="ACS_CATEGORY">
+		<description>Instrument alarms</descriptions>
+		<alarms>
+			<FaultFamily>Instrument</FaultFamily>
+		</alarms>
+	</category>
+</categories>
