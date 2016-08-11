@@ -20,8 +20,8 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 	pixelBias = 4
 	resetLevel = 1
 	telescopePosition = Position(0.0, 0.0)
-	az = 45
-	el = 360
+	az = 360
+	el = 45
 	#telescopePosition.az = 0.0
 	#telescopePosition.el = 0.0
 
@@ -87,7 +87,7 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 		self.el = coordinates.el
 		if self.mode == False:
 			telescope = self.getComponent("TELESCOPE")
-			if(self.az < 45.0 and self.el < 360):
+			if(self.az < 360.0 and self.el < 45.0):
 				telescope.moveTo(coordinates)
 				self.logger.log(logging.INFO, "Moving telescope to : " + str(coordinates))
 			else:
