@@ -82,7 +82,7 @@ lllll_OBJECTS   =
 # Scripts (public and local)
 # ----------------------------
 SCRIPTS         =
-SCRIPTS_L       = TestPrologue
+SCRIPTS_L       = TestPrologue TestEpilogue
 
 #
 # TCL scripts (public and local)
