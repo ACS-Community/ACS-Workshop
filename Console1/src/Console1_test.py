@@ -6,6 +6,7 @@ from Acspy.Clients.SimpleClient import PySimpleClient
 from Acspy.Common.Log import getLogger
 
 from SYSTEMErrImpl import SystemInAutoModeExImpl
+from SYSTEMErrImpl import *
 
 import logging
 from TYPES import Position
@@ -19,8 +20,8 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 	pixelBias = 4
 	resetLevel = 1
 	telescopePosition = Position(0.0, 0.0)
-	az = 45
-	el = 360
+	az = 360
+	el = 45
 	#telescopePosition.az = 0.0
 	#telescopePosition.el = 0.0
 
@@ -30,20 +31,22 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 		self.logger = self.getLogger()
 
 	def setMode(self, newMode):
-		self.mode = newMode
 		
 		scheduler = self.getComponent("SCHEDULER")
-		if self.mode == True:
+		if self.mode == False:
 			if(newMode == True):
-				ex = AlreadyInAutomaticEx()
-				ex.log(self.logger)
-				raise ex
-			else:
+		                self.mode = newMode
 				scheduler.start()
 				self.logger.log(logging.INFO, "Setting mode to AUTOMATIC")
 		else:
-			scheduler.stop()
-			self.logger.log(logging.INFO, "Setting mode to MANUAL")
+			if(newMode == True):
+				ex = AlreadyInAutomaticExImpl()
+				ex.log(self.logger)
+				raise ex
+			else:
+				self.mode = False
+				scheduler.stop()
+				self.logger.log(logging.INFO, "Setting mode to MANUAL")
 			
 
 	def getMode(self):
@@ -80,15 +83,15 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 
 
 	def moveTelescope(self, coordinates): # verificar formato de parametro "coordinates"
-		self.az = coordinates[0]
-		self.el = coordinates[1]
+		self.az = coordinates.az
+		self.el = coordinates.el
 		if self.mode == False:
 			telescope = self.getComponent("TELESCOPE")
-			if(az > 45.0 or el > 360):
+			if(self.az < 360.0 and self.el < 45.0):
 				telescope.moveTo(coordinates)
 				self.logger.log(logging.INFO, "Moving telescope to : " + str(coordinates))
 			else:
-				ex = PositionOutOfLimitsEx()
+				ex = PositionOutOfLimitsExImpl()
 				ex.log(self.logger)
 				raise ex
 		else:
@@ -121,7 +124,7 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 				return self.cameraImage	
 			else:
 				return b'asd'
-				ex = CameraIsOffEx()
+				ex = CameraIsOffExImpl()
 				ex.log(self.logger)
 				raise ex
 
@@ -152,7 +155,7 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 				instrument = self.getComponent("INSTRUMENT")
 				instrument.setPixelBias(bias)
 			else:
-				ex = CameraIsOffEx()
+				ex = CameraIsOffExImpl()
 				ex.log(self.logger)
 				raise ex
 				
@@ -171,7 +174,7 @@ class Console1_test(CONSOLE_MODULE__POA.Console,ACSComponent, ContainerServices,
 				instrument.setResetLevel(level)
 				self.logger.log(logging.INFO, "Setting level to : " + str(level))
 			else:
-				ex = CameraIsOffEx()
+				ex = CameraIsOffExImpl()
 				ex.log(self.logger)
 				raise ex
 			

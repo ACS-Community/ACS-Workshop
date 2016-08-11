@@ -1,11 +1,11 @@
 <SimulatedComponent xmlns="urn:schemas-cosylab-com:SimulatedComponent:1.0"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <_corbaMethod Name="start"
+  <_corbaMethod Name="moveTo"
            Timeout="0">
-print "AUTOMATIC mode started"
+print "Moving TELESCOPE"
   </_corbaMethod>
-  <_corbaMethod Name="stop"
+  <_corbaMethod Name="getCurrentPosition"
            Timeout="0">
-print "MANUAL mode started"
+print "Getting current position of TELESCOPE"
   </_corbaMethod>
 </SimulatedComponent>

@@ -3,4 +3,4 @@ PROLOGUE TestPrologue
 
 1 "unitTest" "acsutilTATTestRunner unitTest"
 
-EPILOGUE acsutilTATEpilogue
+EPILOGUE TestEpilogue

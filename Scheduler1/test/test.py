@@ -8,6 +8,7 @@
 
 import Acspy.Clients.SimpleClient
 import unittest
+import time
 
 class TestScheduler(unittest.TestCase):
   COMPONENT_NAME = "SCHEDULER1"
@@ -52,6 +53,7 @@ class TestScheduler(unittest.TestCase):
     self.component.start()
     # Just in case thread are so fast
     try:
+      time.sleep(0.2)
       print self.component.proposalUnderExecution()
     except:
       pass
