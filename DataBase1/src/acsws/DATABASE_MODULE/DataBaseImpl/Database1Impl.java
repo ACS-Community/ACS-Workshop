@@ -134,6 +134,21 @@ public class Database1Impl implements DataBaseOperations, ComponentLifecycle {
 				status_str = "ready";
 				break;
 			}
+			if (status == 2){
+				int tarLen = propArray.get(pid).targets.length;
+				byte[][] element = imagArray.get(pid);
+				boolean incomplete = false;
+				for (int i = 0; i<tarLen; i++){
+					if (element[i] == null){
+						incomplete = true;
+						break;
+					}
+				}
+				if (incomplete == true){
+					storage.storeObservation(propArray.get(pid), element);
+					m_logger.warning("Not all Target have images, saving data anyway...");
+				}
+			}
 			m_logger.info("The status for "+ pid + " was change to " + status_str);
 		}
 	}
@@ -144,6 +159,7 @@ public class Database1Impl implements DataBaseOperations, ComponentLifecycle {
 		if (propArray.get(pid).status == -1){
 			throw new ProposalDoesNotExistEx();
 		}
+		propArray.get(pid).status = 1;
 		int tarLen = propArray.get(pid).targets.length;
 		byte[][] element = imagArray.get(pid);
 		if (element[tid] == null){
@@ -161,6 +177,7 @@ public class Database1Impl implements DataBaseOperations, ComponentLifecycle {
 		}
 		if (complete == true){
 			storage.storeObservation(propArray.get(pid), element);
+			propArray.get(pid).status = 2;
 		}
 	}
 	public byte[][] getProposalObservations(int pid) throws ProposalNotYetReadyEx {
