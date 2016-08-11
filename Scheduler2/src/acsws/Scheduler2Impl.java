@@ -12,6 +12,7 @@ import acsws.SYSTEMErr.NoProposalExecutingEx;
 import acsws.SYSTEMErr.PositionOutOfLimitsEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.SYSTEMErr.SchedulerAlreadyRunningEx;
+import acsws.SYSTEMErr.SchedulerAlreadyStoppedEx;
 import acsws.TELESCOPE_MODULE.Telescope;
 import acsws.TELESCOPE_MODULE.TelescopeHelper;
 import acsws.TYPES.Proposal;
@@ -95,11 +96,16 @@ public void start() throws SchedulerAlreadyRunningEx {
 	}
 }
 
-public void stop() {
-	m_logger.info("Scheduler stopped");
+public void stop() throws SchedulerAlreadyStoppedEx {
+	
 	if (thread != null) {
+		m_logger.info("Scheduler stopped");
 		run = false;
+	} else {
+		m_logger.severe("Scheduler already stopped.");
+		throw new SchedulerAlreadyStoppedEx();
 	}
+	
 }
 
 public int proposalUnderExecution() throws NoProposalExecutingEx{
