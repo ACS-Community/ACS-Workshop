@@ -49,13 +49,13 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	
 	public String name() {
 		// TODO Auto-generated method stub
-		return "DATABASE_MODULE_JAVA";
+		return m_containerServices.getName();
 	}
 
 	public ComponentStates componentState() {
 		// TODO Auto-generated method stub
 		System.out.print("We are Defunct ;D");
-		return ComponentStates.COMPSTATE_DEFUNCT;
+		return ComponentStates.COMPSTATE_OPERATIONAL;
 	}
 
 	// Implementation of DataBaseOperations

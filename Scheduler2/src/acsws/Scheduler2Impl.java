@@ -1,6 +1,11 @@
 package acsws;
 
+import java.sql.Timestamp;
 import java.util.logging.Logger;
+import cern.laser.source.alarmsysteminterface.ASIException;
+import cern.laser.source.alarmsysteminterface.AlarmSystemInterface;
+import cern.laser.source.alarmsysteminterface.AlarmSystemInterfaceFactory;
+import cern.laser.source.alarmsysteminterface.FaultState;
 import acsws.DATABASE_MODULE.DataBase;
 import acsws.DATABASE_MODULE.DataBaseHelper;
 import acsws.INSTRUMENT_MODULE.Instrument;
@@ -32,6 +37,22 @@ private Proposal[] proposals;
 private boolean run;
 private Thread thread;
 private Proposal thisProposal;
+String faultFamily = "Scheduler";
+AlarmSystemInterface alarmSource;
+FaultState fs;
+
+private void launchAlarm(String faultMember, int faultCode) {
+	try {
+		alarmSource = AlarmSystemInterfaceFactory.createSource(this.name());
+		fs = AlarmSystemInterfaceFactory.createFaultState(faultFamily, faultMember, faultCode);
+		fs.setDescriptor(FaultState.ACTIVE);
+		fs.setUserTimestamp(new Timestamp(System.currentTimeMillis()));
+		alarmSource.push(fs);
+	} catch (ASIException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+}
 
 public void initialize (ContainerServices containerServices) {
 	m_containerServices = containerServices;
@@ -40,26 +61,33 @@ public void initialize (ContainerServices containerServices) {
 	thisProposal = null;
 	
 	try {
-		
 		org.omg.CORBA.Object databaseObj = m_containerServices.getDefaultComponent("IDL:acsws/DATABASE_MODULE/DataBase:1.0");
-		org.omg.CORBA.Object instrumentObj = m_containerServices.getDefaultComponent("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
-		org.omg.CORBA.Object telescopeObj = m_containerServices.getDefaultComponent("IDL:acsws/TELESCOPE_MODULE/Telescope:1.0");
-		
-		/*
-		org.omg.CORBA.Object databaseObj = m_containerServices.getComponent("DATABASE");
-		org.omg.CORBA.Object instrumentObj = m_containerServices.getComponent("INSTRUMENT");
-		org.omg.CORBA.Object telescopeObj = m_containerServices.getComponent("TELESCOPE");
-		*/
 		databaseComponente = DataBaseHelper.narrow(databaseObj);
-		instrumentComponente = InstrumentHelper.narrow(instrumentObj);
-		telescopeComponente = TelescopeHelper.narrow(telescopeObj);
-
-
-
 	} catch (AcsJContainerServicesEx e) {
-		// TODO Auto-generated catch block
+		launchAlarm("DATABASE_ERROR_CONNECTION", 1);
+		m_logger.severe("Reference to database could not be obtained.");
 		e.printStackTrace();
 	}
+		
+	try {
+		org.omg.CORBA.Object instrumentObj = m_containerServices.getDefaultComponent("IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0");
+		instrumentComponente = InstrumentHelper.narrow(instrumentObj);
+	} catch (AcsJContainerServicesEx e) {
+		launchAlarm("INSTRUMENT_ERROR_CONNECTION", 1);
+		m_logger.severe("Reference to instrument could not be obtained.");
+		e.printStackTrace();
+	}
+	
+
+	try {
+		org.omg.CORBA.Object telescopeObj = m_containerServices.getDefaultComponent("IDL:acsws/TELESCOPE_MODULE/Telescope:1.0");
+		telescopeComponente = TelescopeHelper.narrow(telescopeObj);
+	} catch (AcsJContainerServicesEx e) {
+		launchAlarm("TELESCOPE_ERROR_CONNECTION", 1);
+		m_logger.severe("Reference to telescope could not be obtained.");
+		e.printStackTrace();
+	}
+		
 	
 }
 
@@ -119,23 +147,6 @@ public int proposalUnderExecution() throws NoProposalExecutingEx{
 }
 
 public void run() {
-
-	try {
-		if (databaseComponente == null) {
-			throw new AcsJContainerServicesEx();
-		}
-		if (instrumentComponente == null) {
-			throw new AcsJContainerServicesEx();
-		}
-		if (telescopeComponente == null) {
-			throw new AcsJContainerServicesEx();
-		}
-	} catch (AcsJContainerServicesEx e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		return;
-	}
-
 	byte[] image;
 	m_logger.info("Scheduler running");
 	proposals = databaseComponente.getProposals();
