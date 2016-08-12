@@ -1,0 +1,53 @@
+<SimulatedComponent xmlns="urn:schemas-cosylab-com:SimulatedComponent:1.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <_corbaMethod Name="getProposals"
+           Timeout="0">
+from TYPES import Proposal
+from TYPES import TargetList
+from TYPES import Target
+from TYPES import Position
+pos1=Position(float(10),float(20))
+pos2=Position(float(15),float(25))
+pos3=Position(float(20),float(30))
+pos4=Position(float(25),float(35))
+pos5=Position(float(30),float(40))
+pos6=Position(float(35),float(45))
+pos7=Position(float(40),float(50))
+tg1=Target(1,pos1,1)
+tg2=Target(2,pos2,2)
+tg3=Target(3,pos3,1)
+tg4=Target(4,pos4,1)
+tg5=Target(5,pos5,1)
+tg6=Target(6,pos6,1)
+tg7=Target(7,pos7,1)
+tgList1=[tg1,tg2,tg3]
+tgList2=[tg3,tg4,tg5]
+tgList3=[tg6,tg7,tg1]
+tgList4=[tg2,tg4,tg6]
+tgList5=[tg1,tg3,tg5]
+tgList6=[tg1,tg2]
+tgList7=[tg3,tg4]
+tgList8=[tg5,tg6]
+tgList9=[tg6,tg7]
+propList=[]
+prop1=Proposal(001,tgList1,0)
+propList.append(prop1)
+prop2=Proposal(002,tgList2,0)  
+propList.append(prop2)
+prop3=Proposal(003,tgList3,0)
+propList.append(prop3)
+prop4=Proposal(004,tgList4,0)
+propList.append(prop4)
+prop5=Proposal(005,tgList5,0)
+propList.append(prop5)
+prop6=Proposal(006,tgList6,0)
+propList.append(prop6)
+prop7=Proposal(007,tgList7,0)
+propList.append(prop7)
+prop8=Proposal(011,tgList8,0)
+propList.append(prop8)
+prop9=Proposal(012,tgList9,0)
+propList.append(prop9)
+return propList
+</_corbaMethod>
+</SimulatedComponent>
