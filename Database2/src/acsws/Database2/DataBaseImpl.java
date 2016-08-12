@@ -130,24 +130,20 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		
 		try {
 			statusActual = getProposalStatus(pid);
+			// Si la proposal no ha sido completada
+			if (statusActual != 2){
+				m_logger.info("ProposalNotYetReadyEx");
+				ProposalNotYetReadyEx e = new ProposalNotYetReadyEx();
+				throw e;
+			}
 		} catch (ProposalDoesNotExistEx e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-			m_logger.info("ProposalDoesNotExistEx");
-			AcsJProposalNotYetReadyEx e2 = new AcsJProposalNotYetReadyEx(e1);
-			throw e2.toProposalNotYetReadyEx();
-			
-			
-			//throw new ProposalNotYetReadyEx();
+			m_logger.info("ProposalDoesNotExist in memory, but may exist in storage");
 		}
 		
-		// Si la proposal no ha sido completada
-		if (statusActual != 2){
-			m_logger.info("ProposalNotYetReadyEx");
-			ProposalNotYetReadyEx e = new ProposalNotYetReadyEx();
-			throw e;
-		}
-		
+
+		// Se cuentan los target en targetList
 		for (String key_pid : map.keySet()){
 			if(key_pid.startsWith(Integer.toString(pid) + ":") ) {
 				target_cnt++;
@@ -182,7 +178,8 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			AcsJProposalDoesNotExistEx e2 = new AcsJProposalDoesNotExistEx(e1);
 			throw e2.toProposalDoesNotExistEx();
 		}
-		if (statusActual + 1 != status){
+
+		if (statusActual + 1 != status ){
 			m_logger.info("InvalidProposalStatusTransitionEx");
 			InvalidProposalStatusTransitionEx e = new InvalidProposalStatusTransitionEx();
 			throw e;
@@ -192,7 +189,7 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 				pro.status = status;
 				m_logger.info("Proposal Status Changed Successfully");
 				break;
-			}
+			}	
 		}		
 	}
 
@@ -205,7 +202,7 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		List<String> pids_list = new ArrayList<String>();
 		byte[][] imageList = null ;
 		try { 
-			store = StorageHelper.narrow( m_containerServices.getComponent("STORAGE") );
+			store = StorageHelper.narrow(m_containerServices.getComponent("STORAGE"));
 		} catch ( AcsJContainerServicesEx e) {
 			m_logger.info("Excepcion de Java Container con Componente Storage");
 		}
@@ -225,7 +222,6 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 					throw new ImageAlreadyStoredEx();		
 				}
 				map.put(Integer.toString(proposal.pid) + ":" + Integer.toString(tid), image);
-				
 				for (String key_pid : map.keySet()){
 					if(key_pid.startsWith(Integer.toString(pid) + ":") ) {
 						image_cnt++;
