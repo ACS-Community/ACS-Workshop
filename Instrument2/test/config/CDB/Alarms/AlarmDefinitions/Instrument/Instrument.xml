@@ -1,4 +1,5 @@
-<fault-family name="Instrument">
+<?xml version="1.0" encoding="UTF-8"?>
+<fault-family name="Instrument" xmlns="urn:schemas-cosylab-com:acsalarm-fault-family:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:schemas-acs:AcsAlarmSystem:1.0 ../../../acsalarm-fault-family.xsd ">
 	<alarm-source>ALARM_SYSTEM_SOURCES</alarm-source> 
 	<help-url>http://tempuri.org</help-url> 
 	<contact email="" gsm="" name="" />
@@ -19,7 +20,4 @@
 			<position>Gallinero</position>
 		</location>
 	</fault-member>
-
-	<fault-member-default>
-	</fault-member-default>
 </fault-family>
