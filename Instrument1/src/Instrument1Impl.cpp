@@ -99,8 +99,8 @@ void Instrument1::initialize()
 	  status = 0; //CAMERA Logically OFF
         try
         {
-                //Camera = getContainerServices()->getDefaultComponent<CAMERA_MODULE::Camera>("IDL:acsws/CAMERA_MODULE/Camera:1.0");
-                Camera = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
+                Camera = getContainerServices()->getDefaultComponent<CAMERA_MODULE::Camera>("IDL:acsws/CAMERA_MODULE/Camera:1.0");
+                //Camera = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
 		ACS_SHORT_LOG((LM_INFO, "Instrument1 Component Initialized!"));
         }
         catch(int e)

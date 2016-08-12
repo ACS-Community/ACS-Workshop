@@ -1,0 +1,38 @@
+<fault-family name="Scheduler" xmlns="urn:schemas-cosylab-com:acsalarm-fault-family:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<alarm-sourse>ALARM_SYSTEM_SOURCES</alarm-sources>
+	<help-url></help-url>
+	<contact name="" email="" />
+	<fault-code value="1">
+		<priority>3</priority>
+		<cause>Connection error. Reference to component could not be obtained.</cause>
+		<action>Check CDB declaration of default components.</action>
+		<consecuense>Communication with components from scheduler is not possible.</consecuense>
+		<problem-description>Please test components.</problem-description>
+	</fault-code>
+	<fault-member name="DATABASE_ERROR_CONNECTION">
+		<location>
+			<building>building</building>
+			<floor>floor</floor>
+			<room>room</room>
+			<position>position</position>
+		</location>		
+	</fault-member>
+	<fault-member name="INSTRUMET_ERROR_CONNECTION">
+			<location>
+				<building>building</building>
+				<floor>floor</floor>
+				<room>room</room>
+				<position>position</position>
+			</location>		
+		</fault-member>
+	<fault-member name="TELESCOPE_ERROR_CONNECTION">
+			<location>
+				<building>building</building>
+				<floor>floor</floor>
+				<room>room</room>
+				<position>position</position>
+			</location>		
+	</fault-member>
+	<fault-member-default>
+	</fault-member-default>
+</fault-family>
