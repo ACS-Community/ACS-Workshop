@@ -1,6 +1,11 @@
 
-
+#include <ACSAlarmSystemInterfaceFactory.h>
 #include <Telescope1Impl.h>
+#include <FaultState.h>
+#include <faultStateConstants.h>
+
+using namespace acsalarm;
+//::AlarmSystemInterface;
 
 Telescope1::Telescope1(const ACE_CString& name,
                maci::ContainerServices * containerServices):
@@ -12,7 +17,29 @@ Telescope1::Telescope1(const ACE_CString& name,
    cmount_p = getContainerServices()->getDefaultComponent<TELESCOPE_MODULE::TelescopeControl>("IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0");
    
    if (CORBA::is_nil(cmount_p.in())){
-        //TODO:: Throw an exception 
+        //TODO:: Throw an exception
+	//ALARM
+	std::string family = "Telescope1";
+	std::string member = "INSTRUMENT";
+	int code = 3;
+
+	acsalarm::AlarmSystemInterface* alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
+	
+		auto_ptr<acsalarm::FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, code);
+	
+		fltstate -> setDescriptor(faultState::ACTIVE_STRING);
+		
+		acsalarm::Timestamp * tstampPtr = new acsalarm::Timestamp();
+		auto_ptr<acsalarm::Timestamp> tstampAutoPtr(tstampPtr);
+		fltstate->setUserTimestamp(tstampAutoPtr);
+	
+		acsalarm::Properties * propsPtr = new acsalarm::Properties();
+		propsPtr->setProperty("STATUS","OFF");
+		auto_ptr<acsalarm::Properties> propsAutoPtr(propsPtr);
+		fltstate->setUserProperties(propsAutoPtr);
+
+		alarmSource->push(*fltstate);
+	//ALARM_END
         ACS_SHORT_LOG((LM_CRITICAL,"MOUNT component cannot be found, please reload the component."));
    }
    cmount_p->calibrateEncoders();
@@ -31,12 +58,59 @@ Telescope1::observe(const ::TYPES::Position & coordinates,::CORBA::Long exposure
         std::stringstream s;
         
 
-	if(coordinates.el > 75){
+	if(coordinates.el > 62){
+		//ALARM
+		std::string family = "Telescope1";
+		std::string member = "MOUNT";
+		int code = 1;
+
+		acsalarm::AlarmSystemInterface* alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
+	
+		auto_ptr<acsalarm::FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, code);
+	
+		fltstate -> setDescriptor(faultState::ACTIVE_STRING);
+		
+		acsalarm::Timestamp * tstampPtr = new acsalarm::Timestamp();
+		auto_ptr<acsalarm::Timestamp> tstampAutoPtr(tstampPtr);
+		fltstate->setUserTimestamp(tstampAutoPtr);
+	
+		acsalarm::Properties * propsPtr = new acsalarm::Properties();
+		propsPtr->setProperty("ELEVATION_MAXIMUM","62");
+		auto_ptr<acsalarm::Properties> propsAutoPtr(propsPtr);
+		fltstate->setUserProperties(propsAutoPtr);
+
+		alarmSource->push(*fltstate);
+	
+		//ALARM_END
+
 		ACS_SHORT_LOG((LM_WARNING,"Not moving to prevent camera damage."));
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
 		throw error;
 	}
 	if(coordinates.el < 0){
+		//ALARM
+		std::string family = "Telescope1";
+		std::string member = "MOUNT";
+		int code = 1;
+
+		acsalarm::AlarmSystemInterface* alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
+	
+		auto_ptr<acsalarm::FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, code);
+	
+		fltstate -> setDescriptor(faultState::ACTIVE_STRING);
+		
+		acsalarm::Timestamp * tstampPtr = new acsalarm::Timestamp();
+		auto_ptr<acsalarm::Timestamp> tstampAutoPtr(tstampPtr);
+		fltstate->setUserTimestamp(tstampAutoPtr);
+	
+		acsalarm::Properties * propsPtr = new acsalarm::Properties();
+		propsPtr->setProperty("ELEVATION_MINIMUM","0");
+		auto_ptr<acsalarm::Properties> propsAutoPtr(propsPtr);
+		fltstate->setUserProperties(propsAutoPtr);
+
+		alarmSource->push(*fltstate);
+		//ALARM_END
+
 		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent brain damage."));
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
 		throw error;
@@ -103,15 +177,64 @@ Telescope1::waitOnSource(const ::TYPES::Position & coord){
 
 void 
 Telescope1::moveTo(const ::TYPES::Position & coordinates) throw (SYSTEMErr::PositionOutOfLimitsEx, CORBA::SystemException){
+
+
+	
         ACS_TRACE("::Telescope1::moveTo");
         std::stringstream s;
 
 	if(coordinates.el > 62){
+		//ALARM
+		std::string family = "Telescope1";
+		std::string member = "MOUNT";
+		int code = 1;
+
+		acsalarm::AlarmSystemInterface* alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
+	
+		auto_ptr<acsalarm::FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, code);
+	
+		fltstate -> setDescriptor(faultState::ACTIVE_STRING);
+		
+		acsalarm::Timestamp * tstampPtr = new acsalarm::Timestamp();
+		auto_ptr<acsalarm::Timestamp> tstampAutoPtr(tstampPtr);
+		fltstate->setUserTimestamp(tstampAutoPtr);
+	
+		acsalarm::Properties * propsPtr = new acsalarm::Properties();
+		propsPtr->setProperty("ELEVATION_MAXIMUM","62");
+		auto_ptr<acsalarm::Properties> propsAutoPtr(propsPtr);
+		fltstate->setUserProperties(propsAutoPtr);
+
+		alarmSource->push(*fltstate);
+		//ALARM_END
+
 		ACS_SHORT_LOG((LM_WARNING,"Not moving to prevent camera damage."));
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
 		throw error;
 	}
 	if(coordinates.el < 0){
+		//ALARM
+		std::string family = "Telescope1";
+		std::string member = "MOUNT";
+		int code = 1;
+
+		acsalarm::AlarmSystemInterface* alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
+	
+		auto_ptr<acsalarm::FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, code);
+	
+		fltstate -> setDescriptor(faultState::ACTIVE_STRING);
+		
+		acsalarm::Timestamp * tstampPtr = new acsalarm::Timestamp();
+		auto_ptr<acsalarm::Timestamp> tstampAutoPtr(tstampPtr);
+		fltstate->setUserTimestamp(tstampAutoPtr);
+	
+		acsalarm::Properties * propsPtr = new acsalarm::Properties();
+		propsPtr->setProperty("ELEVATION_MINIMUM","0");
+		auto_ptr<acsalarm::Properties> propsAutoPtr(propsPtr);
+		fltstate->setUserProperties(propsAutoPtr);
+
+		alarmSource->push(*fltstate);
+	
+		//ALARM_END
 		ACS_SHORT_LOG((LM_WARNING, "Not moving to prevent brain damage."));
 		SYSTEMErr::PositionOutOfLimitsExImpl error("Telescope1Impl.cpp",34,NULL, DEFAULT_SEVERITY);
 		throw error;

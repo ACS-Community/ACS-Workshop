@@ -5,6 +5,12 @@
 
 #include <Instrument1.h>
 
+//#include "AlarmSystemInterface.h"
+#include "ACSAlarmSystemInterfaceFactory.h"
+#include "FaultState.h"
+#include "faultStateConstants.h"
+#include "Timestamp.h"
+using acsalarm::AlarmSystemInterface;
 
     /**
      * Constructor
@@ -21,15 +27,6 @@
 		Camera(CAMERA_MODULE::Camera::_nil())
 {
 	status = 0; //CAMERA Logically OFF
-	try
-	{
-		Camera = getContainerServices()->getDefaultComponent<CAMERA_MODULE::Camera>("IDL:acsws/CAMERA_MODULE/Camera:1.0");
-		//Camera = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
-	}
-	catch(int e)
-	{
-		ACS_SHORT_LOG((LM_INFO, "Unable to get CAMERA component"));
-	}
 
 }
     
@@ -97,7 +94,21 @@ std::string shutterSpeedValues[52]= {
 };
  
 	
-
+void Instrument1::initialize()
+{
+	  status = 0; //CAMERA Logically OFF
+        try
+        {
+                //Camera = getContainerServices()->getDefaultComponent<CAMERA_MODULE::Camera>("IDL:acsws/CAMERA_MODULE/Camera:1.0");
+                Camera = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
+		ACS_SHORT_LOG((LM_INFO, "Instrument1 Component Initialized!"));
+        }
+        catch(int e)
+        {
+                ACS_SHORT_LOG((LM_INFO, "Unable to get CAMERA component"));
+        }
+	
+}
 void Instrument1::cameraOn()
 	{
 		if(status == 0)
@@ -181,6 +192,35 @@ TYPES::ImageType* Instrument1::takeImage(CORBA::Long exposureTime)
 		}
 		else
 		{
+			// constants we will use when creating the fault
+			std::string family = "AlarmSource";
+			std::string member = "ALARM_INSTRUMENT1";
+			int code = 1;
+			
+			// Step 1: create the AlarmSystemInterface using the factory
+			AlarmSystemInterface* alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
+			
+			// Step 2: create the FaultState using the factory
+			auto_ptr<acsalarm::FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, code);
+			
+			// Step 3: set the fault state's descriptor
+			std::string stateString = faultState::ACTIVE_STRING;
+			fltstate->setDescriptor(stateString);
+			
+			// Step 4: create a Timestamp and use it to configure the FaultState
+			acsalarm::Timestamp * tstampPtr = new acsalarm::Timestamp();
+			auto_ptr<acsalarm::Timestamp> tstampAutoPtr(tstampPtr);
+			fltstate->setUserTimestamp(tstampAutoPtr);
+			
+			// Step 5: create a Properties object and configure it, then assign to the FaultState
+			acsalarm::Properties * propsPtr = new acsalarm::Properties();
+			propsPtr->setProperty("TEST_PROPERTY", "TEST_VALUE");
+			auto_ptr<acsalarm::Properties> propsAutoPtr(propsPtr);
+			fltstate->setUserProperties(propsAutoPtr);
+			
+			// Step 6: push the FaultState to the alarm server
+			alarmSource->push (*fltstate);
+
 			ACS_SHORT_LOG((LM_INFO, "Problem detected, Verify if Camera ON"));
 			SYSTEMErr::CameraIsOffExImpl ex (__FILE__, __LINE__, "Instrument1::takeImage");
 			throw ex.getCameraIsOffEx();
