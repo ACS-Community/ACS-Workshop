@@ -1,8 +1,13 @@
-<categories>
+<?xml version="1.0" encoding="UTF-8"?>
+<categories
+	xmlns="urn:schemas-cosylab-com:acsalarm-categories:1.0" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
 	<category is-default="true" path="ACS_CATEGORY">
-		<description>Instrument alarms</descriptions>
+		<description>Instrument alarms</description>
 		<alarms>
 			<FaultFamily>Instrument</FaultFamily>
 		</alarms>
 	</category>
+
 </categories>

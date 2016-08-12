@@ -43,6 +43,8 @@ public:
 
 	virtual void aboutToAbort();
 
+	void raiseCameraIsOffAlarm();
+
 	void operator=(const Instrument& other)
 	{
 		on = other.on;	
