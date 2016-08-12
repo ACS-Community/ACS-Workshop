@@ -184,7 +184,7 @@ TYPES::ImageType* Instrument1::takeImage(CORBA::Long exposureTime)
 		TYPES::ImageType* Image = new TYPES::ImageType;
 		
 		// constants we will use when creating the fault
-                std::string family = "AlarmSource";
+                std::string family = "Instrument1_ALARM";
                 std::string member = "ALARM_INSTRUMENT1";
                  int code = 1;
 
