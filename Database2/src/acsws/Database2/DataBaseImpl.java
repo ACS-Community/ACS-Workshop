@@ -1,6 +1,7 @@
 package acsws.Database2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -216,24 +217,23 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 					}
 				     }
 
-				    if(image_cnt == bool_cnt){
-                                        pro.status = 2; 
-                                        imageList = new byte[image_cnt][];
-					for( int l = 0; l < pids_list.size() ; l++){
-                                              imageList[l] = map.get( pids_list.get(l) );
-                                	}
-					store.storeObservation(pro,  imageList);
-                                        // Eliminar imagenes 
-                                        for( String image_delete : pids_list){
-					map.replace(image_delete, null);
-                                        }
-				    }
+				    //if(image_cnt == bool_cnt){
+                                    imageList = new byte[image_cnt][];
+				    for( int l = 0; l < pids_list.size() ; l++){
+			 	        // Guardar aun cuando no estan todas las imagenes
+			 	        imageList[l] = map.get( pids_list.get(l) );
+					if (map.get( pids_list.get(l) ) == null ) {
+					    m_logger.info("Saving incomplete proposal");
+					    Arrays.fill( imageList[l], (byte) 0 );
+   				        }					  
+                                    }
+				    store.storeObservation(pro,  imageList);
+                                    // Eliminar imagenes 
+                                    for( String image_delete : pids_list){
+				    map.replace(image_delete, null);
+                                    }
+				    
 				}
-			
-				
-
-
-
 			}	
 		}		
 	}
@@ -258,31 +258,6 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 					throw new ImageAlreadyStoredEx();		
 				}
 				map.put(Integer.toString(proposal.pid) + ":" + Integer.toString(tid), image);
-				//for (String key_pid : map.keySet()){
-				//	if(key_pid.startsWith(Integer.toString(pid) + ":") ) {
-				//		image_cnt++;
-				//		if ( map.get(key_pid) != null ) {
-				//			bool_cnt++;
-				//			pids_list.add(key_pid);
-				//			
-				//		}
-				//	}
-				//}
-				
-				//if(image_cnt == bool_cnt){
-				//	pro.status = 2;	
-				//	imageList = new byte[image_cnt][];
-				//	for( int l = 0; l < pids_list.size() ; l++){
-				//		
-				//		imageList[l] = map.get( pids_list.get(l) );
-				//	}
-					
-				//	store.storeObservation(pro,  imageList);
-					// Eliminar imagenes 
-				//	for( String image_delete : pids_list){
-				//		map.replace(image_delete, null);
-				//	}
-				//}
 			}
 		}
 		if (Exists == false){
