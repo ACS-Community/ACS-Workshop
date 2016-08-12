@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fault-family name="Scheduler" xmlns="urn:schemas-cosylab-com:acsalarm-fault-family:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:schemas-acs:AcsAlarmSystem:1.0 ../../../acsalarm-fault-family.xsd ">
+  <alarm-source>ALARM_SYSTEM_SOURCES</alarm-source> 
+  <help-url>http://tempuri.org</help-url> 
+  <contact email="" gsm="" name="" /> 
+  <fault-code value="100">
+    <priority>1</priority> 
+      <cause>Could not get dataBase Container</cause> 
+      <action>Startup dataBase Container</action> 
+      <consequence>Can not initialize Scheduler</consequence> 
+      <problem-description>The Container was not succesfully obtained with the idl of the implementation in SchedulerImpl.java </problem-description> 
+  </fault-code>
+
+  <fault-code value="200">
+    <priority>1</priority> 
+      <cause>Could not get Instrument Container</cause> 
+      <action>Startup Instrument Container</action> 
+      <consequence>Can not initialize Scheduler</consequence> 
+      <problem-description>The Container was not succesfully obtained with the idl of the implementation in SchedulerImpl.java </problem-description> 
+  </fault-code>
+
+  <fault-code value="300">
+    <priority>1</priority> 
+      <cause>Could not get Telescope Container</cause> 
+      <action>Startup Telescope Container</action> 
+      <consequence>Can not initialize Scheduler</consequence> 
+      <problem-description>The Container was not succesfully obtained with the idl of the implementation in SchedulerImpl.java </problem-description> 
+  </fault-code>
+
+  <fault-member name="Scheduler3">
+    <location>
+              <building>Alma SCO</building> 
+              <floor>-1</floor> 
+              <room>Licanbur Auditorium</room> 
+              <position>ws07</position> 
+  </location>
+  </fault-member>
+ </fault-family>

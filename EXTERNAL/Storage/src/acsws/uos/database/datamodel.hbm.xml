@@ -31,7 +31,7 @@
 			<key-property name="tid" type="integer" column="TID"/>
 			<key-property name="pid" type="integer" column="PID"/>
 		</composite-id>
-		<property name="image" type="byte[]" column="IMAGE_BLOB"/>
+		<property name="image" type="blob" column="IMAGE_BLOB"/>
 	</class>
 	
 </hibernate-mapping>

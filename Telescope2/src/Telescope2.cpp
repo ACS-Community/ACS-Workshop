@@ -1,7 +1,14 @@
 #include <Telescope2.h>
 #include <cmath>
 #include <stdlib.h>     //for using the function sleep
+#include <string>
 
+
+//Alarm System
+#include <ACSAlarmSystemInterfaceFactory.h>
+#include <faultStateConstants.h>
+
+using namespace acsalarm;
 
 TelescopeImpl::TelescopeImpl(const ACE_CString& name,
                                             maci::ContainerServices* containerServices):
@@ -49,9 +56,21 @@ TYPES::ImageType* TelescopeImpl::observe(const ::TYPES::Position & coordinates,
 
 	//Calling instrument to take image
 	TYPES::ImageType* image; 
-	image = instrument->takeImage(exposureTime);
-	
-	return image;
+
+	try{
+		image = instrument->takeImage(exposureTime);
+		return image;
+
+	}catch(SYSTEMErr::CameraIsOffEx &ex){
+		std::string family = "Antenna";
+		std::string member = "TEST1";
+
+		ACSAlarmSystemInterfaceFactory::createAndSendAlarm(family, member, 1, true);
+		//Throw Alarm
+		ACS_SHORT_LOG((LM_ERROR, "Camera is off"));
+
+		throw ex;
+	}
 }
 
 
@@ -60,7 +79,6 @@ void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 {
 	
 	double max_el = 62;
-	double max_az = 90;
 
 	double epsilon = 0.5;	
 	//Call Mount setTo
@@ -69,7 +87,7 @@ void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 
 
 	//Check Position limits
-	if((el > max_el || el < 0 ) || std::abs(az) > max_az){
+	if(el > max_el){
 		SYSTEMErr::PositionOutOfLimitsExImpl ex(__FILE__, __LINE__ , "TelescopeImpl::moveTo");
 		ex.log();
 		throw ex.getPositionOutOfLimitsEx();
@@ -83,12 +101,13 @@ void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 	}	
 	mount->setTo(el,az);
 
+	//Waiting to get in position
         while(true){
                 TYPES::Position actual_p = getCurrentPosition();
                 if(std::abs(actual_p.el - el) <= epsilon && std::abs(actual_p.az - az) <= epsilon){
                         break;
                 }
-		sleep(1);         //make the programme waiting for 5 secondes
+		sleep(1);
 
         }
 
