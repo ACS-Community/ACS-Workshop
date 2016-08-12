@@ -7,5 +7,6 @@
 
 	<shutterSpeed default_timer_trig="2.0"/>
 	<isoSpeed default_timer_trig="2.0"/>
+	<busy default_timer_trig="2.0" default_value="false"/>
 
 </Camera>

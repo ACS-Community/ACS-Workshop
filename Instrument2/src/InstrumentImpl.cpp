@@ -4,14 +4,20 @@
 #include <InstrumentImpl.h>
 #include <SYSTEMErr.h>
 #include <string>
+#include <ACSAlarmSystemInterfaceFactory.h>
+#include <faultStateConstants.h>
 
 using namespace baci;
+using namespace acsalarm;
 
 int LOCALCOUNT = 0;
 
 ACE_Log_Priority LOCAL_LOGGING_LEVEL = LM_INFO;
 
 const static int MAX_LOGS = 5;
+
+std::string family = "Instrument";
+std::string member = "Instrument2";
 
 // Please forgive us
 std::string shutterSpeedValues[52]= {
@@ -192,7 +198,9 @@ void Instrument::execute() throw (acsErrTypeLifeCycle::acsErrTypeLifeCycleExImpl
 	}
 
 	ACS::RWstring_var isoSpeed = camera->isoSpeed();
-        isoSpeed->set_sync("400");
+	isoSpeed->set_sync("400");
+
+	raiseCameraIsOffAlarm();
 }
 
 void Instrument::cleanUp()
@@ -205,6 +213,27 @@ void Instrument::cleanUp()
 void Instrument::aboutToAbort()
 {
 	ACS_TRACE("Instrument::aboutToAbort");
+}
+
+void Instrument::raiseCameraIsOffAlarm()
+{
+
+	AlarmSystemInterface * alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
+
+	auto_ptr<FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, 1);
+
+	// taken from https://github.com/ACS-Community/ACS/blob/master/LGPL/CommonSoftware/acsalarm/include/faultStateConstants.h 
+	fltstate->setDescriptor(faultState::ACTIVE_STRING);
+
+	Timestamp * tstampPtr = new Timestamp();
+	auto_ptr<Timestamp> tstampAutoPtr(tstampPtr);
+	fltstate->setUserTimestamp(tstampAutoPtr);
+
+	Properties * propsPtr = new Properties();
+	auto_ptr<Properties> propsAutoPtr(propsPtr);
+	fltstate->setUserProperties(propsAutoPtr);
+
+	alarmSource->push(*fltstate);	
 }
 
 
