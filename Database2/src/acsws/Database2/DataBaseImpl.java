@@ -1,6 +1,7 @@
 package acsws.Database2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import acsws.SYSTEMErr.ImageAlreadyStoredEx;
 import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.ProposalNotYetReadyEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
+import acsws.SYSTEMErr.wrappers.AcsJInvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.wrappers.AcsJProposalDoesNotExistEx;
 import acsws.SYSTEMErr.wrappers.AcsJProposalNotYetReadyEx;
 import acsws.TYPES.ImageListHelper;
@@ -169,6 +171,18 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	public void setProposalStatus(int pid, int status)
 			throws InvalidProposalStatusTransitionEx, ProposalDoesNotExistEx {
 		long statusActual = -1;
+		int image_cnt = 0, bool_cnt = 0;
+		List<String> pids_list = new ArrayList<String>();
+                byte[][] imageList = null ;
+		Storage store = null;
+                
+		try {
+                        store = StorageHelper.narrow(m_containerServices.getComponent("STORAGE"));
+                } catch ( AcsJContainerServicesEx e) {
+                        m_logger.info("Excepcion de Java Container con Componente Storage");
+                }
+
+
 		try {
 			statusActual = getProposalStatus(pid);
 		} catch (ProposalDoesNotExistEx e1) {
@@ -181,14 +195,45 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 		if (statusActual + 1 != status ){
 			m_logger.info("InvalidProposalStatusTransitionEx");
-			InvalidProposalStatusTransitionEx e = new InvalidProposalStatusTransitionEx();
-			throw e;
+			AcsJInvalidProposalStatusTransitionEx e = new AcsJInvalidProposalStatusTransitionEx();
+			throw e.toInvalidProposalStatusTransitionEx();
+			//throw e;
+			 //  AcsJProposalDoesNotExistEx impl = new AcsJProposalDoesNotExistEx();
+			  // throw impl.toProposalDoesNotExistEx();
 		}
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
 				pro.status = status;
 				m_logger.info("Proposal Status Changed Successfully");
-				break;
+
+				if (status == 2){
+				    for (String key_pid : map.keySet()){
+                                        if(key_pid.startsWith(Integer.toString(pid) + ":") ) {
+                                            image_cnt++;
+					    if ( map.get(key_pid) != null ) {
+                                	        bool_cnt++;
+                                                pids_list.add(key_pid);
+					    }
+					}
+				     }
+
+				    //if(image_cnt == bool_cnt){
+                                    imageList = new byte[image_cnt][];
+				    for( int l = 0; l < pids_list.size() ; l++){
+			 	        // Guardar aun cuando no estan todas las imagenes
+			 	        imageList[l] = map.get( pids_list.get(l) );
+					if (map.get( pids_list.get(l) ) == null ) {
+					    m_logger.info("Saving incomplete proposal");
+					    Arrays.fill( imageList[l], (byte) 0 );
+   				        }					  
+                                    }
+				    store.storeObservation(pro,  imageList);
+                                    // Eliminar imagenes 
+                                    for( String image_delete : pids_list){
+				    map.replace(image_delete, null);
+                                    }
+				    
+				}
 			}	
 		}		
 	}
@@ -196,16 +241,7 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	public void storeImage(int pid, int tid, byte[] image)
 			throws ImageAlreadyStoredEx, ProposalDoesNotExistEx{
 		// TODO Auto-generated method stub
-		Storage store = null;
-		int image_cnt = 0, bool_cnt = 0;
 		boolean Exists = false;
-		List<String> pids_list = new ArrayList<String>();
-		byte[][] imageList = null ;
-		try { 
-			store = StorageHelper.narrow(m_containerServices.getComponent("STORAGE"));
-		} catch ( AcsJContainerServicesEx e) {
-			m_logger.info("Excepcion de Java Container con Componente Storage");
-		}
 		
 		if (proposalList.isEmpty()){
 			   m_logger.info("The proposal list is empty");
@@ -222,31 +258,6 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 					throw new ImageAlreadyStoredEx();		
 				}
 				map.put(Integer.toString(proposal.pid) + ":" + Integer.toString(tid), image);
-				for (String key_pid : map.keySet()){
-					if(key_pid.startsWith(Integer.toString(pid) + ":") ) {
-						image_cnt++;
-						if ( map.get(key_pid) != null ) {
-							bool_cnt++;
-							pids_list.add(key_pid);
-							
-						}
-					}
-				}
-				
-				if(image_cnt == bool_cnt){
-					pro.status = 2;	
-					imageList = new byte[image_cnt][];
-					for( int l = 0; l < pids_list.size() ; l++){
-						
-						imageList[l] = map.get( pids_list.get(l) );
-					}
-					
-					store.storeObservation(pro,  imageList);
-					// Eliminar imagenes 
-					for( String image_delete : pids_list){
-						map.replace(image_delete, null);
-					}
-				}
 			}
 		}
 		if (Exists == false){
@@ -262,6 +273,15 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		// TODO Auto-generated method stub
 		proposalList.clear();
 		m_logger.info("All Proposals cleared");
+		Storage store = null;
+                try {
+                        store = StorageHelper.narrow( m_containerServices.getComponent("STORAGE") );
+                } catch ( AcsJContainerServicesEx e) {
+                        m_logger.info("Excepcion de Java Container con Componente Storage");
+                        e.log(this.m_logger);
+                }
+		store.clearAllData();
+		m_logger.info("Storage cleared");
 	}
 
 	// Implementation of LifeCycle

@@ -99,8 +99,8 @@ void Instrument1::initialize()
 	  status = 0; //CAMERA Logically OFF
         try
         {
-                //Camera = getContainerServices()->getDefaultComponent<CAMERA_MODULE::Camera>("IDL:acsws/CAMERA_MODULE/Camera:1.0");
-                Camera = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
+                Camera = getContainerServices()->getDefaultComponent<CAMERA_MODULE::Camera>("IDL:acsws/CAMERA_MODULE/Camera:1.0");
+                //Camera = getContainerServices()->getComponent<CAMERA_MODULE::Camera>("CAMERA");
 		ACS_SHORT_LOG((LM_INFO, "Instrument1 Component Initialized!"));
         }
         catch(int e)
@@ -147,6 +147,7 @@ TYPES::ImageType* Instrument1::takeImage(CORBA::Long exposureTime)
 		const char* expTime="1";
 		const char* iso = "400";
 		int flag=0;
+		int j=0;
 	
 		// Maps shutter speeds to microseconds equivalents
         	static ::CORBA::Long shutterSpeedMap[52] = {
@@ -168,19 +169,63 @@ TYPES::ImageType* Instrument1::takeImage(CORBA::Long exposureTime)
                 	if (diff == 0) 
 			{
                         	flag=1;
-				expTime =  shutterSpeedValues[i].c_str();		
+				expTime =  shutterSpeedValues[i].c_str();
+				j=i;		
 			}
 		}
 		
 		if (flag ==0)
-			ACS_SHORT_LOG((LM_WARNING, "Exposure time not exact. Default Exposure Time = 1 seconds"));
+		{
+			ACS_SHORT_LOG((LM_WARNING, "Exposure time not exact."));
+			SYSTEMErr::CameraIsOffExImpl ex (__FILE__, __LINE__, "Instrument1::takeImage");
+                        throw ex.getCameraIsOffEx();
+		}
 
 		TYPES::ImageType* Image = new TYPES::ImageType;
 		
+		// constants we will use when creating the fault
+                std::string family = "AlarmSource";
+                std::string member = "ALARM_INSTRUMENT1";
+                 int code = 1;
+
+                 // Step 1: create the AlarmSystemInterface using the factory
+                 AlarmSystemInterface* alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
+
 		if (status == 1)
 		{
 			try
 			{
+						
+				if(j<10)
+				{
+					
+					code=2;		
+				
+		                        // Step 2: create the FaultState using the factory
+                		        auto_ptr<acsalarm::FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, code);
+	
+        		                // Step 3: set the fault state's descriptor
+                        		std::string stateString = faultState::ACTIVE_STRING;
+                       			 fltstate->setDescriptor(stateString);
+
+                       			// Step 4: create a Timestamp and use it to configure the FaultState
+                        		acsalarm::Timestamp * tstampPtr = new acsalarm::Timestamp();
+                       			auto_ptr<acsalarm::Timestamp> tstampAutoPtr(tstampPtr);
+                        		fltstate->setUserTimestamp(tstampAutoPtr);
+
+                       			// Step 5: create a Properties object and configure it, then assign to the FaultState
+                        		acsalarm::Properties * propsPtr = new acsalarm::Properties();
+                        		propsPtr->setProperty("TEST_PROPERTY", "TEST_VALUE");
+                        		auto_ptr<acsalarm::Properties> propsAutoPtr(propsPtr);
+                        		fltstate->setUserProperties(propsAutoPtr);
+
+                        		// Step 6: push the FaultState to the alarm server
+                        		alarmSource->push (*fltstate);
+
+					
+					ACS_SHORT_LOG((LM_WARNING, "Exposure Time > 3.2 seconds"));
+
+				}
 				Image = Camera->takeImage(expTime,iso);	
 				ACS_SHORT_LOG((LM_INFO, "TakeImage is Ready, Exposure Time = %s seconds",expTime));
 			}
@@ -193,12 +238,8 @@ TYPES::ImageType* Instrument1::takeImage(CORBA::Long exposureTime)
 		else
 		{
 			// constants we will use when creating the fault
-			std::string family = "AlarmSource";
-			std::string member = "ALARM_INSTRUMENT1";
-			int code = 1;
+			code = 1;
 			
-			// Step 1: create the AlarmSystemInterface using the factory
-			AlarmSystemInterface* alarmSource = ACSAlarmSystemInterfaceFactory::createSource();
 			
 			// Step 2: create the FaultState using the factory
 			auto_ptr<acsalarm::FaultState> fltstate = ACSAlarmSystemInterfaceFactory::createFaultState(family, member, code);
