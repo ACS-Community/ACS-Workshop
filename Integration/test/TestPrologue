@@ -8,7 +8,7 @@ mkdir tmp
 acsutilTATPrologue
 
 #Start the Storage HSQLDB
-nohup acswsStartDatabase &
+#nohup acswsStartDatabase &
 
 #start container
 acsutilAwaitContainerStart -py pyContainer

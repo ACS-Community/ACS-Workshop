@@ -17,6 +17,7 @@ import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.ProposalNotYetReadyEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
 import acsws.SYSTEMErr.wrappers.AcsJProposalDoesNotExistEx;
+import acsws.SYSTEMErr.wrappers.AcsJProposalNotYetReadyEx;
 import acsws.TYPES.ImageListHelper;
 import acsws.TYPES.Proposal;
 import acsws.TYPES.Target;
@@ -40,9 +41,8 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 	int STATUS_INITIAL_PROPOSAL = 0;
 	int STATUS_NO_SUCH_PROPOSAL = -999;
 	List<Proposal> proposalList = new ArrayList<Proposal>();
-	byte[][] imageList; 
-	int[][][] map;
-	int image_cnt = 0;
+	 
+	HashMap<String, byte[]> map = new HashMap<String, byte[]>();
 	
 	
 	public String name() {
@@ -74,9 +74,12 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		proposal.pid = store.getNextValidId(); 
 		proposal.status = STATUS_INITIAL_PROPOSAL;
 		proposalList.add(proposal);
-		imageList = new byte[targets.length][];
-		map = new int[targets.length][targets.length][targets.length];
-		m_logger.info("The proposal was created");
+		//imageList = new byte[targets.length][];
+		for (Target tar : targets){
+			map.put(Integer.toString(proposal.pid) + ":" + Integer.toString(tar.tid) , null);
+		}
+		
+		m_logger.info("The proposal was created. PID: " + proposal.pid );
 		return proposal.pid;
 	}
 
@@ -114,7 +117,9 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		// TODO Auto-generated method stub
 		Storage store = null;
 		long statusActual = -1;
-		byte[][] imageList = new byte[0][0];
+		byte[][] imageList = null ;
+		int target_cnt = 0;
+		
 		try { 
 			store = StorageHelper.narrow( m_containerServices.getComponent("STORAGE") );
 		} catch ( AcsJContainerServicesEx e) {
@@ -129,7 +134,11 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			m_logger.info("ProposalDoesNotExistEx");
-			return imageList;
+			AcsJProposalNotYetReadyEx e2 = new AcsJProposalNotYetReadyEx(e1);
+			throw e2.toProposalNotYetReadyEx();
+			
+			
+			//throw new ProposalNotYetReadyEx();
 		}
 		
 		// Si la proposal no ha sido completada
@@ -138,6 +147,13 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			ProposalNotYetReadyEx e = new ProposalNotYetReadyEx();
 			throw e;
 		}
+		
+		for (String key_pid : map.keySet()){
+			if(key_pid.startsWith(Integer.toString(pid) + ":") ) {
+				target_cnt++;
+			}
+		}		
+		imageList = new byte[target_cnt][];
 		
 		imageList = store.getObservation(pid);
 		return imageList;
@@ -184,6 +200,10 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			throws ImageAlreadyStoredEx, ProposalDoesNotExistEx{
 		// TODO Auto-generated method stub
 		Storage store = null;
+		int image_cnt = 0, bool_cnt = 0;
+		boolean Exists = false;
+		List<String> pids_list = new ArrayList<String>();
+		byte[][] imageList = null ;
 		try { 
 			store = StorageHelper.narrow( m_containerServices.getComponent("STORAGE") );
 		} catch ( AcsJContainerServicesEx e) {
@@ -195,44 +215,52 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 			   AcsJProposalDoesNotExistEx impl = new AcsJProposalDoesNotExistEx();
 			   throw impl.toProposalDoesNotExistEx();
 		}
-		
-		for (Proposal pro : proposalList ) {
-			if (pro.pid == pid){
-				if (pro.status == 1){
-					for (Target targetList : pro.targets ) {
-						if(targetList.tid == tid){
-							// Revisar si tid ya tiene imagen
-							for (int j = 0; j < pro.targets.length ; j++ ){
-								if (map[pid-1][tid-1][j] == 0 ) {
-									// Store locally or in memory
-									imageList[image_cnt] = new byte[image.length];
-									image_cnt++;
-									map[pid][tid][j] = 1;
-									
-									// Si la cantidad de imagenes == a la de targets
-									if(image_cnt == pro.targets.length){
-										pro.status = 2;
-										store.storeObservation(pro, imageList);
-										// Eliminar imagenes 
-										imageList = null;
-									}
-									break;
-								}
-							}
-							m_logger.info("ImageAlreadyStoredEx");
-							throw new ImageAlreadyStoredEx();							
+
+		for ( Proposal pro : proposalList) {			
+			if (pro.status == 1 && pro.pid == pid){
+				Exists = true;
+				// Revisar si imagen fue guardada previamente
+				if ( map.get(Integer.toString(proposal.pid) + ":" + Integer.toString(tid)) != null  ){
+					m_logger.info("ImageAlreadyStoredEx");
+					throw new ImageAlreadyStoredEx();		
+				}
+				map.put(Integer.toString(proposal.pid) + ":" + Integer.toString(tid), image);
+				
+				for (String key_pid : map.keySet()){
+					if(key_pid.startsWith(Integer.toString(pid) + ":") ) {
+						image_cnt++;
+						if ( map.get(key_pid) != null ) {
+							bool_cnt++;
+							pids_list.add(key_pid);
+							
 						}
 					}
 				}
-				m_logger.info(" Invalid Status for tid ");
-				break;
+				
+				if(image_cnt == bool_cnt){
+					pro.status = 2;	
+					imageList = new byte[image_cnt][];
+					for( int l = 0; l < pids_list.size() ; l++){
+						
+						imageList[l] = map.get( pids_list.get(l) );
+					}
+					
+					store.storeObservation(pro,  imageList);
+					// Eliminar imagenes 
+					for( String image_delete : pids_list){
+						map.replace(image_delete, null);
+					}
+				}
 			}
 		}
-		m_logger.info("ProposalDoesNotExistEx");
-		throw new ProposalDoesNotExistEx();
+		if (Exists == false){
+			m_logger.info("ProposalDoesNotExistEx");
+			AcsJProposalDoesNotExistEx impl = new AcsJProposalDoesNotExistEx();
+			throw impl.toProposalDoesNotExistEx();
+		}
+
 	}
-		
-			
+
 
 	public void clean() {
 		// TODO Auto-generated method stub
@@ -266,4 +294,5 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 		m_logger.info("DB aboutToAbort");
 	}
 
+	
 }
