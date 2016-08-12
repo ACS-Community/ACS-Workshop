@@ -12,6 +12,7 @@
 #include <TypesC.h>
 #include <SYSTEMErr.h>
 
+
 class TelescopeImpl : public virtual acscomponent::ACSComponentImpl,
 			public virtual POA_TELESCOPE_MODULE::Telescope
 
