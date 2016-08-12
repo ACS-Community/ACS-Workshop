@@ -100,7 +100,7 @@ void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 		throw acsErrTypeLifeCycle::LifeCycleExImpl(__FILE__, __LINE__, "::TelescopeImpl::observe");
 	}	
 	mount->setTo(el,az);
-/*
+
 	//Waiting to get in position
         while(true){
                 TYPES::Position actual_p = getCurrentPosition();
@@ -110,7 +110,7 @@ void TelescopeImpl::moveTo( const ::TYPES::Position & coordinates)
 		sleep(1);
 
         }
-*/
+
 }
 
 TYPES::Position TelescopeImpl::getCurrentPosition(){
