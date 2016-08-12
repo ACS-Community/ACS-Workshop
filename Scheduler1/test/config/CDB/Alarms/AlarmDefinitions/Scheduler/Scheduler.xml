@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fault-family name="Scheduler" xmlns="urn:schemas-cosylab-com:acsalarm-fault-family:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <alarm-source>ALARM_SYSTEM_SOURCES</alarm-source>
+  <help-url>https://ictwiki.alma.cl/twiki/bin/view/Main/ThirteenthACSWorkshop</help-url>
+  <contact email="efulet@gmail.com" gsm="" name="Scheduler1 Team" />
+  <fault-code value="100">
+    <!--
+         0: Very hight
+         1: Hight
+         2: Medium
+         3: Low
+         4: None ??
+    -->
+    <priority>1</priority>
+    <cause>Cannot obtain Container instance</cause>
+    <action>Verify container is running</action>
+    <consequence>A cascade of failures</consequence>
+    <problem-description>This issue happens when process is trying to obtain the container instance</problem-description>
+  </fault-code>
+  
+  <!--<fault-member-default></fault-member-default>-->
+  
+  <fault-member name="SCHEDULER1">
+    <location>
+      <building>Workshop room</building>
+      <floor>-1</floor>
+      <room>room</room>
+      <position>table 3</position>
+    </location>
+  </fault-member>
+</fault-family>
+

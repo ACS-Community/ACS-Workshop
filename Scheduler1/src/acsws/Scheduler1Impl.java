@@ -2,9 +2,17 @@ package acsws;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
+
+import cern.laser.source.alarmsysteminterface.ASIException;
+import cern.laser.source.alarmsysteminterface.AlarmSystemInterface;
+import cern.laser.source.alarmsysteminterface.AlarmSystemInterfaceFactory;
+import cern.laser.source.alarmsysteminterface.FaultState;
 
 import acsws.DATABASE_MODULE.DataBase;
 import acsws.DATABASE_MODULE.DataBaseHelper;
@@ -44,10 +52,14 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 	private ContainerServices m_containerServices;
 	private Logger m_logger;
 	
-	// Constants for component names, these names have to match with the CDB definition
-	private static final String DATABASE_COMPONENT_NAME = "IDL:acsws/DATABASE_MODULE/DataBase:1.0";
-	private static final String INSTRUMENT_COMPONENT_NAME = "IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0";
-	private static final String TELESCOPE_COMPONENT_NAME = "IDL:acsws/TELESCOPE_MODULE/Telescope:1.0";
+	// Constants for component names, these names have to match with the CDB definition.
+	// TODO This should be read from a configuration file.
+	private static final String SCHEDULER_INTERFACE_NAME = "Scheduler";
+	private static final String SCHEDULER_COMPONENT_NAME = "SCHEDULER1";
+	
+	private static final String DATABASE_COMPONENT_IDL_DEF = "IDL:acsws/DATABASE_MODULE/DataBase:1.0";
+	private static final String INSTRUMENT_COMPONENT_IDL_DEF = "IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0";
+	private static final String TELESCOPE_COMPONENT_IDL_DEF = "IDL:acsws/TELESCOPE_MODULE/Telescope:1.0";
 	
 	private DataBase databaseComp = null;
 	private Instrument intrumentComp = null;
@@ -64,6 +76,17 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 	private static final int NO_PROPOSAL_UNDER_EX = -1;
 	private final AtomicInteger proposalUnderExID = new AtomicInteger(NO_PROPOSAL_UNDER_EX);
 	
+	/* ---- ALARMS ---- */
+	private String faultFamily = SCHEDULER_INTERFACE_NAME;
+	private String faultMember = SCHEDULER_COMPONENT_NAME;
+	
+	// Define alarm codes
+	private int faultCode = 100;
+	
+	AlarmSystemInterface alarmSource = null;
+	FaultState faultState = null;
+	/* ---- ALARMS ---- */
+	
 	/////////////////////////////////////////////////////////////
 	// Implementation of ComponentLifecycle
 	/////////////////////////////////////////////////////////////
@@ -74,12 +97,51 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		
 		m_logger.info("initialize() called...");
 		
+		// Initialize alarms
 		try {
-			databaseComp = DataBaseHelper.narrow(m_containerServices.getDefaultComponent(DATABASE_COMPONENT_NAME));
-			intrumentComp = InstrumentHelper.narrow(m_containerServices.getDefaultComponent(INSTRUMENT_COMPONENT_NAME));
-			telescopeComp = TelescopeHelper.narrow(m_containerServices.getDefaultComponent(TELESCOPE_COMPONENT_NAME));
+			alarmSource = AlarmSystemInterfaceFactory.createSource(this.name());
+			faultState = (FaultState) AlarmSystemInterfaceFactory.createFaultState(faultFamily, faultMember, faultCode);
+		} catch (ASIException e) {
+			m_logger.severe("Error trying to initialize alarm objects " + e);
+			m_logger.severe(getStackTraceFromException(e));
+		}
+		
+		// Get components: DATABASE
+		try {
+			databaseComp = DataBaseHelper.narrow(m_containerServices.getDefaultComponent(DATABASE_COMPONENT_IDL_DEF));
 		} catch (AcsJContainerServicesEx e) {
-			m_logger.severe("Error trying to get components " + e);
+			// Active an alarm here
+			HashMap<String, String> propMap = new HashMap<String, String>();
+			propMap.put("Container", "Database");
+			pushAlarm(propMap);
+			
+			m_logger.severe("Error trying to get database component " + e);
+			m_logger.severe(getStackTraceFromException(e));
+		}
+		
+		// Get components: INSTRUMENT
+		try {
+			intrumentComp = InstrumentHelper.narrow(m_containerServices.getDefaultComponent(INSTRUMENT_COMPONENT_IDL_DEF));
+		} catch (AcsJContainerServicesEx e) {
+			// Active an alarm here
+			HashMap<String, String> propMap = new HashMap<String, String>();
+			propMap.put("Container", "Instrument");
+			pushAlarm(propMap);
+			
+			m_logger.severe("Error trying to get instrument component " + e);
+			m_logger.severe(getStackTraceFromException(e));
+		}
+		
+		// Get components: TELESCOPE
+		try {
+			telescopeComp = TelescopeHelper.narrow(m_containerServices.getDefaultComponent(TELESCOPE_COMPONENT_IDL_DEF));
+		} catch (AcsJContainerServicesEx e) {
+			// Active an alarm here
+			HashMap<String, String> propMap = new HashMap<String, String>();
+			propMap.put("Container", "Telescope");
+			pushAlarm(propMap);
+			
+			m_logger.severe("Error trying to get telescope component " + e);
 			m_logger.severe(getStackTraceFromException(e));
 		}
 	}
@@ -164,15 +226,15 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 			schedulerThread = new Thread(new Runnable() {
 				public void run() {
 					try {
-						// Set flags for processing proposals
-						isStarted.set(true);
-						isStopped.set(false);
-						
 						Proposal[] proposalArr = databaseComp.getProposals();
 						if(proposalArr == null) {
 							throw new NullPointerException("Error: getProposals method returned a null response");
 						}
 						m_logger.info("Proposals length: " + proposalArr.length);
+						
+						// Set flags for processing proposals
+						isStarted.set(true);
+						isStopped.set(false);
 						
 						//for(Proposal proposal: proposalArr) {//no valid for current java version
 						for(int i=0; i<proposalArr.length; i++) {
@@ -327,5 +389,31 @@ public class Scheduler1Impl implements ComponentLifecycle, SchedulerOperations {
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 		return sw.toString();
+	}
+	
+	/**
+	 * A useful method for pushing alarms
+	 * 
+	 * @param propMap A map of properties
+	 */
+	private void pushAlarm(HashMap<String, String> propMap) {
+		faultState.setDescriptor(FaultState.ACTIVE);
+		faultState.setUserTimestamp(new Timestamp(System.currentTimeMillis()));
+		
+		Properties properties = new Properties();
+		
+		for(String key : propMap.keySet()) {
+			properties.setProperty(key, propMap.get(key));
+		}
+		
+		faultState.setUserProperties(properties);
+		
+		// Push the alarm
+		try {
+			alarmSource.push(faultState);
+		} catch (ASIException e) {
+			m_logger.severe("Error trying to push a alarm " + e);
+			m_logger.severe(getStackTraceFromException(e));
+		}
 	}
 }
