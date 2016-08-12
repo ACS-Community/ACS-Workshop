@@ -16,6 +16,7 @@ import acsws.SYSTEMErr.ImageAlreadyStoredEx;
 import acsws.SYSTEMErr.InvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.ProposalNotYetReadyEx;
 import acsws.SYSTEMErr.ProposalDoesNotExistEx;
+import acsws.SYSTEMErr.wrappers.AcsJInvalidProposalStatusTransitionEx;
 import acsws.SYSTEMErr.wrappers.AcsJProposalDoesNotExistEx;
 import acsws.SYSTEMErr.wrappers.AcsJProposalNotYetReadyEx;
 import acsws.TYPES.ImageListHelper;
@@ -181,8 +182,11 @@ public class DataBaseImpl implements ComponentLifecycle, DataBaseOperations {
 
 		if (statusActual + 1 != status ){
 			m_logger.info("InvalidProposalStatusTransitionEx");
-			InvalidProposalStatusTransitionEx e = new InvalidProposalStatusTransitionEx();
-			throw e;
+			AcsJInvalidProposalStatusTransitionEx e = new AcsJInvalidProposalStatusTransitionEx();
+			throw e.toInvalidProposalStatusTransitionEx();
+			//throw e;
+			 //  AcsJProposalDoesNotExistEx impl = new AcsJProposalDoesNotExistEx();
+			  // throw impl.toProposalDoesNotExistEx();
 		}
 		for (Proposal pro : proposalList ) {
 			if (pro.pid == pid){
