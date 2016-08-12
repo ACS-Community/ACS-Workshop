@@ -36,7 +36,7 @@ class Instrument1: public virtual acscomponent::ACSComponentImpl,     //Componen
      * Destructor
      */
     virtual ~Instrument1();
-    
+    virtual void initialize();    
     /* --------------------- [ CORBA interface ] ----------------------*/    
     
 	virtual void cameraOn (void);

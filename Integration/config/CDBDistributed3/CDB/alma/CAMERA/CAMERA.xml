@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Camera
+	xmlns="urn:schemas-cosylab-com:Camera:1.0"
+	xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0"
+	xmlns:baci="urn:schemas-cosylab-com:BACI:1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<shutterSpeed default_timer_trig="2.0"/>
+	<isoSpeed default_timer_trig="2.0"/>
+
+</Camera>
