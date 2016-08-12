@@ -14,7 +14,7 @@ class TestScheduler(unittest.TestCase):
 
   def test_proposalCheck(self):
     try:
-      self.assertEqual(self.scheduler.proposalUnderExecution(), 0)
+      self.assertTrue(isinstance(self.scheduler.proposalUnderExecution(), int))
     except SYSTEMErr.NoProposalExecutingEx:
       print "Scheduler expected 0"
 
