@@ -154,7 +154,7 @@ public class HibernateStorage implements ComponentLifecycle, StorageOperations {
 			return new byte[0][0];
 		ArrayList<byte[]> retVal = new ArrayList<>(result.size());
 		for (ImageTypeBlob blob: result) {
-			retVal.add(blob.getImage());
+			retVal.add(blob.getImageAsBytes());
 		}
 		return retVal.toArray(new byte[0][0]);
 	}

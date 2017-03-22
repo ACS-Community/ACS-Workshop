@@ -1,0 +1,11 @@
+<SimulatedComponent xmlns="urn:schemas-cosylab-com:SimulatedComponent:1.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <_corbaMethod Name="start"
+           Timeout="0">
+print "AUTOMATIC mode started"
+  </_corbaMethod>
+  <_corbaMethod Name="stop"
+           Timeout="0">
+print "MANUAL mode started"
+  </_corbaMethod>
+</SimulatedComponent>

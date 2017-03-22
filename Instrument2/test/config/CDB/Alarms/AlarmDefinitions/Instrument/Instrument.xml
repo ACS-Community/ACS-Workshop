@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fault-family name="Instrument" xmlns="urn:schemas-cosylab-com:acsalarm-fault-family:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:schemas-acs:AcsAlarmSystem:1.0 ../../../acsalarm-fault-family.xsd ">
+	<alarm-source>ALARM_SYSTEM_SOURCES</alarm-source> 
+	<help-url>http://tempuri.org</help-url> 
+	<contact email="" gsm="" name="" />
+
+	<fault-code value="1">
+		<priority>3</priority> 
+  		<cause>Camera is off</cause> 
+  		<action>Turn on the camera</action> 
+  		<consequence>Devastating</consequence> 
+  		<problem-description>The camera is off, so it is not on</problem-description> 
+  	</fault-code>
+
+	<fault-member name="Instrument2">
+		<location>
+			<building>USM</building>
+			<floor>-1</floor>
+			<room>LabComp</room>
+			<position>Gallinero</position>
+		</location>
+	</fault-member>
+</fault-family>

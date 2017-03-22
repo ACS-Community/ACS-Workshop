@@ -1,0 +1,12 @@
+<SimulatedComponent xmlns="urn:schemas-cosylab-com:SimulatedComponent:1.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <_corbaMethod Name="moveTo"
+           Timeout="0">
+print "Moving TELESCOPE"
+  </_corbaMethod>
+  <_corbaMethod Name="getCurrentPosition"
+           Timeout="0">
+import TYPES
+return TYPES.Position(3.0,6.0)
+  </_corbaMethod>
+</SimulatedComponent>

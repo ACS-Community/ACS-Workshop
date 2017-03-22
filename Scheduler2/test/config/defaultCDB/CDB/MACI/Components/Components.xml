@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Components  xmlns="urn:schemas-cosylab-com:Components:1.0"
+       xmlns:cdb="urn:schemas-cosylab-com:CDB:1.0" 
+       xmlns:baci="urn:schemas-cosylab-com:BACI:1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <_ Name="Scheduler2" 	    
+         Code="acsws.Scheduler2Helper" 
+         Type="IDL:acsws/SCHEDULER_MODULE/Scheduler:1.0"
+         Container="frodoContainer" ImplLang="java" Default='true'/>
+      <_ Name="CONSOLE"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/CONSOLE_MODULE/Console:1.0"
+         Container="pyContainer" ImplLang="py" Default='true' />
+      <_ Name="DATABASE"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/DATABASE_MODULE/DataBase:1.0"
+         Container="pyContainer" ImplLang="py" Default='true'/>
+      <_ Name="TELESCOPE"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/TELESCOPE_MODULE/Telescope:1.0"
+         Container="pyContainer" ImplLang="py" Default='true'/>
+      <_ Name="INSTRUMENT"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/INSTRUMENT_MODULE/Instrument:1.0"
+         Container="pyContainer" ImplLang="py" Default='true'/>
+      <_ Name="CAMERA"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/CAMERA_MODULE/Camera:1.0"
+         Container="pyContainer" ImplLang="py" Default='true'/>
+      <_ Name="MOUNT"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/TELESCOPE_MODULE/TelescopeControl:1.0"
+         Container="pyContainer" ImplLang="py" Default='true'/>
+      <_ Name="STORAGE"
+         Code="Acssim.Servants.Simulator"
+         Type="IDL:acsws/STORAGE_MODULE/Storage:1.0"
+         Container="pyContainer" ImplLang="py" Default='true'/>
+
+</Components>
+
